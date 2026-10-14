@@ -1,6 +1,6 @@
 # Audit: JOY Design System foundations
 
-**Date:** 2026-10-14 · **Status:** draft for review. Nothing in this document has been built yet.
+**Date:** 2026-10-14 · **Status:** reviewed. Decisions D7–D15 (`docs/decisions.md`) were applied to section 6 on 2026-10-14. Nothing has been built yet.
 
 This audit lists every color, type style, size and component pattern we found in the sources, compares the sources with each other, and proposes a token list. Each proposed value is marked:
 
@@ -145,7 +145,7 @@ Mixed-case evidence for button labels:
 
 | Variable | Value | Status |
 | --- | --- | --- |
-| `joy/blue/500` | `#1442FF` | SOURCED: JOY palette |
+| `joy/blue/500` | `#1443FF` | SOURCED: frames + site (D7). The palette says `#1442FF`. |
 | `joy/blue/600` | `#0E38DF` | SOURCED: frames + site (not in palette) |
 | `joy/blue/700` | `#0024B5` | SOURCED: Doritos-sheet nav, site CSS |
 | `joy/blue/900` | `#0A0F36` | SOURCED: JOY palette "Dark Blue" |
@@ -182,19 +182,21 @@ The number after each color (500, 600…) shows how dark it is relative to the o
 | `color/text/on-action` | neutral/0 | neutral/0 | neutral/0 | SOURCED (Rockstar rule: white on black) |
 | `color/text/link` | joy/blue/500 | doritos/dark/900 | rockstar/black/900 | SOURCED |
 | `color/action/primary` | joy/blue/500 | doritos/dark/900 | rockstar/black/900 | SOURCED |
-| `color/action/primary-hover` | joy/blue/600 | doritos/dark/900 (no change) | rockstar/black/900 (no change) | **Decision 6.4** |
-| `color/action/primary-pressed` | joy/blue/700 | doritos/dark/900 | rockstar/black/900 | **Decision 6.4** |
-| `color/text/on-action-pressed` | neutral/0 | doritos/orange/500 | rockstar/violet/500 | Doritos SOURCED; Rockstar DERIVED (follows the Doritos pattern) |
+| `color/action/primary-hover` | joy/blue/600 | doritos/dark/900 (no change; label underlines) | rockstar/black/900 (no change; label underlines) | Approved (D8, D9) |
+| `color/action/primary-pressed` | joy/blue/700 | doritos/dark/900 | rockstar/black/900 | Approved (D8, D9) |
+| `color/text/on-action-pressed` | neutral/0 | doritos/orange/500 | rockstar/violet/500 | Doritos SOURCED; Rockstar approved (D9) |
 | `color/action/inverse` (filled button on a dark bg) | neutral/0 | doritos/dark/900 | rockstar/black/900 | JOY SOURCED (frame "Button Inverted"); others SOURCED |
 | `color/text/on-action-inverse` | joy/blue/500 | neutral/0 | neutral/0 | SOURCED |
 | `color/border/default` | neutral/100 | neutral/100 | neutral/100 | SOURCED (JOY input); DERIVED for others |
 | `color/border/action` (outline button) | joy/blue/500 | doritos/dark/900 | rockstar/black/900 | SOURCED |
-| `color/border/focus` (on light bg) | joy/blue/900 | doritos/red/500 | rockstar/violet/500 | **Decision 6.4** |
-| `color/border/focus-inverse` (on dark bg) | neutral/0 | doritos/orange/500 | rockstar/violet/500 | **Decision 6.4** |
+| `color/border/focus` (on light bg) | joy/blue/900 | doritos/red/500 | rockstar/violet/500 | Approved (D10) |
+| `color/border/focus-inverse` (on dark bg) | neutral/0 | doritos/orange/500 | rockstar/violet/500 | Approved (D10) |
 | `color/brand/primary` | joy/blue/500 | doritos/red/500 | rockstar/black/900 | SOURCED |
 | `color/brand/accent` | joy/sky/300 | doritos/orange/500 | rockstar/violet/500 | SOURCED colors; the role is DERIVED |
 | `color/feedback/expired` (Ended badge) | joy/red/600 | joy/red/600 | joy/red/600 | SOURCED (JOY) |
-| `color/feedback/active` | **NEEDS SOURCE** | | | No "Active" badge exists in any source. |
+| `color/feedback/active` | joy/green/300 | joy/green/300 | joy/green/300 | Approved (D15) |
+| `color/text/on-feedback-active` | joy/blue/900 | joy/blue/900 | joy/blue/900 | Approved (D15) |
+| `color/text/on-feedback-expired` | neutral/0 | neutral/0 | neutral/0 | SOURCED |
 | `font/family/body` | font/family/brand | font/family/brand | font/family/brand | Placeholder |
 
 All text/background pairs above pass WCAG AA (≥ 4.5:1) or the 3:1 rule for UI parts; see section 8.
@@ -208,7 +210,7 @@ All text/background pairs above pass WCAG AA (≥ 4.5:1) or the 3:1 rule for UI 
 | Border width | `border-width/thin` 1 · `border-width/thick` 2 | SOURCED |
 | Font size | `font-size/14` `16` `20` `24` `36` `60` | SOURCED |
 | Line height | `line-height/16` `18` `20` `24` `28` `40` `64` | SOURCED |
-| Opacity | `opacity/disabled` 0.3 | SOURCED (Doritos spec). **Not in the agreed Scale list; needs your OK** (rule 7). |
+| Opacity | `opacity/disabled` 0.3 | SOURCED (Doritos spec). Approved (D11). |
 
 **Proposed text styles** (desktop values from `18:4470`):
 
@@ -221,10 +223,14 @@ All text/background pairs above pass WCAG AA (≥ 4.5:1) or the 3:1 rule for UI 
 | `Body/L` | Regular | 20 / 24 | Section intro text |
 | `Body/M` | Regular | 16 / 20 | Default body |
 | `Body/S` | Regular | 14 / 18 | Small print |
-| `Label` | Semi Bold | 16 / 20 | Buttons, nav, tabs. **Case: decision 6.4** |
-| `Caption` | Regular | 14 / 16 | Mobile small text. Close to Body/S, so we could drop it (decision 6.4). |
+| `Label` | Semi Bold | 16 / 20 | Buttons, nav, tabs. UPPERCASE (D12) |
+| `Caption` | Regular | 14 / 16 | Mobile small text. Kept (D13) |
 
-### 6.4 Decisions needed from you
+### 6.4 Decisions (answered 2026-10-14; see D7–D15)
+
+Answers: 1 → `#1443FF` (D7) · 2 → yes (D8) · 3 → yes (D9) · 4 → yes (D10) · 5 → yes (D11) · 6 → UPPERCASE, as used today (D12) · 7 → keep Caption, as used today (D13) · 8 → yes (D14) · 9 → JOY Green with JOY Dark Blue text (D15).
+
+Original questions:
 
 1. **JOY blue hex:** `#1442FF` (palette) or `#1443FF` (frames and site)? *Recommendation: `#1442FF`, because the brand sheet is the source of truth.*
 2. **JOY hover and pressed:** hover = `#0E38DF` (site CTA hover, in the frames), pressed = `#0024B5` (Register fill in the sheet)? Both colors are SOURCED; giving them these roles is DERIVED. *Recommendation: yes.*

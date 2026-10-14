@@ -202,3 +202,31 @@ go
 - The 9 decisions in `docs/audit.md` section 6.4 (JOY blue hex, hover/pressed roles, Doritos/Rockstar hover, focus colors, disabled opacity token, label case, Caption, mobile type, Active badge color).
 - CLAUDE.md says "There is no JOY base brand sheet". Should it be updated to point to the JOY palette frame `18:20865`? I haven't edited CLAUDE.md.
 - After decisions: Prompt 2 builds tokens (`tokens/*.json` and the 3 Figma variable collections).
+
+---
+## Session 3 (follow-up) — Prompt 1: Audit decisions — 2026-10-14
+
+### Prompt (verbatim)
+1. frames/site 2. yes 3. yes 4. yes 5. yes. 6. whatever is used right now 7. whatever used right now 8. yes 9. pick from joy.
+
+### What I did
+- Recorded the 9 answers as decisions D7–D15 in `docs/decisions.md`.
+- How I read the two "whatever is used right now" answers:
+  - #6: the live site and JOY frames use UPPERCASE labels, so `Label` is UPPERCASE.
+  - #7: both Caption (14/16, mobile frames) and Body/S (14/18, desktop frame) are in use, so both are kept.
+- For #9, I picked JOY Green `#EBFF40` with JOY Dark Blue `#0A0F36` text for the Active badge (16.67:1). JOY Blue would look like a button, and green clearly differs from the red Ended badge.
+- Updated `docs/audit.md` section 6 to match: status line, `joy/blue/500` = `#1443FF`, the hover/pressed/focus rows, the new feedback text tokens, the opacity token, and the Label and Caption rows.
+
+### Changes
+- Repo: `docs/decisions.md` (D7–D15), `docs/audit.md`, `docs/process-log.md`.
+- Figma: no changes.
+
+### Decisions
+- D7–D15 (see `docs/decisions.md`).
+
+### Verification
+- The replacement script confirmed 12 of 12 audit edits applied.
+
+### Open questions / next steps
+- Should CLAUDE.md point to the JOY palette frame `18:20865`? (Not answered yet; CLAUDE.md is unchanged.)
+- Next: Prompt 2, build the tokens (`tokens/*.json` + the 3 Figma variable collections).
