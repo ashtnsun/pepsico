@@ -1,0 +1,93 @@
+{
+  "capturedAt": "2026-10-14T02:33:49.883Z",
+  "page": "https://www.joy-pepsico.eu/en-gb/",
+  "files": [
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/custom/pepsico_joy_gin_extend/dist/css/components/toolbar.css?tmflzv",
+      "file": "modules__custom__pepsico_joy_gin_extend__dist__css__components__toolbar.css",
+      "status": 200,
+      "bytes": 717
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/contrib/webform/css/webform.form.css?tmflzv",
+      "file": "modules__contrib__webform__css__webform.form.css",
+      "status": 200,
+      "bytes": 3186
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/contrib/webform/css/webform.element.details.toggle.css?tmflzv",
+      "file": "modules__contrib__webform__css__webform.element.details.toggle.css",
+      "status": 200,
+      "bytes": 983
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/contrib/webform/css/webform.element.message.css?tmflzv",
+      "file": "modules__contrib__webform__css__webform.element.message.css",
+      "status": 200,
+      "bytes": 1180
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/custom/pepsico_joy_eu/modules/custom/pepsico_joy_eu_push/css/joy-airship-prompt.css?tmflzv",
+      "file": "modules__custom__pepsico_joy_eu__modules__custom__pepsico_joy_eu_push__css__joy-airship-prompt.css",
+      "status": 200,
+      "bytes": 1380
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/custom/pepsico_joy_gin_extend/dist/css/custom-styles.css?tmflzv",
+      "file": "modules__custom__pepsico_joy_gin_extend__dist__css__custom-styles.css",
+      "status": 200,
+      "bytes": 0
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/modules/contrib/webform/css/webform.ajax.css?tmflzv",
+      "file": "modules__contrib__webform__css__webform.ajax.css",
+      "status": 200,
+      "bytes": 1210
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/themes/custom/barrio_pepsico_brands/css/bootstrap.min.css?tmflzv",
+      "file": "themes__custom__barrio_pepsico_brands__css__bootstrap.min.css",
+      "status": 200,
+      "bytes": 160403
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/themes/custom/barrio_pepsico_joypepsico/css/style.css?tmflzv",
+      "file": "themes__custom__barrio_pepsico_joypepsico__css__style.css",
+      "status": 200,
+      "bytes": 6190936
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/themes/custom/barrio_pepsico_joypepsico/css/font-awesome.min.css?tmflzv",
+      "file": "themes__custom__barrio_pepsico_joypepsico__css__font-awesome.min.css",
+      "status": 200,
+      "bytes": 59396
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/libraries/slick/slick/slick.css?tmflzv",
+      "file": "libraries__slick__slick__slick.css",
+      "status": 200,
+      "bytes": 1776
+    },
+    {
+      "url": "https://www.joy-pepsico.eu/en-gb/libraries/slick/slick/slick-theme.css?tmflzv",
+      "file": "libraries__slick__slick__slick-theme.css",
+      "status": 200,
+      "bytes": 3135
+    },
+    {
+      "url": "inline <style> #0",
+      "file": "inline-style-0.css",
+      "bytes": 5424
+    },
+    {
+      "url": "inline <style> #3",
+      "file": "inline-style-3.css",
+      "bytes": 380
+    },
+    {
+      "url": "inline <style> #4",
+      "file": "inline-style-4.css",
+      "bytes": 7691
+    }
+  ]
+}

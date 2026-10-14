@@ -1,0 +1,12 @@
+
+        .newsletter-v2__form .messages,
+        .newsletter-v2__form .alert,
+        .newsletter-v2__form .form-item--error-message {
+          color: #ff8a80;
+          margin: 0 0 12px;
+        }
+        .newsletter-v2__form input[type="email"].error,
+        .newsletter-v2__form .form-item--error input[type="email"] {
+          border-bottom-color: #ff8a80;
+        }
+      

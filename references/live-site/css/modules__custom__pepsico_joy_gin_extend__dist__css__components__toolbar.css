@@ -1,0 +1,17 @@
+body .toolbar .toolbar-bar #toolbar-item-administration-tray .toolbar-icon-admin-toolbar-tools-help.toolbar-icon-default:before {
+  -webkit-mask-image: url(../../../dist/media/joy-logo-black.svg);
+  mask-image: url(../../../dist/media/joy-logo-black.svg);
+  width: 28px;
+}
+
+body .toolbar .toolbar-bar .toolbar-icon-pepsico-joy-promotion-handler-admin:before {
+  -webkit-mask-image: url(../../../dist/media/joy-logo-black.svg);
+  mask-image: url(../../../dist/media/joy-logo-black.svg);
+  width: 28px;
+}
+
+body .toolbar .toolbar-bar .toolbar-icon-pepsico-joy-eu-admin:before {
+  -webkit-mask-image: url(../../../dist/media/joy-logo-black.svg);
+  mask-image: url(../../../dist/media/joy-logo-black.svg);
+  width: 28px;
+}

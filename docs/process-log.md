@@ -120,3 +120,47 @@ Move the screenshots, use Inter as the plceholder font for now. Commit is fine.
 ### Open questions / next steps
 - Galano Grotesque is still `NEEDS SOURCE`. When a licensed copy is installed, swap the font-family Primitive and re-check text styles for line breaks and widths.
 - Prompt 0.5 also saves captures into `references/live-site/`. Some names could clash with the existing files (for example `home.png`), so new captures should use a prefix or a subfolder (for example `references/live-site/capture/`) rather than overwrite them.
+
+---
+## Session 2 — Prompt 0.5: Live site capture — 2026-10-14
+
+### Prompt (verbatim)
+ok go next
+
+(Mid-session note from the user: "I refreshed the page on playwright, it worked? just letting you know.")
+
+### What I did
+- Took "next" to mean Prompt 0.5 as CLAUDE.md describes it: capture joy-pepsico.eu/en-gb (screenshots and CSS) to check the JOY base values.
+- Found that the site is behind Imperva/Incapsula bot protection: `curl` and a fresh Playwright browser both got 403. I didn't try to get around it. I checked the Internet Archive as a fallback, but its CSS copies were from 2024, so I didn't use them.
+- The user refreshed the page by hand in the Playwright browser, which passed the check. Everything after that was captured in the same session.
+- Saved all 15 same-site stylesheets and inline styles to `references/live-site/css/`, with `_index.json` mapping each file to its URL.
+- Took full-page screenshots of 9 pages at desktop (1440 × 900) and mobile (390 × 844): 18 files in `references/live-site/capture/`. The first set had the cookie consent backdrop over the top of each page, so I hid `#consent-greyout-div` and `.cc-window` with CSS and retook all 18. No cookie choice was made.
+- Recorded the rendered styles of headings, buttons, links, inputs, accordion, breadcrumb, badge, cards and footer on 6 pages at 1440 px (`references/live-site/computed-styles.json`), plus hover and focus states for the main button types.
+- Searched the 6 MB theme CSS for `@font-face`, `:root` variables, media-query breakpoints, color counts, radius counts and brand-scoped rules (`body.brand-doritos`, `body.brand-rockstar`).
+- Wrote `references/live-site/README.md` with the findings and their sources.
+- Added `.playwright-mcp/` (the Playwright tool's scratch folder) to `.gitignore`.
+
+### Changes
+- Repo: `references/live-site/README.md`, `references/live-site/capture/` (18 PNGs), `references/live-site/css/` (16 files), `references/live-site/computed-styles.json`, `.gitignore`, `docs/process-log.md`.
+- Figma: no changes.
+
+### Decisions
+- No new architecture decisions. Two process choices, logged here only:
+  - Captures go in `references/live-site/capture/`, so they don't overwrite the team's earlier screenshots.
+  - The site's Galano webfont files were **not** downloaded, because webfont licenses usually don't cover design-tool use.
+
+### Verification
+- Opened `home--desktop.png`, `faq--desktop.png` (first set, where I spotted the overlay) and `promo-doritos-las-vegas-wrap--desktop.png` (retaken set: clean, no overlay).
+- Every page returned 200 and none showed the Incapsula block page (checked for its iframe on each page).
+- Cross-checked button colors in both the rendered styles and `style.css`. Example: `.btn-primary` hover is CSS `rgb(0, 34.6, 173)` and rendered `rgb(0, 35, 173)` = `#0023AD`.
+
+### Open questions / next steps
+The live site disagrees with several "known" values in CLAUDE.md. Please confirm which ones to use before we build tokens:
+1. **Button radius:** the site uses **44px**, not 32. **Button padding:** 0 24px with a fixed 45px height, not 12/20. The Figma frames may differ; per CLAUDE.md, the Figma frames win on intent. Should we check frame `18:4470` before deciding?
+2. **Font weights:** the site loads Galano **Regular 400, SemiBold 600, Bold 700**, not just Regular and Bold. Buttons, nav, card titles and accordion questions use SemiBold. With Inter as the placeholder, that maps to Inter Semi Bold.
+3. **Second JOY blue:** the site uses `#0E38DF` a lot (newsletter band, breadcrumb bar, CTA hover, text on yellow) as well as `#1443FF`. Should it be a Primitive?
+4. **Two primary hover values:** CTA hover is `#0E38DF` and Bootstrap `.btn-primary` hover is `#0023AD`. Which is the JOY primary hover?
+5. **Accordion radius 10:** not confirmed. The FAQ accordion has no box at all; items are separated by thin blue lines.
+6. **Rockstar:** the site styles Rockstar with black only; violet `#B64F9B` isn't used anywhere. The brand sheet is still the source for Rockstar colors, so violet's role is still open.
+7. **Disabled state:** no disabled buttons appear on the captured pages. `#ADBDFF` comes from the CSS only.
+8. JOY yellow `#FFE600` and cyan `#00E0F3` are used a lot (hero CTAs, focus border, accent band) but aren't in CLAUDE.md. Should they be JOY Primitives?
