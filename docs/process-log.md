@@ -164,3 +164,41 @@ The live site disagrees with several "known" values in CLAUDE.md. Please confirm
 6. **Rockstar:** the site styles Rockstar with black only; violet `#B64F9B` isn't used anywhere. The brand sheet is still the source for Rockstar colors, so violet's role is still open.
 7. **Disabled state:** no disabled buttons appear on the captured pages. `#ADBDFF` comes from the CSS only.
 8. JOY yellow `#FFE600` and cyan `#00E0F3` are used a lot (hero CTAs, focus border, accent band) but aren't in CLAUDE.md. Should they be JOY Primitives?
+
+---
+## Session 3 — Prompt 1: Audit — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+(In reply to my proposal: "Should I start the audit?" The audit plan was to inventory the reference frames, read the brand sheets fully and look for others, compare with the live site, inventory the 8 components, and propose a token list marked sourced / DERIVED / NEEDS SOURCE.)
+
+### What I did
+- Mapped the Sponsor Files. `get_metadata` without a node listed only one page, but the file has a second page, **"Brand guides/elements" (`18:15669`)**, which holds every brand sheet.
+- Found a **JOY palette and contrast matrix** (`18:20865`) with 8 official JOY colors. CLAUDE.md says there's no JOY base sheet; this is the closest thing.
+- Listed the other brand sheets: full sheets for Elma Classic Chips, Cheetos and Tostitos; color sheets for 11 brands; contrast matrices for Lay's, Pepsi and 14 more.
+- Pulled exact values from all 40 cells of the Doritos CTA spec (3 styles × 5 states × light/dark, plus icon buttons) and its navigation. Took screenshots to confirm them visually.
+- Read the Rockstar sheet text and colors.
+- Inventoried reference frame `18:4470` (586 nodes): color, type, radius, padding and gap counts. Read the breadcrumb, steps line, step module, prizes, product card, FAQs, CTA banner, hero and newsletter sections in detail.
+- Found the "Ended" badge on the closed promo page `18:4704`, and the mobile type sizes in `18:4619`.
+- Inventoried the Wireframes file to use as a wishlist.
+- Ran WCAG contrast checks on 29 candidate color pairs.
+- Wrote `docs/audit.md`: sources, answers to the 8 Prompt 0.5 questions, color/type/spacing inventories, the proposed Primitives/Theme/Scale tokens and text styles, 9 decisions for the user, the component inventory and the contrast results.
+- Re-checked two claims before reporting and fixed them in the audit: the breadcrumb border is on the top, not the bottom, and corrected the Step card contents.
+
+### Changes
+- Repo: `docs/audit.md` (new); `docs/screenshots/audit-joy-palette-18-20865.png`, `audit-doritos-cta-spec-18-16787.png`, `audit-doritos-navigation-18-16849.png` (new); removed `docs/screenshots/.gitkeep`; `docs/process-log.md`.
+- Figma: no changes. All `use_figma` calls in this session were read-only scripts on the Sponsor Files and Wireframes.
+
+### Decisions
+- None made. The audit proposes tokens and lists 9 decisions for the user (audit section 6.4).
+
+### Verification
+- Every value in the audit came from a node read (IDs are listed in the audit) or from `references/live-site/`.
+- Checked the Doritos CTA spec and navigation visually against the extracted values.
+- Contrast ratios were computed with the WCAG luminance formula, and they match the sheet's own matrix where both cover the same pair (for example JOY Blue on white = 6.46; Doritos orange on white = 2.82).
+
+### Open questions / next steps
+- The 9 decisions in `docs/audit.md` section 6.4 (JOY blue hex, hover/pressed roles, Doritos/Rockstar hover, focus colors, disabled opacity token, label case, Caption, mobile type, Active badge color).
+- CLAUDE.md says "There is no JOY base brand sheet". Should it be updated to point to the JOY palette frame `18:20865`? I haven't edited CLAUDE.md.
+- After decisions: Prompt 2 builds tokens (`tokens/*.json` and the 3 Figma variable collections).
