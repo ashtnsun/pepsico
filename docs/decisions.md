@@ -233,3 +233,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** a new "Body/M Bold" text style to match the reference's Bold exactly; setting uppercase on Body/M (tested: this detaches the text style); the live site's blue bar with white text.
 - **Why:** The Figma frame `18:4472` wins over the live site. The Semi Bold `Label` gives the current-page emphasis CLAUDE.md asks for without adding a style. Text properties would share formatting across Regular and Semi Bold variants (D22).
 - **Date:** 2026-10-14
+
+## D33 — Pagination Dots: solid grey inactive dots; dots built as hug frames
+
+- **Decision:** `Dot` has `State` = Active (59 × 8 pill, `action/primary`) or Inactive (8 × 8, `text/secondary` at full opacity). `Pagination Dots` is a row of 5 Dot instances, gap `spacing/8`, with `Has dot 4` and `Has dot 5` off by default (3 dots). Each Dot is a hug-content auto-layout frame around a fixed-size "Shape" rectangle.
+- **Options considered:** the reference inactive color `#333333` at 30% (about 1.8:1, below the 3:1 rule for graphics); fixed-size Dot frames (tested: switching an instance's State kept the old size, so the active pill stayed 8px).
+- **Why:** `text/secondary` passes 5.7:1 on white. The hug frame makes the State switch resize correctly. Gap 8 sits between the sources' 6 and 16.
+- **Date:** 2026-10-14

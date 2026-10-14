@@ -619,3 +619,31 @@ go
 
 ### Open questions / next steps
 - Next and last Phase 1 component: Pagination Dots.
+
+---
+## Session 15 — Prompt 13: Pagination Dots — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+### What I did
+- Built page `Pagination Dots`: `Dot` set (Active pill `action/primary`, Inactive dot `text/secondary`, `radius/full`) and the `Pagination Dots` component (5 Dot instances, gap `spacing/8`, booleans `Has dot 4`/`Has dot 5` off).
+- Found and fixed a resizing problem: switching a nested Dot instance's State kept its old size, both with swapComponent and with setProperties, and also after removing the width binding. Restructured each Dot as a hug-content auto-layout frame around a fixed-size "Shape" rectangle; after that, switching State resizes correctly (59 ↔ 8).
+- Added a 3-brand preview (3 dots with the first active; 5 dots with the third active).
+- Wrote `guidelines/components/pagination-dots.md`.
+
+### Changes
+- Repo: `guidelines/components/pagination-dots.md` (new); `docs/decisions.md` (D33); `docs/screenshots/prompt-13-pagination-dots-preview-3-brands.png` (new); `docs/process-log.md`.
+- Figma: page `Pagination Dots` `33:2`: Dot set `33:5` (Active `33:3`, Inactive `33:4`), component `Pagination Dots` `33:6`, preview `33:12`.
+
+### Decisions
+- D33: solid grey inactive dots; hug-frame Dot structure.
+
+### Verification
+- Width read-back after the fix: `Inactive:8 Inactive:8 Active:59 Inactive:8 Inactive:8` in all 3 brand rows.
+- Shape fills, radius and height bound; row gap bound.
+- Preview screenshot: active pill JOY blue / Doritos black / Rockstar black; grey inactive dots.
+
+### Open questions / next steps
+- **All 8 Phase 1 components are now built.** Suggested next steps: a QA pass (`docs/qa-report.md`: binding audit of every component, contrast table, naming check), `guidelines/Guidelines.md` + `guidelines/foundations/*.md` for the Make Kit, then publishing the library.
+- Still open: Accordion hover for Doritos/Rockstar; Ended badge on Doritos-red areas; Primary vs Secondary on dark for Doritos/Rockstar; placeholder icon set; Galano Grotesque license.
