@@ -205,3 +205,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** the newsletter frame's 16/20 padding (52px); the live login's 5/20 (42px).
 - **Why:** Fields and buttons sit side by side (newsletter), so equal heights line up. The live site's login label is sentence case ("E-mail*").
 - **Date:** 2026-10-14
+
+## D29 — Accordion: light background only, open and closed share one background
+
+- **Decision:** Accordion has `Is open` (No/Yes) × `State` (Default, Hover, Focus): 6 variants. There's no Background, Pressed or Disabled. Both open and closed items use `surface/subtle`; the chevron (rotated when open) and the visible answer show the state. Hover colors the question `text/link`. Focus uses the outside ring (D21). The chevron uses `text/link`, as the reference uses JOY blue.
+- **Options considered:** for the open background, the reference's `#F7F7F7` at 50% opacity (no token; it would need a hardcoded paint opacity) or `surface/default` (invisible on white pages). For hover: an underline (needs a separate layer and breaks on multi-line questions) or a color change.
+- **Why:** The FAQ (`18:30918`) only appears on light pages and only shows open and closed. One shared background keeps the token set small, and the open state is still clear.
+- **Date:** 2026-10-14

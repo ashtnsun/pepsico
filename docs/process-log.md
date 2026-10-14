@@ -496,3 +496,37 @@ ok go to next component
 - Error on dark backgrounds relies on the "Error:" text prefix plus a low-contrast red border. An error icon would help once the icon set exists.
 - The light-background default border uses a text token (`text/secondary`) as a stroke. A dedicated `color/border/input` token would read more clearly; that would be an addition.
 - Next component: Accordion (FAQs `18:30918`).
+
+---
+## Session 11 — Prompt 9: Accordion — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+### What I did
+- Read the FAQ reference `18:30918` (screenshot + node read):
+  - closed items `#F4F4F4`, radius 10, padding 0/8; header padding 12;
+  - question Bold 20 `#333`, 16px chevron in `#1443FF` (same shape as the button icon), pointing down when closed and up when open;
+  - open item `#F7F7F7` at 50%, answer Regular 16 `#666`;
+  - items 20px apart.
+- Built page `Accordion` with the `Accordion` component set: 6 variants (Is open × Default/Hover/Focus). Each has a Header (Question in Heading/3 + Chevron instance colored `text/link`, rotated 180° when open), an Answer area (Body/M `text/secondary`, open only) and a Focus ring layer on Focus. Text properties `Question` and `Answer`.
+- Re-applied text fills with resolved fallback colors after linking the properties (the Text Field lesson).
+- Fixed: the variants were stuck at 48px because `resize()` reset their height to fixed. Set them back to hug height and re-ran the layout.
+- Added a backdrop, labels and an `Accordion / Preview` frame (3 brands, each an FAQ block: Heading/1 title + 4 items at 560px, one open, one hovered).
+- Wrote `guidelines/components/accordion.md`.
+
+### Changes
+- Repo: `guidelines/components/accordion.md` (new); `docs/decisions.md` (D29); `docs/screenshots/prompt-9-accordion-*.png` (new); `docs/process-log.md`.
+- Figma: page `Accordion` `27:2`: component set `27:41` (6 variants), backdrop `27:42`, labels `27:43`–`27:48`, preview `27:49`.
+
+### Decisions
+- D29: light background only; open and closed share `surface/subtle`; hover = question in `text/link`.
+
+### Verification
+- Binding audit: 0 issues (padding, radius, header padding and gap, all fills and strokes including the icon fill, text styles).
+- Heights after the fix: closed 48, open 104; focus rings 56 and 112 (stretch with the item).
+- 3-brand preview screenshot: JOY blue chevrons and hover; Doritos and Rockstar black chevrons.
+
+### Open questions / next steps
+- For Doritos and Rockstar, hover only darkens the question from `#333` to near-black, which is hard to see, because their `text/link` is black. Options: an underline on hover (Doritos-sheet style, single-line questions only), or a hover background token. Needs a decision.
+- Next component: Card (Step, Prize, Content).
