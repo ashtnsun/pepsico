@@ -31,3 +31,18 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** (a) these 8 core components; (b) also the page-level patterns (Navbar, Footer, Newsletter, Promo Hero, and others).
 - **Why:** These are the building blocks the current promo pages use most. The larger patterns are built from them, so they move to Phase 2.
 - **Date:** 2026-10-13
+
+## D5 — Inter is the placeholder font until Galano Grotesque is sourced
+
+- **Decision:** Use Inter as a placeholder font family in Figma until Galano Grotesque (the live site's font) is available in the file.
+- **Options considered:** (a) install licensed Galano Grotesque on every editor's machine now; (b) use Inter as a placeholder; (c) pick another fallback font.
+- **Why:** Galano Grotesque isn't available in the AI-Assisted Design System file, and it's a paid font. Inter is free, ships with Figma, and has every weight we might need, so text work can go ahead now.
+- **How to swap later:** keep the font family in one Primitive (for example `font/family/brand`) so replacing Inter means changing one value, not every text style.
+- **Date:** 2026-10-13
+
+## D6 — Existing site screenshots live in references/live-site/
+
+- **Decision:** Move the 13 screenshots from `references/screenshots/` to `references/live-site/`.
+- **Options considered:** (a) keep them in `references/screenshots/`; (b) move them into `references/live-site/`.
+- **Why:** CLAUDE.md says live-site captures go in `references/live-site/`, and having one folder for them is easier to find.
+- **Date:** 2026-10-13

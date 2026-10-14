@@ -92,3 +92,31 @@ Do not create tokens or change anything in Figma yet. Log this session.
 - `references/screenshots/` already has 13 screenshots, but CLAUDE.md says live-site captures go in `references/live-site/`. Should Prompt 0.5 keep these where they are as the team's own captures, or move them?
 - The repo sits inside a OneDrive folder. OneDrive sync can sometimes lock or duplicate files inside `.git/`. If commits start failing, move the repo out of OneDrive or pause syncing.
 - Next is Prompt 0.5: capture the live site with Playwright, which needs Node (installed).
+
+---
+## Session 1 (follow-up) — Prompt 0: Repo setup, answers to open questions — 2026-10-13
+
+### Prompt (verbatim)
+Move the screenshots, use Inter as the plceholder font for now. Commit is fine.
+
+### What I did
+- Moved the 13 screenshots from `references/screenshots/` to `references/live-site/` with `git mv`, so git keeps their history. Removed `references/live-site/.gitkeep` (the folder isn't empty now) and the empty `references/screenshots/` folder.
+- Recorded Inter as the placeholder font (D5) and the screenshot move (D6) in `docs/decisions.md`.
+- Ran a read-only check that Inter is available in the AI-Assisted Design System file. It has 18 styles: Thin, Extra Light, Light, Regular, Medium, Semi Bold, Bold, Extra Bold, Black, and the Italic version of each.
+- Left the commit author as it is (`ashtnsun <ashsun10141@gmail.com>`), as you confirmed.
+
+### Changes
+- Repo: `references/screenshots/*.png` → `references/live-site/*.png`; `docs/decisions.md` (added D5, D6); `docs/process-log.md` (this entry).
+- Figma: no changes.
+
+### Decisions
+- D5: Inter is the placeholder font until Galano Grotesque is sourced. Keep the family in one Primitive so it can be swapped later.
+- D6: Existing site screenshots now live in `references/live-site/`.
+
+### Verification
+- `ls references/live-site` shows all 13 PNGs; `git status` shows them as renames (R), not deletes and adds.
+- The Inter style list came from `figma.listAvailableFontsAsync()`.
+
+### Open questions / next steps
+- Galano Grotesque is still `NEEDS SOURCE`. When a licensed copy is installed, swap the font-family Primitive and re-check text styles for line breaks and widths.
+- Prompt 0.5 also saves captures into `references/live-site/`. Some names could clash with the existing files (for example `home.png`), so new captures should use a prefix or a subfolder (for example `references/live-site/capture/`) rather than overwrite them.
