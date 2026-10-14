@@ -70,3 +70,23 @@ Text tokens can also color icons (they're allowed on shape fills and strokes), b
 - Components use **Theme and Scale tokens only**, never Primitives and never typed-in values.
 - Don't put brand names in Theme token names. Brand names belong in Primitives (`doritos/red/500`).
 - To add or change a token: update the JSON and Figma together, and log the change in `docs/decisions.md`.
+
+## Text styles
+
+Nine local text styles in Figma (Prompt 3). Each style's **font family, size and line height are bound to variables** (`font/family/body`, `font-size/*` and `line-height/*`), so changing a token updates every style. The weight is set on the style itself, because there are no weight tokens.
+
+| Style | Weight | Size / line height | Use for |
+| --- | --- | --- | --- |
+| `Display` | Bold | 60 / 64 | Promo hero title (one per page) |
+| `Heading/1` | Bold | 36 / 40 | Section titles |
+| `Heading/2` | Bold | 24 / 28 | Sub-sections; section titles on mobile |
+| `Heading/3` | Bold | 20 / 24 | Card titles, accordion questions |
+| `Body/L` | Regular | 20 / 24 | Section intros, step text |
+| `Body/M` | Regular | 16 / 20 | Default body, breadcrumb, badges |
+| `Body/S` | Regular | 14 / 18 | Small print (desktop) |
+| `Label` | Semi Bold | 16 / 20, **UPPERCASE** | Buttons, navigation, tabs |
+| `Caption` | Regular | 14 / 16 | Small text on mobile |
+
+Mobile sizes (D14): use Heading/2's size for section titles and Heading/1's size for the hero. These are written guidance, not separate styles.
+
+**Swapping to Galano Grotesque:** change `font/family/brand` to `Galano Grotesque`, then update each style's weight name. Galano uses "SemiBold" (no space), while Inter uses "Semi Bold".

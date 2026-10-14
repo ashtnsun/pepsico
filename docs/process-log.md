@@ -268,3 +268,43 @@ yes go
 ### Open questions / next steps
 - Expected token additions when building Button (they'll need approval then): outline/link pressed text on light backgrounds for Doritos (the sheet uses red there), and a border for outline buttons on dark backgrounds (white).
 - Next: text styles (Display … Caption) bound to the font family, size and line-height variables. Inter weight names ("Semi Bold") differ from Galano's ("SemiBold"), so swapping the font later means updating the styles too.
+
+---
+## Session 5 — Prompt 3: Text styles — 2026-10-14
+
+### Prompt (verbatim)
+yes go
+
+(In reply to: "Next step: create the 9 text styles (Display through Caption) and bind them to the font and size variables.")
+
+### What I did
+- Checked the Plugin API: `TextStyle.setBoundVariable` supports `fontFamily`, `fontSize` and `lineHeight`.
+- Created 9 local text styles in the AI-Assisted Design System file in one write, using Inter as the placeholder (D5), with values from audit §6.3 and decisions D12–D14:
+  - Display, Heading/1–3: Bold 60/64, 36/40, 24/28, 20/24
+  - Body/L, Body/M, Body/S: Regular 20/24, 16/20, 14/18
+  - Label: Semi Bold 16/20, UPPERCASE
+  - Caption: Regular 14/16
+  - Letter spacing 0 on all.
+- Bound every style's font family to Theme `font/family/body`, its size to `font-size/*` and its line height to `line-height/*`. Added a plain-English description to each style.
+- Rendered a temporary type specimen in all 3 Theme modes, took a screenshot, and removed it in the same script.
+- Added a "Text styles" section to `docs/tokens.md`.
+
+### Changes
+- Repo: `docs/tokens.md`, `docs/screenshots/prompt-3-text-styles-check.png` (new), `docs/process-log.md`.
+- Figma: 9 text styles:
+  - Display `S:d4432c31…`, Heading/1 `S:cafded9f…`, Heading/2 `S:690ec942…`, Heading/3 `S:ce62b5a3…`
+  - Body/L `S:8dbefbb0…`, Body/M `S:e1ac390d…`, Body/S `S:623b2d12…`
+  - Label `S:fd9baff3…`, Caption `S:aedac814…`
+  - The canvas is still empty (temporary specimen `8:11` removed).
+
+### Decisions
+- None new. Font weight stays a fixed style name on each text style; there are no weight tokens in the architecture.
+
+### Verification
+- The write returned each style's bound variables: all 9 have family → `font/family/body`, and size and line height → the matching Scale variables.
+- Screenshot `docs/screenshots/prompt-3-text-styles-check.png`: all 9 styles in JOY, Doritos and Rockstar, with correct sizes, Label uppercase and nothing clipped. The font is identical across modes, as expected, since every mode points to the same font Primitive.
+- `pageChildren: 0` after cleanup.
+
+### Open questions / next steps
+- Text styles aren't in `tokens/*.json`; the three JSON files cover variables only. If Make or code needs typography tokens, we could add DTCG `typography` composite tokens. That would be an addition, so ask first.
+- Next: components, starting with Button (it needs the 2 extra tokens noted in Session 4).
