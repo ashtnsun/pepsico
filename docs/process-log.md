@@ -678,3 +678,40 @@ yes
 - The 6 open issues in `docs/qa-report.md`.
 - Housekeeping: rename or delete the empty "Page 1".
 - Next: Make Kit docs (`guidelines/Guidelines.md`, `guidelines/foundations/*.md`), then publish the library.
+
+---
+## Session 17 — Prompt 15: Make Kit docs + publishing steps — 2026-10-14
+
+### Prompt (verbatim)
+go next steps
+
+(Next steps from Session 16: Make Kit docs, then publish the library.)
+
+### What I did
+- Generated the CSS custom properties from `tokens/*.json` with a script: `:root` = JOY + Scale; `[data-brand="doritos"]` and `[data-brand="rockstar"]` contain only the colors that differ, each line commented with its source Primitive. Wrote them to `guidelines/foundations/tokens.md`.
+- Wrote `guidelines/Guidelines.md`, the entry point for Figma Make:
+  - files to read;
+  - how brands are set (`data-brand`);
+  - the component index with when to use each;
+  - a typical promotion page order (from the reference frames);
+  - global rules (tokens only, text styles only, Background Light/Dark, accessibility, Ended promotions, plain language, 1440/390 widths).
+- Wrote `guidelines/foundations/color.md` (roles, safe text/background pairs, rules), `typography.md` (9 styles as CSS `font` shorthands, mobile sizes) and `spacing-and-shape.md` (spacing uses, radius, borders, focus, disabled, layout).
+- Checked a layout claim before keeping it: mobile side padding is 16 in the reference (FAQ, newsletter; 24 in the navbar). Corrected it from 20.
+- Validated every `var(--…)` in all guideline files against the generated CSS: 60 variables defined, 0 bad references.
+- Publishing can only be done in the Figma app, so I added step-by-step publishing and Make Kit instructions to `README.md` instead of publishing.
+
+### Changes
+- Repo: `guidelines/Guidelines.md`, `guidelines/foundations/tokens.md`, `color.md`, `typography.md`, `spacing-and-shape.md` (new; removed `guidelines/foundations/.gitkeep`); `README.md`; `docs/process-log.md`.
+- Figma: no changes (one read-only check of mobile frame `18:4619` in the Sponsor Files).
+
+### Decisions
+- None new. CSS brand switching uses a `data-brand` attribute, the code equivalent of the Theme modes.
+
+### Verification
+- The generated CSS matches the token JSON (which QA showed matches Figma).
+- Reference check: 0 unknown variables across `Guidelines.md`, 4 foundation files and 8 component files.
+
+### Open questions / next steps
+- Publish the library (README steps) — needs a person in Figma.
+- Build the Make Kit from the library and attach `guidelines/`; run the test prompt in the README.
+- The 6 open decisions in `docs/qa-report.md`; Page 1 cleanup.

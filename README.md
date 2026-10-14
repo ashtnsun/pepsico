@@ -15,3 +15,16 @@ A themeable design system for JOY by PepsiCo, the cross-brand rewards and promot
 | `tokens/` | Design tokens as W3C DTCG JSON (`primitives.json`, `theme.json`, `scale.json`). |
 | `guidelines/` | Instructions for Figma Make (an AI) on how to rebuild each foundation and component in code. |
 | `docs/` | Process log, decisions, audit, token docs, QA report, screenshots. |
+
+## Publishing the library and building the Make Kit
+
+Publishing has to be done by a person in the Figma app; the API can't publish.
+
+1. Open the [AI-Assisted Design System](https://www.figma.com/design/AJ0GKjFjDNvEsD4MfdyZaN/AI-Assisted-Design-System) file. Optionally rename or delete the empty "Page 1" first (see `docs/qa-report.md`).
+2. Open the **Assets** panel → **Library** icon (book) → **Publish**.
+3. Check the list:
+   - Collections `2. Theme` and `3. Scale`, the 9 text styles, and the components Button, Icon Button, Text Field, Accordion, Card, Badge, Breadcrumb, Breadcrumb Item, Pagination Dots, Dot and Icon/Chevron Down.
+   - `1. Primitives` should not be listed; it's hidden from publishing on purpose.
+4. Add a short description, e.g. "Phase 1: tokens, type, 8 components", and publish.
+5. In **Figma Make**, create a Make Kit from the published library, then add the files from `guidelines/` to the kit's guidelines: `Guidelines.md` first, then `foundations/` and `components/`.
+6. Test: ask Make for "a Doritos promotion page with steps, prizes and FAQ" and check that it uses `var(--…)` tokens and `data-brand="doritos"`.
