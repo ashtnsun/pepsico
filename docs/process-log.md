@@ -458,3 +458,41 @@ the brand themes section needs more work, I dont like the way its structured, so
 
 ### Open questions / next steps
 - Text Field proposal still waiting for approval.
+
+---
+## Session 10 — Prompt 8: Text Field — 2026-10-14
+
+### Prompt (verbatim)
+ok go to next component
+
+(Taken as approval of the Text Field proposal from Sessions 7–9.)
+
+### What I did
+- Read the live site's login form (captured in Prompt 0.5) for a light-background input: white pill, 1px `#9B9B9B` border (2.7:1, too faint), padding 5/20, sentence-case label "E-mail*" above.
+- Added Theme token `color/feedback/error` (`VariableID:23:2`, `joy/red/600` in all modes) to Figma and `tokens/theme.json` (Theme now has 29).
+- Built page `Text Field` with the `Text Field` component set: 10 variants (Background × Default/Hover/Focus/Error/Disabled). Each has a Label (Body/M), a Field (pill, 12/20 padding, 2px border, Focus ring layer on Focus), Text (Body/M) and Helper text (Caption). Properties: `Label`, `Text`, `Helper text` (text), `Has label`, `Has helper text` (boolean).
+- Problems found and fixed:
+  1. The first build failed when wiring properties by searching for layers by name. It rolled back; I rebuilt keeping direct references to each layer.
+  2. Text colors showed as black/dark even though the bindings were correct. The paints carried a black fallback color, which the renderer showed after the text properties were linked. I re-applied every text paint with the variable's resolved value as its fallback, and the render then matched.
+- Added backdrops, labels and a `Text Field / Preview` frame with all 3 brands (Default, Focus, Error on light and dark).
+- Updated the Foundations Brand themes board: added an `error` row to the Feedback card.
+- Wrote `guidelines/components/text-field.md`; updated `docs/tokens.md`.
+
+### Changes
+- Repo: `tokens/theme.json`; `guidelines/components/text-field.md` (new); `docs/tokens.md`; `docs/decisions.md` (D27, D28); `docs/screenshots/prompt-8-text-field-*.png` (new); `docs/process-log.md`.
+- Figma:
+  - Variable `color/feedback/error` `VariableID:23:2`.
+  - Page `Text Field` `25:2`: component set `25:55` (10 variants), backdrops `25:56` and `25:57`, labels `25:58`–`25:64`, preview `25:65`.
+  - Foundations board `22:2`: new row `25:174`.
+
+### Decisions
+- D27: Text Field states and error token. D28: 44px height and Body/M label.
+
+### Verification
+- Per-variant text color read-back matched the spec. The binding audit of all 10 variants found 0 issues (padding, gap, radius, stroke weight, opacity, every fill/stroke bound, all text styled).
+- Screenshots: the variant grid after the color fix, and the 3-brand preview (`prompt-8-text-field-preview-3-brands.png`). Focus rings use each brand's focus color, Error is red on light, and helper text is white on dark.
+
+### Open questions / next steps
+- Error on dark backgrounds relies on the "Error:" text prefix plus a low-contrast red border. An error icon would help once the icon set exists.
+- The light-background default border uses a text token (`text/secondary`) as a stroke. A dedicated `color/border/input` token would read more clearly; that would be an addition.
+- Next component: Accordion (FAQs `18:30918`).

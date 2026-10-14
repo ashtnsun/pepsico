@@ -584,6 +584,29 @@
             }
           }
         }
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{joy.red.600}",
+        "$description": "Error borders, error text and error icons on light backgrounds (7.03:1 on white). Not readable on surface/inverse; use text/on-inverse there (Prompt 8).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-feedback-error)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.red.600}",
+              "Doritos": "{joy.red.600}",
+              "Rockstar": "{joy.red.600}"
+            }
+          }
+        }
       }
     }
   },

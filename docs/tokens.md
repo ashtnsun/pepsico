@@ -12,7 +12,7 @@ Built 2026-10-14 (Prompt 2). Values come from `docs/audit.md` §6 and decisions 
 | Collection | Modes | What's in it | Who uses it |
 | --- | --- | --- | --- |
 | `1. Primitives` | Value | 20 raw colors + 1 font family. Hidden from publishing. | Only the Theme collection. **Never use a Primitive in a component.** |
-| `2. Theme` | **JOY** (default), Doritos, Rockstar | 27 color roles + 1 font family (3 added for Button in Prompt 4). Every value points to a Primitive. | Components (colors, font) |
+| `2. Theme` | **JOY** (default), Doritos, Rockstar | 28 color roles + 1 font family (3 added for Button in Prompt 4, 1 for Text Field in Prompt 8). Every value points to a Primitive. | Components (colors, font) |
 | `3. Scale` | Value | 31 numbers: spacing, radius, border width, font size, line height, opacity | Components (sizes) |
 
 Switching a frame's `2. Theme` mode from JOY to Doritos or Rockstar re-colors everything inside it. Scale values are the same for every brand.
@@ -50,6 +50,7 @@ In code, each variable becomes a CSS custom property: slashes become hyphens, e.
 | `color/brand/accent` | `#75DEF2` | `#FA7115` | `#B64F9B` | Decoration. Never text on light surfaces. |
 | `color/feedback/active` | `#EBFF40` | same | same | Active badge |
 | `color/feedback/expired` | `#B21119` | same | same | Ended badge |
+| `color/feedback/error` | `#B21119` | same | same | Error borders and messages on light backgrounds (Prompt 8) |
 
 Text tokens can also color icons (they're allowed on shape fills and strokes), because icon color always comes from a text token.
 

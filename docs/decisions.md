@@ -186,3 +186,22 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** (a) the single long frame from D25; (b) separate, lighter boards.
 - **Why:** The user found the first version too dense. Brand themes now shows swatches only (no hex, alias or description), aligned across the 3 brands; hex values live only on the Primitives board. Everything is still bound to the real variables and styles.
 - **Date:** 2026-10-14
+
+## D27 — Text Field: derived states, new error token
+
+- **Decision:** Text Field has `Background` (Light/Dark) × `State` (Default, Hover, Focus, Error, Disabled). It has no Pressed state, since fields don't have one. New token `color/feedback/error` → `joy/red/600` `#B21119` for all brands.
+  - **Light:** white field with a `text/secondary` border (5.7:1); hover and focus use `border/action`.
+  - **Dark:** transparent field with the sourced `#EDEDED` border.
+  - **Focus:** the outside ring (D21).
+  - **Error:** red border; red helper text on light, white helper text starting with "Error:" on dark.
+  - **Disabled:** 30% opacity.
+- **Options considered:** for the light border: `#EDEDED` (1.17:1) or the live site's `#9B9B9B` (2.7:1), both below the 3:1 rule for field borders, versus `text/secondary`. For error on dark: red text (about 1.3:1 on JOY blue) versus white text with an "Error:" prefix.
+- **Why:** The user approved the proposal ("ok go to next component"). The only sourced field is the dark newsletter input (`18:30938`); everything else is DERIVED from existing tokens and contrast rules.
+- **Date:** 2026-10-14
+
+## D28 — Text Field sizing and label style
+
+- **Decision:** Field padding is 12/20, so the field is 44px tall and matches Button. The label uses the `Body/M` style in sentence case, not the uppercase `Label` style. The default width is 320 in Figma; it fills its column in code.
+- **Options considered:** the newsletter frame's 16/20 padding (52px); the live login's 5/20 (42px).
+- **Why:** Fields and buttons sit side by side (newsletter), so equal heights line up. The live site's login label is sentence case ("E-mail*").
+- **Date:** 2026-10-14
