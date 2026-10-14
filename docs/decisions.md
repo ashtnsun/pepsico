@@ -179,3 +179,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** (a) a static picture; (b) a page built from bound samples.
 - **Why:** Requested by the user. Bound samples keep the page correct when tokens change. Hex values and alias names are typed text, so re-run the page build if Primitive values change.
 - **Date:** 2026-10-14
+
+## D26 — Foundations page redesigned as separate boards (replaces D25 layout)
+
+- **Decision:** The Foundations page is six separate boards in one left-to-right row: 00 Cover, 01 Brand themes, 02 Primitives, 03 Typography, 04 Spacing, 05 Shape. Each board has a small eyebrow, a title, one sentence, and visual samples. There are no long description tables.
+- **Options considered:** (a) the single long frame from D25; (b) separate, lighter boards.
+- **Why:** The user found the first version too dense. Brand themes now shows swatches only (no hex, alias or description), aligned across the 3 brands; hex values live only on the Primitives board. Everything is still bound to the real variables and styles.
+- **Date:** 2026-10-14

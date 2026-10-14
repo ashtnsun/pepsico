@@ -397,3 +397,33 @@ go, I also want a foundations page that visualyl shows all the cariables/stytles
 - Still open: should Doritos/Rockstar Primary (and Icon Button) on dark backgrounds differ from Secondary?
 - Hex values and alias names on the Foundations page are typed text. If a Primitive value changes, regenerate that section.
 - Next component: Text Field (newsletter input `18:30938`). Only Default exists in the sources; hover, focus, error, disabled, label and helper text will be DERIVED and need approval.
+
+---
+## Session 8 — Prompt 6: Foundations page redesign — 2026-10-14
+
+### Prompt (verbatim)
+the foundations page needs to be structured more nicely, more aesthetically, less cognitively demanding, theres so much information on it right nnow. Different sections should be separate frames in the canvas, not jsut one big list of the secitons. Make it look nice, maybe even style it a little bit.
+
+### What I did
+- Removed the old single frame `14:3` (which I made in Session 7). The first attempt failed on a sizing-order bug and was rolled back automatically; I checked the canvas before retrying.
+- Set a light grey page canvas and built 6 separate boards (1200px wide, white, `radius/card`, 120px apart in one row). Each board has an eyebrow, a title and one sentence, and reduces text to the minimum:
+  - **00 Cover** `17:7`: JOY-blue header band (`surface/inverse`) with the Display title, "On this page" index cards for the 5 boards, and brand chips (each chip in its own mode, filled with `brand/primary`).
+  - **01 Brand themes** `18:2`: a legend column of short token names grouped by role, and three brand columns (each in its own mode) with color-only tiles aligned row by row. A one-line footnote explains full names and CSS variables.
+  - **02 Primitives** `18:270`: one row of 104px tiles per family, each with a short name and hex, plus a font card.
+  - **03 Typography** `18:394`: a type specimen with small meta on the left and the sample in each style.
+  - **04 Spacing** `19:2`: squares sized by the spacing tokens (width and height bound), plus a short "Common uses" card.
+  - **05 Shape** `19:44`: radius tiles, border-width samples and opacity samples, each with a 3-word use.
+- All layout, colors and text on the boards use Theme/Scale tokens and the text styles.
+
+### Changes
+- Repo: `docs/screenshots/prompt-5-foundations-page.png` (replaced with an overview of the new boards), `docs/decisions.md` (D26), `docs/process-log.md`.
+- Figma: page `Foundations` `14:2`: removed `14:3`; added boards `17:7`, `18:2`, `18:270`, `18:394`, `19:2`, `19:44`.
+
+### Decisions
+- D26: Foundations is now 6 separate, lighter boards.
+
+### Verification
+- Screenshot of every board after it was built, plus a page overview. Text isn't clipped, the brand columns line up with the legend rows, the swatches resolve per mode, and the spacing and radius samples render at their token values.
+
+### Open questions / next steps
+- Text Field proposal (from Session 7) is still waiting for approval: derived hover/focus/error/disabled states, a new error token.
