@@ -564,3 +564,30 @@ go
 - The reference's curved two-tone prize artwork and the step-circle drop shadow were left out (no tokens). Add them back as image artwork per campaign if wanted.
 - Accordion hover visibility for Doritos/Rockstar (Session 11) is still open.
 - Next component: Badge (Active / Expired).
+
+---
+## Session 13 — Prompt 11: Badge — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+### What I did
+- Built page `Badge` with the `Badge` component set: `Status=Active` (green `feedback/active`, dark-blue text, "Active") and `Status=Expired` (red `feedback/expired`, white text, "Ended"). Pill with padding `spacing/8`/`spacing/16` and `radius/full`; label in Body/M with a resolved-fallback bound fill.
+- Added a backdrop and a `Badge / Preview` frame: each brand, on the page surface and on `brand/primary`.
+- Wrote `guidelines/components/badge.md`.
+
+### Changes
+- Repo: `guidelines/components/badge.md` (new); `docs/decisions.md` (D31); `docs/screenshots/prompt-11-badge-preview-3-brands.png` (new); `docs/process-log.md`.
+- Figma: page `Badge` `30:2`: component set `30:7` (Active `30:3`, Expired `30:5`), backdrop `30:8`, preview `30:9`.
+
+### Decisions
+- D31: two statuses with fixed words; source is the Ended pill in the redesign.
+
+### Verification
+- Audit: fills, text fill, padding and radius are bound, and the label uses Body/M (0 issues). Both badges are 36px tall.
+- Preview screenshot in all 3 brands: readable everywhere, but the red Ended pill blends into the Doritos-red background.
+
+### Open questions / next steps
+- Ended badge on Doritos-red areas: add a white border, or keep badges off brand-red areas (rule written in the guideline for now)?
+- Accordion hover for Doritos/Rockstar is still open.
+- Next component: Breadcrumb (`18:4472`).

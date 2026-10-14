@@ -219,3 +219,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** keep the reference's yellow/amber two-tone prize artwork with its curved split and drop shadow; theme with brand primary + accent (accent fails with text in some brands).
 - **Why:** The reference colors belong to one Lay's campaign. The live site uses brand-colored circles (Doritos red) with white text. Separate text properties avoid the shared-formatting problem (D22).
 - **Date:** 2026-10-14
+
+## D31 — Badge: two statuses with fixed labels, no text property
+
+- **Decision:** `Badge` has `Status` = Active ("Active", `feedback/active` + `text/on-feedback-active`) or Expired ("Ended", `feedback/expired` + `text/on-feedback-expired`). It follows the Ended pill from `18:4704`: padding 8/16, `radius/full`, Body/M, 36px tall. There's no text property; each variant keeps its own word (overridable on an instance).
+- **Options considered:** a shared `Label` text property (would show the same default word on both statuses); the live site's white corner tab (`brand-teaser-badge`), which looks identical for active and ended promos.
+- **Why:** The Figma redesign is the source, and the research problem was that ended promos look active, so each status needs its own fixed look and word.
+- **Date:** 2026-10-14
