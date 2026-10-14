@@ -123,3 +123,45 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** (a) one file per brand; (b) one file with modes in `$extensions`.
 - **Why:** CLAUDE.md names a single `theme.json`, and one file keeps the three brands side by side so differences are easy to review.
 - **Date:** 2026-10-14
+
+## D18 — Three Theme tokens added for Button
+
+- **Decision:** Add `color/text/link-pressed` (JOY `#1443FF`, Doritos `#E31722`, Rockstar `#000000`), `color/text/on-action-inverse-pressed` (JOY `#0024B5`, Doritos `#FA7115`, Rockstar `#B64F9B`) and `color/border/action-inverse` (white for all brands).
+- **Options considered:** reuse existing tokens. That would make JOY's pressed label on a white button disappear, and Doritos outline/link buttons would turn orange on white, which fails contrast.
+- **Why:** These are needed to match the Doritos CTA spec states without invented colors. The user approved all three.
+- **Date:** 2026-10-14
+
+## D19 — Primary hover underlines the label for every brand
+
+- **Decision:** On hover, the Primary button's label is underlined for JOY, Doritos and Rockstar. JOY also darkens to `#0E38DF`.
+- **Options considered:** (a) underline for all brands; (b) no underline anywhere.
+- **Why:** Figma can't switch an underline on and off per brand mode, so we had to pick one behavior. Underlining matches the outline button's hover in the Doritos sheet. Chosen by the user.
+- **Date:** 2026-10-14
+
+## D20 — Placeholder chevron icon until an icon set is chosen
+
+- **Decision:** Create one `Icon/Chevron Down` component (16 px) on an `Icons` page, using the arrow shape from the Doritos sheet (`18:24504`). Button has swappable left/right icon slots, off by default.
+- **Options considered:** (a) placeholder icon; (b) no icons until the set is chosen.
+- **Why:** Lets us build and test the icon slots now; swapping in the real set later doesn't change the Button. Chosen by the user.
+- **Date:** 2026-10-14
+
+## D21 — Focus ring sits outside the button
+
+- **Decision:** Focus is a 2px ring 2px outside the button (CSS `outline` + `outline-offset: 2px`), colored `color/border/focus` (light background) or `color/border/focus-inverse` (dark background).
+- **Options considered:** (a) recolor the button's own border, as the Doritos sheet draws it; (b) an outside ring.
+- **Why:** An inside ring disappears on JOY's white button on dark backgrounds (white ring on white) and is weak on JOY blue (about 2.8:1). An outside ring is measured against the page background, so it passes in every brand. It also gives text links a focus indicator, which the sheet lacks (D10).
+- **Date:** 2026-10-14
+
+## D22 — In Figma, underlines are a separate layer
+
+- **Decision:** Button labels use no text decoration in Figma. A 1.5px "Underline" layer, colored with the label's token, is shown on the variants that need it. Code uses `text-decoration: underline`.
+- **Options considered:** (a) text decoration plus a shared `Label` text property; (b) text decoration with no text property; (c) an underline layer plus the text property.
+- **Why:** Tested in Prompt 4: Figma copies text formatting across every variant that shares a text property, so underlines can't differ per variant with option (a). Option (c) keeps the easy-to-edit Label property.
+- **Date:** 2026-10-14
+
+## D23 — Button has one size (44px) and no Size property
+
+- **Decision:** Button is a single size: padding 12/20 with the Label line height of 20 gives a 44px height. There's no `Size` variant property.
+- **Options considered:** (a) one size; (b) invent Small/Medium/Large.
+- **Why:** Every source shows one size: JOY frames 44px, the Doritos sheet 42px (its line height is 18). Extra sizes would be invented values. Can be added later if designs need them.
+- **Date:** 2026-10-14

@@ -12,7 +12,7 @@ Built 2026-10-14 (Prompt 2). Values come from `docs/audit.md` §6 and decisions 
 | Collection | Modes | What's in it | Who uses it |
 | --- | --- | --- | --- |
 | `1. Primitives` | Value | 20 raw colors + 1 font family. Hidden from publishing. | Only the Theme collection. **Never use a Primitive in a component.** |
-| `2. Theme` | **JOY** (default), Doritos, Rockstar | 24 color roles + 1 font family. Every value points to a Primitive. | Components (colors, font) |
+| `2. Theme` | **JOY** (default), Doritos, Rockstar | 27 color roles + 1 font family (3 added for Button in Prompt 4). Every value points to a Primitive. | Components (colors, font) |
 | `3. Scale` | Value | 31 numbers: spacing, radius, border width, font size, line height, opacity | Components (sizes) |
 
 Switching a frame's `2. Theme` mode from JOY to Doritos or Rockstar re-colors everything inside it. Scale values are the same for every brand.
@@ -33,6 +33,8 @@ In code, each variable becomes a CSS custom property: slashes become hyphens, e.
 | `color/text/on-action-pressed` | white | `#FA7115` | `#B64F9B` | Label on a filled button while pressed |
 | `color/text/on-action-inverse` | `#1443FF` | white | white | Label on a filled button placed on a dark band |
 | `color/text/link` | `#1443FF` | `#030303` | `#000000` | Text links, tertiary buttons |
+| `color/text/link-pressed` | `#1443FF` | `#E31722` | `#000000` | Outline / text-link label while pressed (light background) |
+| `color/text/on-action-inverse-pressed` | `#0024B5` | `#FA7115` | `#B64F9B` | Filled button on a dark band, label while pressed |
 | `color/text/on-feedback-active` | `#0A0F36` | same | same | Text on the Active badge |
 | `color/text/on-feedback-expired` | white | same | same | Text on the Ended badge |
 | `color/action/primary` | `#1443FF` | `#030303` | `#000000` | Filled button background |
@@ -41,6 +43,7 @@ In code, each variable becomes a CSS custom property: slashes become hyphens, e.
 | `color/action/inverse` | white | `#030303` | `#000000` | Filled button on a dark band |
 | `color/border/default` | `#EDEDED` | same | same | Inputs, dividers |
 | `color/border/action` | `#1443FF` | `#030303` | `#000000` | Outline button border |
+| `color/border/action-inverse` | white | white | white | Button border on a dark band |
 | `color/border/focus` | `#0A0F36` | `#E31722` | `#B64F9B` | Focus ring on light backgrounds |
 | `color/border/focus-inverse` | white | `#FA7115` | `#B64F9B` | Focus ring on dark backgrounds |
 | `color/brand/primary` | `#1443FF` | `#E31722` | `#000000` | Brand areas (step circles). Not buttons. |

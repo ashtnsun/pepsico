@@ -308,3 +308,55 @@ yes go
 ### Open questions / next steps
 - Text styles aren't in `tokens/*.json`; the three JSON files cover variables only. If Make or code needs typography tokens, we could add DTCG `typography` composite tokens. That would be an addition, so ask first.
 - Next: components, starting with Button (it needs the 2 extra tokens noted in Session 4).
+
+---
+## Session 6 — Prompt 4: Button — 2026-10-14
+
+### Prompt (verbatim)
+yes go
+
+(In reply to: "Should I add those two tokens and build Button?" Then three answers via a question prompt: add a 3rd token `color/text/on-action-inverse-pressed`; underline Primary hover for all brands; use a placeholder chevron icon.)
+
+### What I did
+- Asked 3 blocking questions before building (third token, hover underline, icons) and recorded the answers (D18–D20).
+- Added 3 Theme tokens in Figma and JSON: `color/text/link-pressed`, `color/text/on-action-inverse-pressed`, `color/border/action-inverse`. Theme now has 28 variables.
+- Read the arrow icon geometry from the Doritos sheet (`18:24504`) and created the placeholder `Icon/Chevron Down` (16px, fill bound to `color/text/default`) on a new `Icons` page.
+- Tested three API behaviors before building, using temporary nodes removed in the same script:
+  - underlining a label keeps its text style;
+  - stroke weight can be bound to a variable;
+  - shadow color and spread can be bound to variables.
+- Built the `Button` component set on a new `Button` page: 30 variants (Variant Primary/Secondary/Tertiary × Background Light/Dark × State Default/Hover/Pressed/Focus/Disabled). Fills, strokes, stroke weight, radius, padding, gap and opacity are bound to tokens, and the label uses the Label text style.
+- Fixed four problems found in screenshots and reads:
+  1. Buttons were 48px instead of 44: Figma counted the 2px border in the layout. Turned that off; all are now 44px.
+  2. Focus shadows didn't render (Figma ignores shadow spread without clipping, and drops shadows on frames with no fill). Replaced them with an absolute "Focus ring" layer (D21).
+  3. The preview rows clipped the focus rings. Turned off clipping in the preview frames.
+  4. Underlines spread to every variant: Figma copies text formatting across all layers linked to the same text property (confirmed with a diagnostic). Switched to an "Underline" layer per variant (D22).
+- Added component properties: `Label` (text), `Has left icon` / `Has right icon` (boolean, off), `Left icon` / `Right icon` (instance swap, default `Icon/Chevron Down`).
+- Added documentation aids on the page: state and row labels, Light/Dark backdrops bound to the surface tokens, and a `Button / Preview` frame with instances of every state in JOY, Doritos and Rockstar on both backgrounds, plus an icon example.
+- Wrote `guidelines/components/button.md` for Figma Make. Updated `docs/tokens.md`.
+
+### Changes
+- Repo: `tokens/theme.json` (28 tokens); `guidelines/components/button.md` (new; removed `.gitkeep`); `docs/tokens.md`; `docs/decisions.md` (D18–D23); `docs/screenshots/prompt-4-button-preview-3-brands.png`, `prompt-4-button-joy-detail.png` (new); `docs/process-log.md`.
+- Figma:
+  - Theme variables `VariableID:9:2` (`text/link-pressed`), `9:3` (`text/on-action-inverse-pressed`), `9:4` (`border/action-inverse`).
+  - Page `Icons` `10:4` with component `Icon/Chevron Down` `10:5`.
+  - Page `Button` `11:2`:
+    - Component set `Button` `11:183` (30 variants, `11:3`…).
+    - Focus ring layers `11:197`–`11:202`.
+    - Backdrops `11:184` (dark) and `11:196` (light).
+    - Labels `11:185`–`11:195`.
+    - Preview frame `11:203` (columns `11:204` JOY, `11:356` Doritos, `11:504` Rockstar).
+
+### Decisions
+- D18 three Button tokens · D19 Primary hover underlines for all brands · D20 placeholder chevron icon · D21 focus ring outside the button · D22 underline drawn as a layer in Figma · D23 one 44px size, no Size property.
+
+### Verification
+- Structural audit of all 30 variants: 0 issues. Every solid fill and stroke is bound to a variable, padding, gap, radius, stroke weight and disabled opacity are bound, all text uses a style, and there are no default layer names.
+- Property check: every label is linked to `Label`, the icons to the boolean and swap properties, and all heights are 44px.
+- Underline check: on a temporary instance labeled "Terms and conditions", the underline width matched the label (201px). Instance removed.
+- Screenshots: the full preview in all 3 brands (`prompt-4-button-preview-3-brands.png`) and the JOY detail at 1.2× (`prompt-4-button-joy-detail.png`). All states, focus rings and underlines match the spec table.
+
+### Open questions / next steps
+- On dark backgrounds, Doritos and Rockstar Primary look the same as Secondary (black fill vs transparent on black, both with white borders). The Doritos sheet draws it this way, and it's noted in the audit. Should Primary on dark use a different fill for these brands (for example white, like JOY)?
+- The placeholder icon needs replacing once the team chooses an outline icon set.
+- Next component: Icon Button (48px round; sheet `18:16854`).

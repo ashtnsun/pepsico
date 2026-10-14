@@ -199,6 +199,28 @@
           }
         }
       },
+      "on-action-inverse-pressed": {
+        "$type": "color",
+        "$value": "{joy.blue.700}",
+        "$description": "Label on a filled button on a dark background while pressed (Prompt 4).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-action-inverse-pressed)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.700}",
+              "Doritos": "{doritos.orange.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      },
       "link": {
         "$type": "color",
         "$value": "{joy.blue.500}",
@@ -216,6 +238,28 @@
             "modes": {
               "JOY": "{joy.blue.500}",
               "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "link-pressed": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Outline and text-link button labels while pressed, on light surfaces. Doritos uses red because orange fails on white (Prompt 4).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-link-pressed)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.red.500}",
               "Rockstar": "{rockstar.black.900}"
             }
           }
@@ -389,6 +433,26 @@
               "JOY": "{joy.blue.500}",
               "Doritos": "{doritos.dark.900}",
               "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "action-inverse": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Button border on dark backgrounds (Prompt 4).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-border-action-inverse)"
+            },
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
             }
           }
         }
