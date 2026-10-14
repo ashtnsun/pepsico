@@ -591,3 +591,31 @@ go
 - Ended badge on Doritos-red areas: add a white border, or keep badges off brand-red areas (rule written in the guideline for now)?
 - Accordion hover for Doritos/Rockstar is still open.
 - Next component: Breadcrumb (`18:4472`).
+
+---
+## Session 14 — Prompt 12: Breadcrumb — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+### What I did
+- Built page `Breadcrumb`:
+  - `Breadcrumb Item` set (Default, Hover with underline layer, Focus with ring, Current using the Label style).
+  - Found that setting uppercase on a Body/M node **detaches the text style** (the audit returned style: none). Re-applied Body/M and typed the link text in capitals, like the reference.
+  - `Breadcrumb` component: bar with Home + Level 2/3/4 groups (separator "/" + item) + Current page; booleans `Has level 2` (on), `Has level 3` (on), `Has level 4` (off); top border bound to `border-width/thin` and `border/action`.
+- Added a 3-brand preview at 1000px wide.
+- Wrote `guidelines/components/breadcrumb.md`.
+
+### Changes
+- Repo: `guidelines/components/breadcrumb.md` (new); `docs/decisions.md` (D32); `docs/screenshots/prompt-12-breadcrumb-preview-3-brands.png` (new); `docs/process-log.md`.
+- Figma: page `Breadcrumb` `31:2`: item set `31:17` (Default `31:3`, Hover `31:6`, Focus `31:10`, Current `31:14`), backdrop `31:18`, component `Breadcrumb` `32:2`, preview `32:26`.
+
+### Decisions
+- D32: item + bar structure; current page uses Label; typed capitals for links.
+
+### Verification
+- Audit: 0 issues (all fills and strokes bound, every text styled, including all item variants after the fix). Bar height 36px.
+- Preview screenshot: matches `18:4472` (HOME / BRANDS / DORITOS / **LAS VEGAS WRAP**); the top border is JOY blue or black per brand.
+
+### Open questions / next steps
+- Next and last Phase 1 component: Pagination Dots.

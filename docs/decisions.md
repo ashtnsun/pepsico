@@ -226,3 +226,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** a shared `Label` text property (would show the same default word on both statuses); the live site's white corner tab (`brand-teaser-badge`), which looks identical for active and ended promos.
 - **Why:** The Figma redesign is the source, and the research problem was that ended promos look active, so each status needs its own fixed look and word.
 - **Date:** 2026-10-14
+
+## D32 — Breadcrumb: item component + bar with optional levels; current page uses the Label style
+
+- **Decision:** Two components. `Breadcrumb Item` has `State` = Default / Hover (underline layer) / Focus (ring) / Current. `Breadcrumb` is a 1440px bar (`surface/default`, 1px `border/action` top border, padding 8/40, gap 12) with Home, `Has level 2/3/4` booleans and the current page. Links use Body/M with the text typed in capitals; the current page uses `Label` (Semi Bold, uppercase). There are no text properties; edit the text on each instance.
+- **Options considered:** a new "Body/M Bold" text style to match the reference's Bold exactly; setting uppercase on Body/M (tested: this detaches the text style); the live site's blue bar with white text.
+- **Why:** The Figma frame `18:4472` wins over the live site. The Semi Bold `Label` gives the current-page emphasis CLAUDE.md asks for without adding a style. Text properties would share formatting across Regular and Semi Bold variants (D22).
+- **Date:** 2026-10-14
