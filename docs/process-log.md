@@ -647,3 +647,34 @@ go
 ### Open questions / next steps
 - **All 8 Phase 1 components are now built.** Suggested next steps: a QA pass (`docs/qa-report.md`: binding audit of every component, contrast table, naming check), `guidelines/Guidelines.md` + `guidelines/foundations/*.md` for the Make Kit, then publishing the library.
 - Still open: Accordion hover for Doritos/Rockstar; Ended badge on Doritos-red areas; Primary vs Secondary on dark for Doritos/Rockstar; placeholder icon set; Galano Grotesque license.
+
+---
+## Session 16 — Prompt 14: QA pass — 2026-10-14
+
+### Prompt (verbatim)
+yes
+
+(In reply to: "Should I start the QA pass?")
+
+### What I did
+- Variable audit (read-only script): 81 variables. Checked for ALL_SCOPES, missing scopes, WEB code syntax = `var(--name-with-hyphens)`, descriptions, and that Theme values only alias Primitives. 0 issues. (The first attempt returned too much data; reran with compact output.)
+- Compared the Figma variable snapshot with `tokens/*.json` (values, aliases per mode, scopes, Scale values): 0 differences.
+- Checked every `var(--…)` in the 8 component guidelines against the real token list: all exist.
+- Contrast: computed 24 text/background and border/background pairs per brand mode from the Figma values. All pass except the known error border on dark backgrounds.
+- Component audit: one read-only script per page (Button, Icon Button, Text Field, Accordion, Card, Badge, Breadcrumb, Pagination Dots, Icons). For each layer, checked bound fills and strokes, no Primitive bindings, text styles, default names, unbound padding/gap/radius/stroke weight, effects, and component descriptions. 0 issues across 354 layers.
+- Wrote `docs/qa-report.md`: summary, inventory, contrast table, 6 open issues, housekeeping.
+
+### Changes
+- Repo: `docs/qa-report.md` (new), `docs/process-log.md`.
+- Figma: no changes (read-only).
+
+### Decisions
+- None.
+
+### Verification
+- See `docs/qa-report.md`; every check is a script result, not a visual impression.
+
+### Open questions / next steps
+- The 6 open issues in `docs/qa-report.md`.
+- Housekeeping: rename or delete the empty "Page 1".
+- Next: Make Kit docs (`guidelines/Guidelines.md`, `guidelines/foundations/*.md`), then publish the library.
