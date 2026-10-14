@@ -360,3 +360,40 @@ yes go
 - On dark backgrounds, Doritos and Rockstar Primary look the same as Secondary (black fill vs transparent on black, both with white borders). The Doritos sheet draws it this way, and it's noted in the audit. Should Primary on dark use a different fill for these brands (for example white, like JOY)?
 - The placeholder icon needs replacing once the team chooses an outline icon set.
 - Next component: Icon Button (48px round; sheet `18:16854`).
+
+---
+## Session 7 — Prompt 5: Foundations page + Icon Button — 2026-10-14
+
+### Prompt (verbatim)
+go, I also want a foundations page that visualyl shows all the cariables/stytles as well categortized, organized neatly, then move on to next
+
+### What I did
+- Built a `Foundations` page in 4 writes, one section each. The page uses the system's own tokens and text styles for its layout, color and text.
+  1. Header + **Theme colors**: 27 color tokens in 6 role groups (Surface, Text, Action, Border, Brand, Feedback). Each row has the token name, CSS variable, one swatch per brand mode (each cell set to its mode) with the resolved hex and Primitive name, and the usage description.
+  2. **Primitives**: 20 swatch cards in 4 families (JOY, Neutral, Doritos, Rockstar) plus the font family card.
+  3. **Typography**: 9 rows, each with the spec (weight, size/line height, bound tokens) and a live sample in the style.
+  4. **Scale**: spacing bars (width bound to `spacing/*`), radius samples (radius bound), border-width samples (stroke weight bound) and opacity samples (`opacity/disabled` bound).
+- Moved on to the next component, **Icon Button**:
+  - New page `Icon Button` with 10 variants (Background Light/Dark × 5 states): 48px circle, padding `spacing/16`, `radius/full`, 2px border, the Primary Button's tokens, an `Icon` swap property, the outside focus ring and disabled opacity.
+  - Added Light/Dark backdrops, labels and a `Icon Button / Preview` frame with all 3 brands.
+  - Wrote `guidelines/components/icon-button.md`.
+- Left the Primary-on-dark question (Session 6) as the Doritos sheet draws it, since there was no answer. The same applies to Icon Button.
+
+### Changes
+- Repo: `guidelines/components/icon-button.md` (new); `docs/screenshots/prompt-5-foundations-page.png`, `prompt-5-icon-button-preview-3-brands.png` (new); `docs/decisions.md` (D24, D25); `docs/process-log.md`.
+- Figma:
+  - Page `Foundations` `14:2`, root frame `14:3` with sections: Theme colors `14:7`, Primitives `15:2`, Typography `15:102`, Scale `15:159`.
+  - Page `Icon Button` `16:2`: component set `Icon Button` `16:35` (10 variants), backdrops `16:36` and `16:37`, labels `16:38`–`16:44`, preview `16:45`.
+
+### Decisions
+- D24: Icon Button follows the Doritos sheet: one filled style, 48px, no hover change for Doritos/Rockstar.
+- D25: The Foundations page is built from bound samples.
+
+### Verification
+- Foundations: screenshots of every section (`docs/screenshots/prompt-5-foundations-page.png`). Swatches resolve correctly per mode, and the radius, border and opacity samples show their bound values.
+- Icon Button: the binding audit found 0 issues (padding, radius, stroke weight, opacity, all fills/strokes and the icon fill are bound). All variants are 48 × 48. The preview screenshot in 3 brands matches the Doritos sheet: pressed icon orange (Doritos) or violet (Rockstar), focus ring red/orange (Doritos) or violet (Rockstar), disabled at 30%.
+
+### Open questions / next steps
+- Still open: should Doritos/Rockstar Primary (and Icon Button) on dark backgrounds differ from Secondary?
+- Hex values and alias names on the Foundations page are typed text. If a Primitive value changes, regenerate that section.
+- Next component: Text Field (newsletter input `18:30938`). Only Default exists in the sources; hover, focus, error, disabled, label and helper text will be DERIVED and need approval.

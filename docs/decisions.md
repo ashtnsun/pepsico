@@ -165,3 +165,17 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** (a) one size; (b) invent Small/Medium/Large.
 - **Why:** Every source shows one size: JOY frames 44px, the Doritos sheet 42px (its line height is 18). Extra sizes would be invented values. Can be added later if designs need them.
 - **Date:** 2026-10-14
+
+## D24 — Icon Button: one filled style, 48px, follows the Doritos sheet
+
+- **Decision:** Icon Button has only `Background` (Light/Dark) and `State` properties. There's no Variant property and one size (48px). It uses the same tokens as the Primary Button, an `Icon` swap property, and the outside focus ring (D21). Doritos and Rockstar don't change on hover; JOY darkens.
+- **Options considered:** (a) follow the Doritos sheet (48px, filled only); (b) the JOY frames' 42px arrow buttons; (c) add outline/text variants.
+- **Why:** The sheet is the only spec with all states. 48px also meets touch-target guidance. The JOY frames' 40%-opacity "unavailable" arrows map to the Disabled state.
+- **Date:** 2026-10-14
+
+## D25 — A Foundations page documents every token and style visually
+
+- **Decision:** Add a `Foundations` page (after Page 1) showing: Theme colors by role with a swatch per brand mode; Primitives by family; the font family; all 9 text styles with samples; and the spacing, radius, border width and opacity scales. Every sample is bound to the real variable or style.
+- **Options considered:** (a) a static picture; (b) a page built from bound samples.
+- **Why:** Requested by the user. Bound samples keep the page correct when tokens change. Hex values and alias names are typed text, so re-run the page build if Primitive values change.
+- **Date:** 2026-10-14
