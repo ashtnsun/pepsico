@@ -427,3 +427,34 @@ the foundations page needs to be structured more nicely, more aesthetically, les
 
 ### Open questions / next steps
 - Text Field proposal (from Session 7) is still waiting for approval: derived hover/focus/error/disabled states, a new error token.
+
+---
+## Session 9 — Prompt 7: Brand themes board rework — 2026-10-14
+
+### Prompt (verbatim)
+the brand themes section needs more work, I dont like the way its structured, some colors are same color as the background so there neesd to be way to see the color.
+
+### What I did
+- Replaced board `18:2` with a role-card layout (`21:2`). That still hid white and near-white colors (empty-looking circles), so I replaced it again.
+- Final board `22:2` "01 Brand themes":
+  - Six role cards (Surface, Text / Action, Border, Brand, Feedback) in two columns, each with a one-line purpose and JOY / DORITOS / ROCKSTAR column labels.
+  - Every token is shown **in context**, one 72 × 40 sample per brand (81 in total, each cell set to its brand mode):
+    - Text tokens: "Aa" in the token color on the background it belongs on (e.g. `on-inverse` on `surface/inverse`, `on-action` on `action/primary`).
+    - Action and feedback tokens: tiles with their label color.
+    - Border tokens: 2px outlines on a light or dark background.
+    - Surface and brand tokens: plain tiles.
+  - All tiles have a faint ring (`text/default` at 15%), so white and light colors stay visible on the white cards.
+- Fixed empty spacer frames that left a gap above each card's rows.
+
+### Changes
+- Repo: `docs/screenshots/prompt-7-brand-themes-board.png` (new), `docs/process-log.md`.
+- Figma: page `Foundations` `14:2`: removed boards `18:2` and `21:2` (both mine); added board `22:2` at the same position.
+
+### Decisions
+- None new (refines D26: samples show colors in context instead of as bare swatches).
+
+### Verification
+- Screenshot after each build. In the final board every white or near-white token is readable: `on-inverse`/`on-action` as white "Aa" on dark tiles, `action-inverse` and `focus-inverse` as outlines on the dark band, surface tiles with a ring. Columns align across the cards.
+
+### Open questions / next steps
+- Text Field proposal still waiting for approval.
