@@ -109,3 +109,17 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** JOY Blue (but that's the button color, so badges could look clickable); JOY Purple; JOY Green.
 - **Why:** The user asked for a color from the JOY palette. Green reads as "live/active", looks nothing like the red Ended badge or the blue buttons, and the text has very high contrast. One trade-off: the green pill's edge is faint on white (1.11:1). The text carries the meaning, so that's acceptable for a non-interactive badge.
 - **Date:** 2026-10-14
+
+## D16 — Text tokens can also color icons
+
+- **Decision:** `color/text/*` Theme tokens are scoped to text fill, shape fill and stroke color, not text only.
+- **Options considered:** (a) text fill only, plus separate `color/icon/*` tokens; (b) let text tokens color icons too.
+- **Why:** CLAUDE.md says icon color always comes from a Theme text token. Separate icon tokens would duplicate every text color.
+- **Date:** 2026-10-14
+
+## D17 — Token JSON keeps one Theme file with every mode listed
+
+- **Decision:** `tokens/theme.json` holds each token once. `$value` is the JOY (default) value, and `$extensions.com.figma.modes` lists the JOY, Doritos and Rockstar values. Opacity is 0–1 in JSON and a percentage (30) in Figma.
+- **Options considered:** (a) one file per brand; (b) one file with modes in `$extensions`.
+- **Why:** CLAUDE.md names a single `theme.json`, and one file keeps the three brands side by side so differences are easy to review.
+- **Date:** 2026-10-14

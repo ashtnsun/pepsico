@@ -24,12 +24,13 @@ Node IDs in links use a hyphen (`node-id=18-4470`); the MCP tools take a colon (
 
 | Brand | Node | Colors | Also documented |
 | --- | --- | --- | --- |
+| JOY | `18:20865` | Black `#000000`, Purple `#9E00BF`, Blue `#1442FF` (we use `#1443FF`, D7), Sky `#75DEF2`, Green `#EBFF40`, Orange `#FF8000`, White `#FFFFFF`, Dark Blue `#0A0F36` | Palette + contrast matrix only (no CTA or nav spec) |
 | Doritos | `18:16576` | Red `#E31722`, Dark `#030303`, Orange `#FA7115`, White `#FFFFFF`, Black `#000000` | Contrast matrix; CTA spec (filled, outline, text link × Default, Hover, Pressed, Focus, Disabled × light/dark background); navigation with brand band; 48px circular icon buttons |
 | Rockstar | `18:17654` | Black `#000000` (white text only), Violet `#B64F9B` (black or white text) | Colors only. Hover, disabled, surface, and type values must be DERIVED and flagged for approval. |
 
-Search the file for other sheets with the same header (JOY base, Lay's, Pepsi) before assuming they don't exist. Note: Doritos Orange on white fails contrast (2.82:1) and must not carry text on light surfaces.
+All brand sheets are on the Sponsor Files page **"Brand guides/elements" (`18:15669`)**. `get_metadata` without a node ID doesn't list this page, so open it by ID. The page also has sheets or contrast matrices for Lay's, Pepsi, Cheetos, Walkers and others (see `docs/audit.md` §1). Note: Doritos Orange on white fails contrast (2.82:1) and must not carry text on light surfaces.
 
-**Live site:** https://www.joy-pepsico.eu/en-gb/ (public; Drupal 9, Bootstrap-based theme). There is no JOY base brand sheet, so the live site's CSS is the source for exact JOY base values (hover colors, font weights, breakpoints). Where it disagrees with the Figma frames on intent, the Figma frames win.
+**Live site:** https://www.joy-pepsico.eu/en-gb/ (public; Drupal 9, Bootstrap-based theme). The JOY sheet above only covers colors, so the live site's CSS is the source for other exact JOY base values (hover colors, font weights, breakpoints). Where it disagrees with the Figma frames on intent, the Figma frames win.
 
 Known from the current site (verify, don't assume): font Galano Grotesque (Regular, Bold); text `#333333`, secondary text `#666666`; JOY blue `#1443FF` for buttons, newsletter band, and footer; subtle surface `#F4F4F4`; pill buttons with radius 32 and padding 12/20; accordion radius 10. The current file has **no variables or styles**; everything is hardcoded.
 

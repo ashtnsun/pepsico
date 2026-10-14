@@ -230,3 +230,41 @@ go
 ### Open questions / next steps
 - Should CLAUDE.md point to the JOY palette frame `18:20865`? (Not answered yet; CLAUDE.md is unchanged.)
 - Next: Prompt 2, build the tokens (`tokens/*.json` + the 3 Figma variable collections).
+
+---
+## Session 4 — Prompt 2: Build tokens — 2026-10-14
+
+### Prompt (verbatim)
+yes go
+
+(In reply to: "Should CLAUDE.md point to the JOY palette frame?" and "Next is Prompt 2: build the tokens … say 'go' when you're ready.")
+
+### What I did
+- Loaded the `figma-use` and `figma-generate-library` skills.
+- Wrote one token source (session scratchpad, `tokens-src.js`) and generated `tokens/primitives.json` (21), `tokens/theme.json` (25) and `tokens/scale.json` (31) from it, in W3C DTCG format with descriptions, scopes, code syntax and per-mode values.
+- Built the Figma variables in the AI-Assisted Design System file, one collection per `use_figma` call:
+  1. `1. Primitives` (`VariableCollectionId:5:2`, mode Value, hidden from publishing): 20 colors + `font/family/brand` = Inter. Scopes empty.
+  2. `2. Theme` (`VariableCollectionId:6:2`, modes JOY `6:0` (default), Doritos `6:1`, Rockstar `6:2`): 24 color roles + `font/family/body`. Every value is an alias to a Primitive.
+  3. `3. Scale` (`VariableCollectionId:6:28`, mode Value): 10 spacing, 5 radius, 2 border widths, 6 font sizes, 7 line heights, `opacity/disabled`.
+- Every variable has targeted scopes (none uses ALL_SCOPES), WEB code syntax `var(--…)` and a description.
+- Tested opacity units with a temporary rectangle, removed in the same script: a variable value of 30 gives node opacity 0.3, so Figma stores percentages.
+- Made a temporary swatch board (`6:61`) with one column per Theme mode, took a screenshot, then deleted it.
+- Wrote `docs/tokens.md`, a plain-English token reference.
+- Updated CLAUDE.md (answering "yes" to the JOY palette question): added a JOY row to the brand-sheet table, noted that sheets live on page "Brand guides/elements" `18:15669`, and corrected the "no JOY base sheet" sentence.
+
+### Changes
+- Repo: `tokens/primitives.json`, `tokens/theme.json`, `tokens/scale.json` (new; removed `tokens/.gitkeep`); `docs/tokens.md` (new); `docs/screenshots/prompt-2-theme-modes-check.png` (new); `CLAUDE.md`; `docs/decisions.md` (D16, D17); `docs/process-log.md`.
+- Figma (AI-Assisted Design System): collections `1. Primitives` `VariableCollectionId:5:2` (21 vars, `VariableID:5:3`–`5:23`), `2. Theme` `VariableCollectionId:6:2` (25 vars, `VariableID:6:3`–`6:27`), `3. Scale` `VariableCollectionId:6:28` (31 vars, `VariableID:6:29`–`6:59`). The canvas is empty (temporary board removed).
+
+### Decisions
+- D16: Text tokens may color icons (scopes include shape fill and stroke).
+- D17: One `theme.json` with modes in `$extensions`; opacity is 0–1 in JSON and a percentage in Figma.
+
+### Verification
+- Read back all 77 variables: collection, modes, default mode, alias targets per mode, scopes, code syntax and description. All match the token source.
+- Screenshot of the swatch board (`docs/screenshots/prompt-2-theme-modes-check.png`): JOY shows blues and Sky, Doritos shows black/red/orange, Rockstar shows black/violet. Shared tokens (neutrals, badges) are the same across modes.
+- After cleanup: page `0:1` has no children and the collections hold 21 / 25 / 31 variables.
+
+### Open questions / next steps
+- Expected token additions when building Button (they'll need approval then): outline/link pressed text on light backgrounds for Doritos (the sheet uses red there), and a border for outline buttons on dark backgrounds (white).
+- Next: text styles (Display … Caption) bound to the font family, size and line-height variables. Inter weight names ("Semi Bold") differ from Galano's ("SemiBold"), so swapping the font later means updating the styles too.

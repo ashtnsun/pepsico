@@ -1,0 +1,550 @@
+{
+  "$description": "2. Theme (Figma collection, modes JOY / Doritos / Rockstar; JOY is default). $value is the JOY value; $extensions.com.figma.modes lists every mode. Every value aliases a Primitive.",
+  "color": {
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Page and card background.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-surface-default)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
+            }
+          }
+        }
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{neutral.50}",
+        "$description": "Quiet background, e.g. accordion items.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-surface-subtle)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{neutral.50}",
+              "Doritos": "{neutral.50}",
+              "Rockstar": "{neutral.50}"
+            }
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{joy.blue.600}",
+        "$description": "Dark band background, e.g. newsletter. Use with text/on-inverse.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-surface-inverse)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.600}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      }
+    },
+    "text": {
+      "default": {
+        "$type": "color",
+        "$value": "{neutral.800}",
+        "$description": "Main text and icons on light surfaces.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-default)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.800}",
+              "Doritos": "{neutral.800}",
+              "Rockstar": "{neutral.800}"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{neutral.600}",
+        "$description": "Supporting text, e.g. accordion answers.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-secondary)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.600}",
+              "Doritos": "{neutral.600}",
+              "Rockstar": "{neutral.600}"
+            }
+          }
+        }
+      },
+      "on-inverse": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Text and icons on surface/inverse.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-inverse)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
+            }
+          }
+        }
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Label and icons on a filled primary button.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-action)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
+            }
+          }
+        }
+      },
+      "on-action-pressed": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Label and icons on a filled button while pressed (D9).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-action-pressed)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{doritos.orange.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      },
+      "on-action-inverse": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Label on a filled button placed on a dark background.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-action-inverse)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
+            }
+          }
+        }
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Text links and tertiary buttons on light surfaces.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-link)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "on-feedback-active": {
+        "$type": "color",
+        "$value": "{joy.blue.900}",
+        "$description": "Text on the Active badge (D15).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-feedback-active)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.900}",
+              "Doritos": "{joy.blue.900}",
+              "Rockstar": "{joy.blue.900}"
+            }
+          }
+        }
+      },
+      "on-feedback-expired": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Text on the Ended badge.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-on-feedback-expired)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{neutral.0}",
+              "Rockstar": "{neutral.0}"
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Filled primary button background.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-action-primary)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{joy.blue.600}",
+        "$description": "Filled button background on hover. Doritos/Rockstar do not change color; the label underlines instead (D8, D9).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-action-primary-hover)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.600}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "primary-pressed": {
+        "$type": "color",
+        "$value": "{joy.blue.700}",
+        "$description": "Filled button background while pressed (D8, D9).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-action-primary-pressed)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.700}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Filled button background on a dark background.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-action-inverse)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{neutral.100}",
+        "$description": "Input borders and dividers.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-border-default)"
+            },
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.100}",
+              "Doritos": "{neutral.100}",
+              "Rockstar": "{neutral.100}"
+            }
+          }
+        }
+      },
+      "action": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Outline (secondary) button border on light surfaces.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-border-action)"
+            },
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.dark.900}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{joy.blue.900}",
+        "$description": "Focus ring on light backgrounds (D10).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-border-focus)"
+            },
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.900}",
+              "Doritos": "{doritos.red.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      },
+      "focus-inverse": {
+        "$type": "color",
+        "$value": "{neutral.0}",
+        "$description": "Focus ring on dark backgrounds (D10).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-border-focus-inverse)"
+            },
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{neutral.0}",
+              "Doritos": "{doritos.orange.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      }
+    },
+    "brand": {
+      "primary": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Main brand color for brand areas, e.g. step circles. Not for buttons.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-brand-primary)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.red.500}",
+              "Rockstar": "{rockstar.black.900}"
+            }
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{joy.sky.300}",
+        "$description": "Secondary brand color for decoration. Not for text on light surfaces.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-brand-accent)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.sky.300}",
+              "Doritos": "{doritos.orange.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      }
+    },
+    "feedback": {
+      "active": {
+        "$type": "color",
+        "$value": "{joy.green.300}",
+        "$description": "Active badge background (D15).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-feedback-active)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.green.300}",
+              "Doritos": "{joy.green.300}",
+              "Rockstar": "{joy.green.300}"
+            }
+          }
+        }
+      },
+      "expired": {
+        "$type": "color",
+        "$value": "{joy.red.600}",
+        "$description": "Ended badge background.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-feedback-expired)"
+            },
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "modes": {
+              "JOY": "{joy.red.600}",
+              "Doritos": "{joy.red.600}",
+              "Rockstar": "{joy.red.600}"
+            }
+          }
+        }
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "body": {
+        "$type": "fontFamily",
+        "$value": "{font.family.brand}",
+        "$description": "Font family for all text.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--font-family-body)"
+            },
+            "scopes": [
+              "FONT_FAMILY"
+            ],
+            "modes": {
+              "JOY": "{font.family.brand}",
+              "Doritos": "{font.family.brand}",
+              "Rockstar": "{font.family.brand}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

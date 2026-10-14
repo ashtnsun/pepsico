@@ -1,0 +1,310 @@
+{
+  "$description": "1. Primitives (Figma collection, 1 mode, hidden from publishing). Raw colors and font family names. Components never use these directly.",
+  "joy": {
+    "blue": {
+      "500": {
+        "$type": "color",
+        "$value": "#1443FF",
+        "$description": "JOY blue. Frames + live site (D7). The JOY palette 18:20865 lists #1442FF.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-blue-500)"
+            },
+            "scopes": []
+          }
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#0E38DF",
+        "$description": "JOY band blue. Figma frames 18:4470 + live site.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-blue-600)"
+            },
+            "scopes": []
+          }
+        }
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#0024B5",
+        "$description": "JOY deep blue. Doritos sheet navigation Register button + live site CSS.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-blue-700)"
+            },
+            "scopes": []
+          }
+        }
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#0A0F36",
+        "$description": "JOY Dark Blue. JOY palette 18:20865.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-blue-900)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "purple": {
+      "500": {
+        "$type": "color",
+        "$value": "#9E00BF",
+        "$description": "JOY Purple. JOY palette 18:20865.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-purple-500)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "sky": {
+      "300": {
+        "$type": "color",
+        "$value": "#75DEF2",
+        "$description": "JOY Sky. JOY palette 18:20865. Fails contrast on white; never use for text on light surfaces.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-sky-300)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "green": {
+      "300": {
+        "$type": "color",
+        "$value": "#EBFF40",
+        "$description": "JOY Green. JOY palette 18:20865. Fails contrast on white; use dark text on it.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-green-300)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "orange": {
+      "500": {
+        "$type": "color",
+        "$value": "#FF8000",
+        "$description": "JOY Orange. JOY palette 18:20865. Fails contrast on white.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-orange-500)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "red": {
+      "600": {
+        "$type": "color",
+        "$value": "#B21119",
+        "$description": "Ended badge red. Closed promo frame 18:4704.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--joy-red-600)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    }
+  },
+  "neutral": {
+    "0": {
+      "$type": "color",
+      "$value": "#FFFFFF",
+      "$description": "White.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-0)"
+          },
+          "scopes": []
+        }
+      }
+    },
+    "50": {
+      "$type": "color",
+      "$value": "#F4F4F4",
+      "$description": "Subtle surface. Accordion in 18:4470 + live site.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-50)"
+          },
+          "scopes": []
+        }
+      }
+    },
+    "100": {
+      "$type": "color",
+      "$value": "#EDEDED",
+      "$description": "Light border. Newsletter input in 18:30938.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-100)"
+          },
+          "scopes": []
+        }
+      }
+    },
+    "600": {
+      "$type": "color",
+      "$value": "#666666",
+      "$description": "Secondary text. 18:4470 + live site.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-600)"
+          },
+          "scopes": []
+        }
+      }
+    },
+    "800": {
+      "$type": "color",
+      "$value": "#333333",
+      "$description": "Body text. 18:4470 + live site.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-800)"
+          },
+          "scopes": []
+        }
+      }
+    },
+    "1000": {
+      "$type": "color",
+      "$value": "#000000",
+      "$description": "Black.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--neutral-1000)"
+          },
+          "scopes": []
+        }
+      }
+    }
+  },
+  "doritos": {
+    "red": {
+      "500": {
+        "$type": "color",
+        "$value": "#E31722",
+        "$description": "Doritos Red. Doritos sheet 18:16576.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--doritos-red-500)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "orange": {
+      "500": {
+        "$type": "color",
+        "$value": "#FA7115",
+        "$description": "Doritos Orange. Doritos sheet 18:16576. Fails contrast on white (2.82:1).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--doritos-orange-500)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "dark": {
+      "900": {
+        "$type": "color",
+        "$value": "#030303",
+        "$description": "Doritos Dark. Doritos sheet 18:16576.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--doritos-dark-900)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    }
+  },
+  "rockstar": {
+    "black": {
+      "900": {
+        "$type": "color",
+        "$value": "#000000",
+        "$description": "Rockstar Black (primary). Rockstar sheet 18:17654. White text only.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--rockstar-black-900)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    },
+    "violet": {
+      "500": {
+        "$type": "color",
+        "$value": "#B64F9B",
+        "$description": "Rockstar Violet (secondary). Rockstar sheet 18:17654. Black or white text.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--rockstar-violet-500)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "brand": {
+        "$type": "fontFamily",
+        "$value": "Inter",
+        "$description": "Placeholder for Galano Grotesque (D5). Swap this one value when the licensed font is installed.",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--font-family-brand)"
+            },
+            "scopes": []
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,511 @@
+{
+  "$description": "3. Scale (Figma collection, 1 mode). Spacing, radius, border width, font size, line height, opacity. Opacity is 0–1 here; Figma stores it as a percentage (figmaValue).",
+  "spacing": {
+    "4": {
+      "$type": "dimension",
+      "$value": "4px",
+      "$description": "4px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-4)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 4
+        }
+      }
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": "8px",
+      "$description": "8px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-8)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 8
+        }
+      }
+    },
+    "12": {
+      "$type": "dimension",
+      "$value": "12px",
+      "$description": "12px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-12)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 12
+        }
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": "16px",
+      "$description": "16px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-16)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 16
+        }
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": "20px",
+      "$description": "20px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-20)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 20
+        }
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": "24px",
+      "$description": "24px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-24)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 24
+        }
+      }
+    },
+    "32": {
+      "$type": "dimension",
+      "$value": "32px",
+      "$description": "32px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-32)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 32
+        }
+      }
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": "40px",
+      "$description": "40px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-40)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 40
+        }
+      }
+    },
+    "48": {
+      "$type": "dimension",
+      "$value": "48px",
+      "$description": "48px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-48)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 48
+        }
+      }
+    },
+    "80": {
+      "$type": "dimension",
+      "$value": "80px",
+      "$description": "80px spacing for gaps and padding.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--spacing-80)"
+          },
+          "scopes": [
+            "GAP"
+          ],
+          "figmaValue": 80
+        }
+      }
+    }
+  },
+  "radius": {
+    "small": {
+      "$type": "dimension",
+      "$value": "4px",
+      "$description": "Small corners, e.g. text-link focus area.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--radius-small)"
+          },
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "figmaValue": 4
+        }
+      }
+    },
+    "container": {
+      "$type": "dimension",
+      "$value": "10px",
+      "$description": "Accordion items and similar containers.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--radius-container)"
+          },
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "figmaValue": 10
+        }
+      }
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": "20px",
+      "$description": "Cards.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--radius-card)"
+          },
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "figmaValue": 20
+        }
+      }
+    },
+    "control": {
+      "$type": "dimension",
+      "$value": "32px",
+      "$description": "Buttons and text fields (pill shape).",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--radius-control)"
+          },
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "figmaValue": 32
+        }
+      }
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "9999px",
+      "$description": "Circles and pills: icon buttons, badges, dots.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--radius-full)"
+          },
+          "scopes": [
+            "CORNER_RADIUS"
+          ],
+          "figmaValue": 9999
+        }
+      }
+    }
+  },
+  "border-width": {
+    "thin": {
+      "$type": "dimension",
+      "$value": "1px",
+      "$description": "Dividers.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--border-width-thin)"
+          },
+          "scopes": [
+            "STROKE_FLOAT"
+          ],
+          "figmaValue": 1
+        }
+      }
+    },
+    "thick": {
+      "$type": "dimension",
+      "$value": "2px",
+      "$description": "Buttons, inputs, focus rings.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--border-width-thick)"
+          },
+          "scopes": [
+            "STROKE_FLOAT"
+          ],
+          "figmaValue": 2
+        }
+      }
+    }
+  },
+  "font-size": {
+    "14": {
+      "$type": "dimension",
+      "$value": "14px",
+      "$description": "14px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-14)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 14
+        }
+      }
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": "16px",
+      "$description": "16px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-16)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 16
+        }
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": "20px",
+      "$description": "20px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-20)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 20
+        }
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": "24px",
+      "$description": "24px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-24)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 24
+        }
+      }
+    },
+    "36": {
+      "$type": "dimension",
+      "$value": "36px",
+      "$description": "36px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-36)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 36
+        }
+      }
+    },
+    "60": {
+      "$type": "dimension",
+      "$value": "60px",
+      "$description": "60px font size.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--font-size-60)"
+          },
+          "scopes": [
+            "FONT_SIZE"
+          ],
+          "figmaValue": 60
+        }
+      }
+    }
+  },
+  "line-height": {
+    "16": {
+      "$type": "dimension",
+      "$value": "16px",
+      "$description": "16px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-16)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 16
+        }
+      }
+    },
+    "18": {
+      "$type": "dimension",
+      "$value": "18px",
+      "$description": "18px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-18)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 18
+        }
+      }
+    },
+    "20": {
+      "$type": "dimension",
+      "$value": "20px",
+      "$description": "20px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-20)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 20
+        }
+      }
+    },
+    "24": {
+      "$type": "dimension",
+      "$value": "24px",
+      "$description": "24px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-24)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 24
+        }
+      }
+    },
+    "28": {
+      "$type": "dimension",
+      "$value": "28px",
+      "$description": "28px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-28)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 28
+        }
+      }
+    },
+    "40": {
+      "$type": "dimension",
+      "$value": "40px",
+      "$description": "40px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-40)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 40
+        }
+      }
+    },
+    "64": {
+      "$type": "dimension",
+      "$value": "64px",
+      "$description": "64px line height.",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--line-height-64)"
+          },
+          "scopes": [
+            "LINE_HEIGHT"
+          ],
+          "figmaValue": 64
+        }
+      }
+    }
+  },
+  "opacity": {
+    "disabled": {
+      "$type": "number",
+      "$value": 0.3,
+      "$description": "Disabled controls are shown at 30% opacity (D11).",
+      "$extensions": {
+        "com.figma": {
+          "codeSyntax": {
+            "WEB": "var(--opacity-disabled)"
+          },
+          "scopes": [
+            "OPACITY"
+          ],
+          "figmaValue": 30
+        }
+      }
+    }
+  }
+}
