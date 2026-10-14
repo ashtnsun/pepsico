@@ -212,3 +212,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** for the open background, the reference's `#F7F7F7` at 50% opacity (no token; it would need a hardcoded paint opacity) or `surface/default` (invisible on white pages). For hover: an underline (needs a separate layer and breaks on multi-line questions) or a color change.
 - **Why:** The FAQ (`18:30918`) only appears on light pages and only shows open and closed. One shared background keeps the token set small, and the open state is still clear.
 - **Date:** 2026-10-14
+
+## D30 — Card: one set with Type = Step / Prize / Content; brand color instead of promo artwork colors
+
+- **Decision:** One `Card` component set with a `Type` variant (Step, Prize, Content) and no states (cards aren't interactive). Step and Prize use `color/brand/primary` with white text (`text/on-inverse`): 6.4:1 JOY, 4.8:1 Doritos, 21:1 Rockstar. Images are grey `surface/subtle` placeholders to replace with image fills. Content nests real Button instances. Each text has its own property (Number shared by Step and Prize).
+- **Options considered:** keep the reference's yellow/amber two-tone prize artwork with its curved split and drop shadow; theme with brand primary + accent (accent fails with text in some brands).
+- **Why:** The reference colors belong to one Lay's campaign. The live site uses brand-colored circles (Doritos red) with white text. Separate text properties avoid the shared-formatting problem (D22).
+- **Date:** 2026-10-14

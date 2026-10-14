@@ -530,3 +530,37 @@ go
 ### Open questions / next steps
 - For Doritos and Rockstar, hover only darkens the question from `#333` to near-black, which is hard to see, because their `text/link` is black. Options: an underline on hover (Doritos-sheet style, single-line questions only), or a hover background token. Needs a decision.
 - Next component: Card (Step, Prize, Content).
+
+---
+## Session 12 — Prompt 10: Card — 2026-10-14
+
+### Prompt (verbatim)
+go
+
+(In reply to: "Should I go ahead on that basis?" — use `brand/primary` instead of promo artwork colors for Step and Prize cards.)
+
+### What I did
+- Read the reference cards: Step `18:42815` (328 × 420, 328px circle at y16, 48px white number badge at 140/46, centered step text 230px wide, image 287 × 151 at y252), Prize (in `18:30837`: card r20, yellow/amber two-tone artwork, badge, image 263 × 139 at y124, name at y348) and Content `18:30884` (image 565 × 403 r20 + text column with padding 48/24, gap 40, Heading/1 + Body/M + Primary/Secondary buttons). Checked the prize row visually.
+- Built page `Card` with the `Card` component set (Type = Step / Prize / Content):
+  - Step: circle `brand/primary`, badge `surface/default` + Number (Heading/3), Step text (Body/L, `text/on-inverse`), Image placeholder.
+  - Prize: card `brand/primary` with `radius/card`, badge, Image placeholder, Prize name (Heading/3, `text/on-inverse`).
+  - Content: auto layout with Image placeholder, Title (Heading/1), Body (Body/M) and two nested **Button** instances (Primary "Read more", Secondary "Discover").
+  - Properties: `Number`, `Step text`, `Prize name`, `Title`, `Body`. Text fills re-applied with resolved fallbacks after linking.
+- Added a backdrop and a `Card / Preview` frame (one row per brand).
+- Wrote `guidelines/components/card.md`.
+
+### Changes
+- Repo: `guidelines/components/card.md` (new); `docs/decisions.md` (D30); `docs/screenshots/prompt-10-card-preview-3-brands.png` (new); `docs/process-log.md`.
+- Figma: page `Card` `29:2`: component set `29:41` (Step `29:3`, Prize `29:9`, Content `29:14`), backdrop `29:42`, preview `29:43`.
+
+### Decisions
+- D30: one Card set by Type; brand primary + white text; image placeholders; nested Buttons.
+
+### Verification
+- Binding audit (own layers, not nested Button internals): 0 issues — all fills bound, all text styled, no default layer names.
+- 3-brand preview screenshot: circles and prize cards turn JOY blue / Doritos red / Rockstar black with readable white text; nested buttons follow each brand.
+
+### Open questions / next steps
+- The reference's curved two-tone prize artwork and the step-circle drop shadow were left out (no tokens). Add them back as image artwork per campaign if wanted.
+- Accordion hover visibility for Doritos/Rockstar (Session 11) is still open.
+- Next component: Badge (Active / Expired).
