@@ -22,6 +22,7 @@ Paste this into the app's global CSS once. Every component guideline uses these 
   --color-text-on-action-inverse-pressed: #0024B5; /* joy/blue/700 */
   --color-text-link: #1443FF; /* joy/blue/500 */
   --color-text-link-pressed: #1443FF; /* joy/blue/500 */
+  --color-text-hover: #1443FF; /* joy/blue/500 */
   --color-text-on-feedback-active: #0A0F36; /* joy/blue/900 */
   --color-text-on-feedback-expired: #FFFFFF; /* neutral/0 */
   --color-action-primary: #1443FF; /* joy/blue/500 */
@@ -81,6 +82,7 @@ Paste this into the app's global CSS once. Every component guideline uses these 
   --color-text-on-action-inverse-pressed: #FA7115; /* doritos/orange/500 */
   --color-text-link: #030303; /* doritos/dark/900 */
   --color-text-link-pressed: #E31722; /* doritos/red/500 */
+  --color-text-hover: #E31722; /* doritos/red/500 */
   --color-action-primary: #030303; /* doritos/dark/900 */
   --color-action-primary-hover: #030303; /* doritos/dark/900 */
   --color-action-primary-pressed: #030303; /* doritos/dark/900 */
@@ -99,6 +101,7 @@ Paste this into the app's global CSS once. Every component guideline uses these 
   --color-text-on-action-inverse-pressed: #B64F9B; /* rockstar/violet/500 */
   --color-text-link: #000000; /* rockstar/black/900 */
   --color-text-link-pressed: #000000; /* rockstar/black/900 */
+  --color-text-hover: #B64F9B; /* rockstar/violet/500 */
   --color-action-primary: #000000; /* rockstar/black/900 */
   --color-action-primary-hover: #000000; /* rockstar/black/900 */
   --color-action-primary-pressed: #000000; /* rockstar/black/900 */

@@ -6,7 +6,7 @@ Use the `--color-*` variables from `tokens.md`. They're grouped by **role**; pic
 | Role | Tokens | Use for |
 | --- | --- | --- |
 | Surface | `--color-surface-default`, `-subtle`, `-inverse` | Page and card backgrounds; `subtle` for quiet areas (accordion); `inverse` for dark bands (newsletter, prize band) |
-| Text | `--color-text-default`, `-secondary`, `-link`, `-link-pressed`, `-on-inverse`, `-on-action`, `-on-action-pressed`, `-on-action-inverse`, `-on-action-inverse-pressed`, `-on-feedback-active`, `-on-feedback-expired` | Text **and icons**. The `on-…` tokens go on top of the matching background |
+| Text | `--color-text-default`, `-secondary`, `-link`, `-link-pressed`, `-hover`, `-on-inverse`, `-on-action`, `-on-action-pressed`, `-on-action-inverse`, `-on-action-inverse-pressed`, `-on-feedback-active`, `-on-feedback-expired` | Text **and icons**. The `on-…` tokens go on top of the matching background |
 | Action | `--color-action-primary`, `-primary-hover`, `-primary-pressed`, `-inverse` | Filled button backgrounds only |
 | Border | `--color-border-default`, `-action`, `-action-inverse`, `-focus`, `-focus-inverse` | Dividers, outline buttons, input borders, focus outlines |
 | Brand | `--color-brand-primary`, `--color-brand-accent` | Brand areas: step circles, prize cards, brand bands, decoration. Never buttons. Never text on light surfaces (`accent`) |
@@ -28,6 +28,7 @@ Every pair below passes WCAG AA (4.5:1) in all three brands.
 
 ## Rules
 - Never put `--color-brand-accent` or Doritos orange text on white; it fails contrast.
+- Use `--color-text-hover` only for the hover state of large text (Heading/3 or bigger) on light surfaces. It's 4.2–4.3:1 on `surface-subtle` for Doritos and Rockstar: fine for large text (needs 3:1), too low for body text. Not for links or buttons (they have their own tokens).
 - On `surface-inverse`, don't use `--color-feedback-error` for text (it fails). Use `text-on-inverse` and start the message with "Error:".
 - Don't invent tints, shades or transparency. If a color is missing, use the closest role and note it.
 - What each brand looks like: JOY = blues (`#1443FF` actions, `#0E38DF` bands); Doritos = black actions, red brand areas, orange accents; Rockstar = black actions and brand, violet accents.

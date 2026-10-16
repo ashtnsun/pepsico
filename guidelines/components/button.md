@@ -14,7 +14,7 @@ A pill-shaped control that triggers an action, such as "Participate here", "Regi
 - Radius: Primary and Secondary `var(--radius-control)`; Tertiary `var(--radius-small)`.
 - Border: `var(--border-width-thick)` solid. Its color is in the table below; Tertiary has no border. The border sits inside the box and doesn't change the size.
 - Label: text style **Label**: `font-family: var(--font-family-body)`, `font-size: var(--font-size-16)`, `line-height: var(--line-height-20)`, `font-weight: 600`, `text-transform: uppercase`.
-- Icons (optional, off by default): 16 × 16 px, left and/or right of the label. Icon color is always the same token as the label.
+- Icons (optional, off by default): a Lucide icon from `lucide-react` at `size={16}`, left and/or right of the label (e.g. `ArrowRight`, `ChevronDown`). Icon color is always the same token as the label (it inherits `currentColor`).
 
 ## Variants and states
 

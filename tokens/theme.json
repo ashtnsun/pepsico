@@ -265,6 +265,28 @@
           }
         }
       },
+      "hover": {
+        "$type": "color",
+        "$value": "{joy.blue.500}",
+        "$description": "Text that changes color on hover but is not a link or button, e.g. accordion questions. JOY blue, Doritos red, Rockstar violet (Prompt 16).",
+        "$extensions": {
+          "com.figma": {
+            "codeSyntax": {
+              "WEB": "var(--color-text-hover)"
+            },
+            "scopes": [
+              "TEXT_FILL",
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "modes": {
+              "JOY": "{joy.blue.500}",
+              "Doritos": "{doritos.red.500}",
+              "Rockstar": "{rockstar.violet.500}"
+            }
+          }
+        }
+      },
       "on-feedback-active": {
         "$type": "color",
         "$value": "{joy.blue.900}",

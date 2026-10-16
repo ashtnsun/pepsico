@@ -40,6 +40,7 @@ Not in the system yet (Phase 2): Navbar, Footer, Newsletter band, Promo Hero, Se
 ## Global rules
 - **Tokens only.** Every color, size, space, radius and border uses a `var(--…)` from `foundations/tokens.md`. No hex values, no `px` values except the fixed sizes named in a guideline (icons 16px, Icon Button 48px, dots).
 - **Text styles only.** Every piece of text uses one of the 9 styles in `foundations/typography.md`.
+- **Icons: Lucide only.** Import from `lucide-react` (e.g. `import { ChevronDown } from 'lucide-react'`) at `size={16}` with the default stroke width. Don't set a color on the icon; it inherits `currentColor` from its parent, which uses a `--color-text-*` token. Icons in the Figma library: ChevronDown, ChevronUp, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, Share2, X, CircleAlert, Check. Prefer these; use another Lucide icon only when none fits.
 - **Background matters.** Components with a `Background` option (Button, Icon Button, Text Field) use **Dark** on `surface/inverse` or brand-colored areas and **Light** everywhere else.
 - **Accessibility:**
   - Every interactive element shows a focus outline (`outline: 2px solid var(--color-border-focus)`, `outline-offset: 2px`; on dark areas use `--color-border-focus-inverse`).

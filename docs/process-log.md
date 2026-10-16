@@ -715,3 +715,47 @@ go next steps
 - Publish the library (README steps) — needs a person in Figma.
 - Build the Make Kit from the library and attach `guidelines/`; run the test prompt in the README.
 - The 6 open decisions in `docs/qa-report.md`; Page 1 cleanup.
+
+---
+## Session 18 — Prompt 16: Accordion hover color, icon set — 2026-10-16
+
+### Prompt (verbatim)
+For the accordian, make the text color primary for doritos, accent for rockstar? is this okay? Levae the ended badge. leave buttons for now, for icon set choose a commonly used icon set, leave font, leave page 1 i deleted it
+
+(Preceded by "is the design system done?", answered from `docs/qa-report.md` and the log.)
+
+### What I did
+- Checked the accordion idea first: `brand/primary` is black for Rockstar and `brand/accent` is orange for Doritos, and both are scoped to fills, so neither existing token gives the requested colors. Proposed a new `color/text/hover` token; contrast passes for large text.
+- Re-authenticated the Figma MCP (first callback expired; second worked).
+- Figma: created `color/text/hover` in `2. Theme` (aliases `joy/blue/500`, `doritos/red/500`, `rockstar/violet/500`; scopes, WEB code syntax, description) and bound it to the Question text in the two Hover variants of Accordion.
+- Downloaded the official Lucide SVGs (`lucide-static@0.460.0`) and built 10 icon components: outlined the strokes, flattened them into one `Shape` vector, scaled to 16px, bound the fill to `text/default`. Replaced the placeholder chevron's geometry in place (`10:5`/`10:6`) so existing instances and their color overrides keep working.
+- Found and fixed a bug from flattening: the vector geometry carried its own hardcoded black fill, which overrode instance colors (Icon Button icons were black on black). Rebuilt each vector without the hardcoded fill; instances use their own token colors again.
+- Set all 10 icons as preferred values for Icon Button `Icon` and Button `Left icon` / `Right icon`.
+- Added a `hover` row to the Foundations "01 Brand themes" Text card.
+- Repo: token JSON, CSS tokens, color/accordion/button/icon-button guidelines, Lucide rule in `Guidelines.md`, README publish steps (no Page 1, icon list), QA report statuses.
+
+### Changes
+- Repo: `tokens/theme.json`, `docs/tokens.md`, `guidelines/foundations/tokens.md`, `guidelines/foundations/color.md`, `guidelines/Guidelines.md`, `guidelines/components/accordion.md`, `button.md`, `icon-button.md`, `README.md`, `docs/qa-report.md`, `docs/decisions.md` (D34, D35), `docs/process-log.md`, `docs/screenshots/prompt-16-*.png` (5).
+- Figma:
+  - Variable `color/text/hover` (`VariableID:74:138`).
+  - Accordion Hover variants `27:8`, `27:26` (Question text `27:10`, `27:28`); set description `27:41`.
+  - Icons page `10:4`: `Icon/Chevron Down` `10:5` (shape `10:6` replaced), new `Icon/Chevron Up` `74:968`, `Icon/Chevron Left` `74:974`, `Icon/Chevron Right` `74:980`, `Icon/Arrow Left` `74:988`, `Icon/Arrow Right` `74:996`, `Icon/Share` `74:1010`, `Icon/Close` `74:1018`, `Icon/Alert Circle` `74:1028`, `Icon/Check` `74:1034`.
+  - Preferred icons on Icon Button `16:35` and Button `11:183`.
+  - Foundations row `Row text/hover` `74:1035`.
+
+### Decisions
+- D34: `color/text/hover` for Accordion hover — the user asked for Doritos primary / Rockstar accent; no existing token matched.
+- D35: Lucide as the icon set (supersedes D20) — widely used, free, `lucide-react` works in Figma Make.
+- Not changed, per the user: Ended badge (issue 2), buttons on dark (issue 3), font (issue 5). Page 1 was deleted by the user.
+
+### Verification
+- Variable read-back: `color/text/hover` values per mode alias the right Primitives.
+- Icon bounds read back (e.g. chevron 9.33 × 5.33 at 3.33, 5.33 = Lucide geometry × 2/3); region fills confirmed to follow the node/instance fill.
+- Screenshots (all 3 brands): Accordion preview (hover question blue / red / violet), Icon Button preview, Button preview (icons in "See more"), Icons page, Foundations Text card. Saved to `docs/screenshots/prompt-16-*.png`.
+- Contrast computed: `text/hover` on `surface/subtle` 5.83 / 4.33 / 4.17 (needs 3:1, large text).
+- Every `var(--…)` in `guidelines/` checked against `guidelines/foundations/tokens.md`.
+
+### Open questions / next steps
+- Still open from QA: buttons on dark for Doritos/Rockstar (issue 3), Galano Grotesque license (issue 5), Text Field border token (issue 6).
+- Optional: add `CircleAlert` to the Text Field error message now that an icon exists (the QA report suggested it for the dark-background error case). Not done; outside this prompt.
+- Publish the library and build the Make Kit (README steps).

@@ -20,10 +20,10 @@ A themeable design system for JOY by PepsiCo, the cross-brand rewards and promot
 
 Publishing has to be done by a person in the Figma app; the API can't publish.
 
-1. Open the [AI-Assisted Design System](https://www.figma.com/design/AJ0GKjFjDNvEsD4MfdyZaN/AI-Assisted-Design-System) file. Optionally rename or delete the empty "Page 1" first (see `docs/qa-report.md`).
+1. Open the [AI-Assisted Design System](https://www.figma.com/design/AJ0GKjFjDNvEsD4MfdyZaN/AI-Assisted-Design-System) file.
 2. Open the **Assets** panel → **Library** icon (book) → **Publish**.
 3. Check the list:
-   - Collections `2. Theme` and `3. Scale`, the 9 text styles, and the components Button, Icon Button, Text Field, Accordion, Card, Badge, Breadcrumb, Breadcrumb Item, Pagination Dots, Dot and Icon/Chevron Down.
+   - Collections `2. Theme` and `3. Scale`, the 9 text styles, and the components Button, Icon Button, Text Field, Accordion, Card, Badge, Breadcrumb, Breadcrumb Item, Pagination Dots, Dot and the 10 Lucide icons (`Icon/…`).
    - `1. Primitives` should not be listed; it's hidden from publishing on purpose.
 4. Add a short description, e.g. "Phase 1: tokens, type, 8 components", and publish.
 5. In **Figma Make**, create a Make Kit from the published library, then add the files from `guidelines/` to the kit's guidelines: `Guidelines.md` first, then `foundations/` and `components/`.

@@ -240,3 +240,17 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** the reference inactive color `#333333` at 30% (about 1.8:1, below the 3:1 rule for graphics); fixed-size Dot frames (tested: switching an instance's State kept the old size, so the active pill stayed 8px).
 - **Why:** `text/secondary` passes 5.7:1 on white. The hug frame makes the State switch resize correctly. Gap 8 sits between the sources' 6 and 16.
 - **Date:** 2026-10-14
+
+## D34 — Accordion hover uses a new `color/text/hover` token (JOY blue, Doritos red, Rockstar violet)
+
+- **Decision:** Add the Theme token `color/text/hover` = JOY `joy/blue/500` (`#1443FF`), Doritos `doritos/red/500` (`#E31722`), Rockstar `rockstar/violet/500` (`#B64F9B`). The Accordion question turns this color on hover; the chevron stays `text/link`. Scopes: text fill, shape fill, stroke. Use it only for large text (Heading/3 or bigger) on light surfaces.
+- **Options considered:** underline on hover; a hover background token; reuse `brand/primary` (scoped to fills, and black for Rockstar) or `brand/accent` (orange for Doritos, fails on white); a new text token (chosen by the user: "primary for Doritos, accent for Rockstar").
+- **Why:** For Doritos and Rockstar, the old hover only went from `#333` to black. Red and violet are clearly visible. Contrast on `surface/subtle`: JOY 5.83, Doritos 4.33, Rockstar 4.17. The question is 20px bold on desktop and mobile, which counts as large text (3:1 needed). Resolves QA issue 1.
+- **Date:** 2026-10-16
+
+## D35 — Icon set: Lucide (supersedes D20)
+
+- **Decision:** Use [Lucide](https://lucide.dev) (ISC license, v0.460.0 SVGs) as the one outline icon set. 10 icon components on the Icons page, 16 × 16: Chevron Down (kept the old component `10:5`, new shape), Chevron Up, Chevron Left, Chevron Right, Arrow Left, Arrow Right, Share, Close, Alert Circle, Check. In Figma each icon is one filled vector named `Shape` (Lucide's 2px stroke at 24px, outlined and scaled to 16px = 1.33px), fill bound to `color/text/default`. All 10 are preferred values in the Button and Icon Button icon slots. In code: `lucide-react` at `size={16}`.
+- **Options considered:** Material Symbols (outline); Heroicons (outline); Phosphor; Lucide.
+- **Why:** Lucide is one of the most widely used outline sets, is free, and has a React package Figma Make can import directly, so Figma and code use the same icons. Keeping one filled `Shape` layer per icon means a component's color override carries over when you swap icons. Resolves QA issue 4.
+- **Date:** 2026-10-16

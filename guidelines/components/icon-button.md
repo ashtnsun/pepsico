@@ -9,7 +9,7 @@ A round 48px button that shows one icon and no visible label, used for carousel 
 
 ## Anatomy
 - Container: 48 × 48 px circle: padding `var(--spacing-16)` on all sides around a 16px icon, `border-radius: var(--radius-full)`, border `var(--border-width-thick)` solid (inside, doesn't change the size).
-- Icon: 16 × 16 px, one icon from the outline icon set (placeholder: chevron). Icon color uses the token in the table below.
+- Icon: one Lucide icon from `lucide-react` at `size={16}` (e.g. `ChevronLeft` / `ChevronRight` for carousels, `Share2`, `X`). Icon color uses the token in the table below, set as the button's `color`.
 - Accessible name: always set `aria-label` (e.g. "Next prize"). The icon itself is `aria-hidden="true"`.
 
 ## Variants and states
@@ -34,8 +34,10 @@ A round 48px button that shows one icon and no visible label, used for carousel 
 
 ## Example
 ```jsx
+import { ChevronRight } from 'lucide-react';
+
 <button className="icon-btn" aria-label="Next prize">
-  <ChevronRightIcon aria-hidden="true" width={16} height={16} />
+  <ChevronRight aria-hidden="true" size={16} />
 </button>
 
 <style>{`
@@ -47,6 +49,5 @@ A round 48px button that shows one icon and no visible label, used for carousel 
 .icon-btn:active { background:var(--color-action-primary-pressed); border-color:var(--color-action-primary-pressed); color:var(--color-text-on-action-pressed); }
 .icon-btn:focus-visible { outline:var(--border-width-thick) solid var(--color-border-focus); outline-offset:2px; }
 .icon-btn:disabled { opacity:calc(var(--opacity-disabled) / 100); cursor:not-allowed; }
-.icon-btn svg { fill: currentColor; }
 `}</style>
 ```

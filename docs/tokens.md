@@ -34,6 +34,7 @@ In code, each variable becomes a CSS custom property: slashes become hyphens, e.
 | `color/text/on-action-inverse` | `#1443FF` | white | white | Label on a filled button placed on a dark band |
 | `color/text/link` | `#1443FF` | `#030303` | `#000000` | Text links, tertiary buttons |
 | `color/text/link-pressed` | `#1443FF` | `#E31722` | `#000000` | Outline / text-link label while pressed (light background) |
+| `color/text/hover` | `#1443FF` | `#E31722` | `#B64F9B` | Text that changes color on hover but isn't a link or button (accordion questions) |
 | `color/text/on-action-inverse-pressed` | `#0024B5` | `#FA7115` | `#B64F9B` | Filled button on a dark band, label while pressed |
 | `color/text/on-feedback-active` | `#0A0F36` | same | same | Text on the Active badge |
 | `color/text/on-feedback-expired` | white | same | same | Text on the Ended badge |

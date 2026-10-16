@@ -8,7 +8,7 @@ All checks were run by scripts that read the Figma file and the repo, not by eye
 
 | Check | Result |
 | --- | --- |
-| Variables: scopes, code syntax, descriptions, aliases | ✅ 81 variables, 0 issues |
+| Variables: scopes, code syntax, descriptions, aliases | ✅ 81 variables, 0 issues (82 after Prompt 16 added `color/text/hover`) |
 | Theme only aliases Primitives (no raw values) | ✅ |
 | `tokens/*.json` matches Figma | ✅ 0 differences |
 | Components bind every fill, stroke, radius, padding, gap and stroke weight to a variable | ✅ 0 issues across 10 component sets / components |
@@ -21,9 +21,9 @@ All checks were run by scripts that read the Figma file and the repo, not by eye
 
 ## Inventory
 
-**Pages:** Page 1 (empty), Foundations, Icons, Button, Text Field, Icon Button, Accordion, Card, Badge, Breadcrumb, Pagination Dots.
+**Pages:** Foundations, Icons, Button, Text Field, Icon Button, Accordion, Card, Badge, Breadcrumb, Pagination Dots.
 
-**Variables:** `1. Primitives` 21 (hidden from publishing) · `2. Theme` 29 (JOY default, Doritos, Rockstar) · `3. Scale` 31.
+**Variables:** `1. Primitives` 21 (hidden from publishing) · `2. Theme` 29, now 30 (JOY default, Doritos, Rockstar) · `3. Scale` 31.
 
 **Text styles (9):** Display, Heading/1–3, Body/L, Body/M, Body/S, Label, Caption. Each has its font family, size and line height bound to variables.
 
@@ -39,7 +39,7 @@ All checks were run by scripts that read the Figma file and the repo, not by eye
 | Breadcrumb | 1 | Has level 2, 3, 4 | 14 |
 | Dot | 2 | State | 4 |
 | Pagination Dots | 1 | Has dot 4, 5 | 6 |
-| Icon/Chevron Down (placeholder) | 1 | — | — |
+| Icon/… (10 Lucide icons, Prompt 16) | 10 | — | — |
 
 ## Contrast (computed from the Figma values)
 
@@ -51,6 +51,7 @@ All checks were run by scripts that read the Figma file and the repo, not by eye
 | `text/secondary` on `surface/subtle` | 4.5:1 | 5.22 | 5.22 | 5.22 |
 | `text/link` on `surface/default` | 4.5:1 | 6.41 | 20.62 | 21.00 |
 | `text/link-pressed` on `surface/default` | 4.5:1 | 6.41 | 4.76 | 21.00 |
+| `text/hover` on `surface/subtle` (Accordion question, 20px bold = large text; added Prompt 16) | 3:1 | 5.83 | 4.33 | 4.17 |
 | `text/on-inverse` on `surface/inverse` | 4.5:1 | 7.92 | 20.62 | 21.00 |
 | `text/on-action` on `action/primary` | 4.5:1 | 6.41 | 20.62 | 21.00 |
 | `text/on-action` on `action/primary-hover` | 4.5:1 | 7.92 | 20.62 | 21.00 |
@@ -76,16 +77,16 @@ All checks were run by scripts that read the Figma file and the repo, not by eye
 
 | # | Issue | Where | Options |
 | --- | --- | --- | --- |
-| 1 | For Doritos and Rockstar, Accordion hover only darkens the question from `#333` to black, which is hard to see | Accordion | Underline on hover · add a hover background token |
-| 2 | The red Ended badge blends into Doritos-red areas | Badge | White border · keep badges off red areas (current guideline) |
-| 3 | On dark backgrounds, Doritos and Rockstar Primary looks the same as Secondary (as the brand sheet draws it) | Button, Icon Button | Keep · give Primary a different fill on dark |
-| 4 | The icon set isn't chosen; `Icon/Chevron Down` is a placeholder | Icons, Button, Icon Button, Accordion | Pick one outline icon set |
-| 5 | Galano Grotesque isn't installed; Inter is a placeholder | All text | Get the license, then swap `font/family/brand` and the weight names |
+| 1 | ✅ **Resolved (Prompt 16, D34):** Accordion hover now uses `color/text/hover` (Doritos red 4.33:1, Rockstar violet 4.17:1 on `surface/subtle`; large text needs 3:1) | Accordion | — |
+| 2 | Kept as is (Prompt 16). The red Ended badge blends into Doritos-red areas | Badge | White border · keep badges off red areas (current guideline) |
+| 3 | Left for now (Prompt 16). On dark backgrounds, Doritos and Rockstar Primary looks the same as Secondary (as the brand sheet draws it) | Button, Icon Button | Keep · give Primary a different fill on dark |
+| 4 | ✅ **Resolved (Prompt 16, D35):** Lucide chosen; 10 icons built, placeholder chevron replaced | Icons, Button, Icon Button, Accordion | — |
+| 5 | Left for now (Prompt 16). Galano Grotesque isn't installed; Inter is a placeholder | All text | Get the license, then swap `font/family/brand` and the weight names |
 | 6 | The light Text Field border borrows a text token (`text/secondary`) | Text Field | Keep · add `color/border/input` |
 
 ## Housekeeping
 
-- **Page 1 is empty.** Rename it to "Cover" (with a short Read Me) or delete it before publishing.
+- ~~**Page 1 is empty.**~~ Deleted by the team (Prompt 16).
 - **Foundations page:** hex values and token names on the boards are typed text. Swatches update automatically, but the text doesn't; regenerate it if a Primitive value changes.
 - **Documentation aids:** the state/row labels next to each component set use fixed grey text. They're notes for designers, not part of the components, and aren't published as components.
 - **Reference differences** (all recorded in `docs/decisions.md`): Primary hover underline for all brands (D19), focus ring outside the button (D21), Button and Text Field 44px tall (D23, D28), Accordion open background (D29), prize card artwork (D30), solid grey pagination dots (D33).
