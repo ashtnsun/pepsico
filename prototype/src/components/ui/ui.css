@@ -1,0 +1,27 @@
+/* ---------- Accordion (live-site FAQ) ---------- */
+.accordion { max-width: 870px; margin: 0 auto; }
+.accordion__item { border-bottom: 1px solid var(--color-text-default); }
+.accordion__item h3 { margin: 0; }
+.accordion__question {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-24); width: 100%;
+  padding: 30px 0 20px; background: none; border: 0; cursor: pointer; text-align: left;
+  font-size: var(--font-size-20); line-height: 26px; font-weight: 600; color: var(--color-text-default);
+}
+.accordion__question:hover { color: var(--color-text-hover); }
+.accordion__chevron { color: var(--site-blue); flex: none; transition: transform .2s; margin-right: 10px; }
+.accordion__chevron.is-open { transform: rotate(180deg); }
+.accordion__answer { padding: 0 0 24px; font-size: var(--font-size-16); line-height: 21px; color: var(--color-text-secondary); white-space: pre-line; }
+@media (max-width: 767px) { .accordion__question { font-size: 18px; line-height: 24px; padding: 20px 0 16px; } }
+
+/* ---------- Share row ---------- */
+.share { display: inline-flex; align-items: center; gap: 15px; font-size: 13px; font-weight: 600; color: inherit; }
+.share button { background: none; border: 0; padding: 2px; color: inherit; cursor: pointer; display: flex; }
+.share button:hover { opacity: .75; }
+
+/* ---------- Modal ---------- */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 120; display: flex; align-items: flex-start; justify-content: center; padding: 96px 16px 16px; overflow-y: auto; }
+.modal { background: #fff; border-radius: var(--radius-card); max-width: 560px; width: 100%; padding: 48px 40px 40px; text-align: center; position: relative; }
+.modal h2 { margin-bottom: var(--spacing-16); }
+.modal p { color: var(--color-text-secondary); line-height: 21px; }
+.modal__actions { display: flex; gap: var(--spacing-12); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-32); }
+.modal__close { position: absolute; right: 16px; top: 16px; background: none; border: 0; cursor: pointer; color: var(--color-text-default); padding: 6px; }

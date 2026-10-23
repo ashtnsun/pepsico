@@ -12,6 +12,7 @@ A themeable design system for JOY by PepsiCo, the cross-brand rewards and promot
 | --- | --- |
 | `references/` | Source material: PDFs, screenshots, brand guidelines. Read-only. |
 | `references/live-site/` | Screenshots and CSS captured from joy-pepsico.eu (Prompt 0.5). |
+| `prototype/` | Interactive web prototype of the redesigned site, for usability testing (Prompt 17). See [prototype/README.md](prototype/README.md). |
 | `tokens/` | Design tokens as W3C DTCG JSON (`primitives.json`, `theme.json`, `scale.json`). |
 | `guidelines/` | Instructions for Figma Make (an AI) on how to rebuild each foundation and component in code. |
 | `docs/` | Process log, decisions, audit, token docs, QA report, screenshots. |

@@ -1,0 +1,16 @@
+/* Moderator tool, deliberately plain so it never reads as part of the JOY design. */
+.mod {
+  position: fixed; right: 16px; bottom: 16px; z-index: 400; width: 320px; max-height: calc(100vh - 32px); overflow-y: auto;
+  background: #1E1E1E; color: #EEE; border-radius: 8px; padding: 14px 16px 16px; font: 13px/1.4 system-ui, sans-serif;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.mod__head { display: flex; justify-content: space-between; align-items: center; }
+.mod__head button { background: none; border: 0; color: #EEE; cursor: pointer; }
+.mod h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #9A9A9A; margin: 14px 0 6px; }
+.mod__small { color: #B5B5B5; font-size: 12px; margin: 4px 0; }
+.mod__row { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+.mod__row button, .mod select, .mod__reset { background: #333; color: #EEE; border: 1px solid #555; border-radius: 4px; padding: 5px 8px; cursor: pointer; font: inherit; }
+.mod__row button:hover, .mod__reset:hover { background: #444; }
+.mod select { width: 100%; }
+.mod__check { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
+.mod__reset { margin-top: 14px; width: 100%; background: #5A1A1A; border-color: #8A2A2A; }

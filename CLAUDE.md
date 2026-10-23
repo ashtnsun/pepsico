@@ -100,6 +100,17 @@ joy-design-system/
     └── screenshots/
 ```
 
+## Prototype phase (web, for usability testing)
+
+From Prompt 17 we also build an interactive web prototype of the redesigned site in `prototype/` (Vite + React + TypeScript). It is for usability testing, so the major tasks must work end to end.
+
+- **Looks:** match the live site (captures in `references/live-site/`). The wireframes only suggest structure and new features; never copy their visuals.
+- **Colors:** buttons, links and navigation stay JOY blue on every page, as on the live site. The brand color only fills promotion surfaces (hero band, step circles, prize band, teaser card). This is different from the Figma `Doritos`/`Rockstar` modes (D36).
+- **Tokens:** `prototype/src/styles/tokens.css` is a copy of `guidelines/foundations/tokens.md`. Values the live site uses that aren't tokens (yellow CTA, brand teaser colors, button height 45) live in `prototype/src/styles/site.css` with a comment naming their source. The Figma rules about binding variables don't apply to the prototype.
+- **Images:** real assets from the live site in `prototype/public/images/` (internal testing only). Font: Inter.
+- **Data:** fake, stored in the browser (`localStorage`). A hidden moderator panel (`Shift + M`) resets data and forces a win or a loss.
+- Run with `cd prototype && npm install && npm run dev`.
+
 ## Logging (required, every session)
 
 At the end of every session, **append** (never overwrite) an entry to `docs/process-log.md`:

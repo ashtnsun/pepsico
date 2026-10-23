@@ -254,3 +254,31 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** Material Symbols (outline); Heroicons (outline); Phosphor; Lucide.
 - **Why:** Lucide is one of the most widely used outline sets, is free, and has a React package Figma Make can import directly, so Figma and code use the same icons. Keeping one filled `Shape` layer per icon means a component's color override carries over when you swap icons. Resolves QA issue 4.
 - **Date:** 2026-10-16
+
+## D36 — Web prototype follows the live site's visuals, not the Figma brand modes
+
+- **Decision:** The usability-test prototype (`prototype/`) copies the live site's look: JOY-blue navigation, breadcrumb bar, buttons and links on every page, and the brand color only on promotion surfaces (hero band, step circles, prize band, teaser card). The Figma `Doritos` and `Rockstar` Theme modes (black buttons) and the Figma-based choices in D31 (Ended pill) and D32 (white breadcrumb bar) are not used in the prototype. Wireframes only decide page structure and new features.
+- **Options considered:** build the prototype from the Figma components and brand modes; follow the live site.
+- **Why:** The user asked for the prototypes to keep the existing site's visual design, so test results are about structure and features, not a new look. The design system tokens are still the base (`tokens.css`); live-site values without a token are in `site.css` with their source.
+- **Date:** 2026-10-23
+
+## D37 — Prototype stack: Vite + React + TypeScript, hash routing, fake data in localStorage
+
+- **Decision:** One static web app. `HashRouter` so the build works from any folder or static host. A fake back end in `src/state/store.tsx` keeps accounts, entries, used codes and newsletter sign-ups in `localStorage`. A hidden moderator panel (Shift + M) resets data, logs in a test user and forces win or lose.
+- **Options considered:** Figma prototype; Figma Make; a real back end.
+- **Why:** Participants need real typing, validation and state (codes, entry limits, progress), which Figma prototypes can't do well. No server keeps hosting free and simple; the moderator needs a quick reset between participants.
+- **Date:** 2026-10-23
+
+## D38 — Prototype uses real live-site content and a fixed "today" (23 Oct 2026)
+
+- **Decision:** All copy, dates, prizes, FAQs, images and two Doritos videos come from the live site, captured on 2026-10-23 through a browser session a teammate unlocked (the site blocks bots). The prototype's date is fixed to 2026-10-23, so Avengers Doomsday and the Doritos wrap-up are active and four promotions are ended in every session. Pages carry `noindex`.
+- **Options considered:** placeholder images and lorem ipsum; the real current date.
+- **Why:** The user chose real images. A fixed date keeps test sessions identical whatever day they run.
+- **Date:** 2026-10-23
+
+## D39 — Prototype-only features and rules (need team input)
+
+- **Decision:** Added from the wireframes, in the live-site style: progress tracker on the logged-in home (every 4 entries earns "a bonus entry into the JOY monthly prize draw", a placeholder rule); "Suggested for you" and "Your entries" cards; search and filters on Promotions; sticky section menu with a Participate button; code entry, "Calculating your instant results…", win / lose / entered screens; onboarding (country + terms) after a first social login; profile entry history. Ended teasers are greyed out with a red "Ended" label. Code rules: Avengers codes start with GB, Doritos with GBC; each code works once; Avengers allows one entry per week, the wrap-up one per person.
+- **Options considered:** leave these out until the team defines them.
+- **Why:** The user wants the major tasks to work end to end. The reward rule is labelled as a placeholder in `prototype/README.md` and `src/data/config.ts`.
+- **Date:** 2026-10-23

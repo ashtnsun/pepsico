@@ -759,3 +759,43 @@ For the accordian, make the text color primary for doritos, accent for rockstar?
 - Still open from QA: buttons on dark for Doritos/Rockstar (issue 3), Galano Grotesque license (issue 5), Text Field border token (issue 6).
 - Optional: add `CircleAlert` to the Text Field error message now that an icon exists (the QA report suggested it for the dark-background error case). Not done; outside this prompt.
 - Publish the library and build the Make Kit (README steps).
+
+---
+## Session 19 — Prompt 17: Web prototype for usability testing — 2026-10-23
+
+### Prompt (verbatim)
+new plan. Instead of building the prototypes directly in Figma itself using MCP, I want to build them out in the web, fully interactive. The main purpose of this is to enable those web prototypes to be used for usability testing. So try to use, or I will provide you the links for the current design system, the wireframes that we have for the redesigned screens, and the existing screenshots of all the of the existing site is already in the folder, in the references folder. I do want to make sure that these prototypes will keep the existing visual design as the current site, the wireframes are just references for the strucutre and new features. Let me know what the plan is and if you have any questions. Heres the design system:https://www.figma.com/design/AJ0GKjFjDNvEsD4MfdyZaN/AI-Assisted-Design-System?node-id=14-2&t=CPP3SOji1bFIJLJp-1 heres the wireframes: https://www.figma.com/design/IMEy8gioQJFpGIgb9qIUJe/Wireframes?node-id=0-1&t=HX5VeZ605s7yVkMn-1
+
+Follow-up (answers to my questions):
+The wireframes are there for broad reference only, they are not visually polished or consistent. Make sure to follow the existing site visuals/how components/elements on the site look. The wireframes should only inform general concepts/ideas of what the stucture should look like. 1. use inter 2. use real images 3. yes 4. basically everything/major tasks, even thugh it's for usability testing, the major tasks/funcationlity of the site should be implemented 5. skip 6. dont worry about that 7. no skip
+
+(Preceded by "whats the current state of the project?", answered from the log and QA report; no changes.)
+
+### What I did
+- Read the 8 JOY wireframe frames (Home logged in/out, Onboarding, Promo Gallery, Promo Details, Promo Loading, Results win/lose, Brand) with `get_metadata` and screenshots. Ignored the Travel/Life Style template frames and the two "D/ PROMOTION LANDINGPAGE EU" frames (user: skip).
+- Studied every live-site capture in `references/live-site/` (sliced into tiles) to match layout and components.
+- A teammate unlocked the live site in the Playwright browser (bot check). In that session I: listed pages and image URLs; downloaded 119 images and 2 Doritos videos through the page's own `fetch`; measured exact styles (navbar, breadcrumb, buttons, teaser cards, steps, prize band, FAQ, newsletter, footer, brand band colors); copied promotion copy, steps, prizes, legal text and FAQs.
+- Built `prototype/` (Vite + React + TypeScript): design-system tokens + live-site values, data files, fake back end, layout, promotion components, 15 routes, moderator panel.
+- Added a "Prototype phase" section to `CLAUDE.md` and a pointer in `README.md`.
+
+### Changes
+- Repo: `prototype/` (new: app source, `public/images` 119 files ~11 MB, `public/media` 2 videos ~15 MB, `README.md`); `CLAUDE.md`; `README.md`; `.gitignore` (`dist/`); `docs/decisions.md` (D36–D39); `docs/screenshots/prompt-17-*.png` (6).
+- Figma: none (read-only: Wireframes file `IMEy8gioQJFpGIgb9qIUJe`).
+
+### Decisions
+- D36 — prototype follows the live site's visuals; brand color only on promotion surfaces.
+- D37 — Vite + React + TS, hash routing, fake data in localStorage, moderator panel.
+- D38 — real live-site content and a fixed date of 2026-10-23.
+- D39 — prototype-only features and rules, including a placeholder reward rule.
+
+### Verification
+- `tsc --noEmit` and `vite build` pass.
+- Screenshots at 1440 px compared with the live captures: home, promotions, promotion page (Avengers), ended promotion, Doritos and Rockstar brand pages, login, register, result, logged-in home.
+- Scripted end-to-end run in the browser, no page errors: participate while logged out → login prompt → register (5 validation errors on empty submit) → back to the promotion → wrong code error → valid code → "Calculating…" → win screen → weekly limit shown on the promotion → Doritos wrong prefix error → draw entry → progress tracker "2 entries away" → log out → unknown email message → magic-link login → profile shows 2 entries.
+- 390 px: home, promotion page, promotions, register, brand page, participate, mobile menu; no horizontal scrolling. Moderator test user shows "1 entry away".
+
+### Open questions / next steps
+- Define the real reward rule behind the progress tracker (placeholder: every 4 entries = bonus draw entry).
+- Where to host for testing (Vercel, GitHub Pages or Netlify). The build is a static folder; deploying puts real brand assets on a public URL, so confirm first.
+- Galano Grotesque is still unlicensed (Inter used).
+- Not covered: the two "D/ PROMOTION LANDINGPAGE EU" wireframe frames (skipped), cookie banner, the "terms updated" pop-up, languages other than English.
