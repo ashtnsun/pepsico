@@ -291,3 +291,17 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Promotions.tsx`, `prototype/src/pages/Home.tsx`, `prototype/src/pages/pages.css`, `prototype/src/components/promo/promo.css`.
 - **Checked by:** `tsc --noEmit`. Playwright: the promotions grid has 3 columns at 1440 px, 2 at 900 px and 1 at 390 px, with all 6 cards and no sideways scroll. The filter row and the grid share the same left and right edges (167–1257 px at 1440). The logged-in home grid has 3 columns. Screenshots of both pages at 1440 px and of the promotions page at 390 px. The "Entered" card state on the promotions page wasn't clicked through (the test account had no entries).
 - **Decision record:** none.
+
+### Change 11 — All brands page: text matches the rest of the site, visible grid lines — 2026-10-26
+
+- **Prompt (verbatim):** On the all brands page, make sure all the headings/text is consistent with the text on the rest of the site. The line border is also barely visible.
+- **What changed:**
+  - Brand names in the grid ("Doritos", "Rockstar", …) were 16 px body text. They now use the site's shared `.h3` style (20 px, semibold), the same as other headings inside lists, such as FAQ questions and empty-state titles. They're now real `<h2>` headings, so screen-reader users can jump between brands. Brand names turn JOY blue on hover, like the FAQ questions do.
+  - "Our brands", the intro line, and the "No active promotions" counts already used the shared styles (`.h1`, `.page-head p`, 14 px secondary text like the date on promo cards), so they stay the same.
+  - The grid lines were `--color-border-default` (`#EDEDED`, about 1.2:1 on white). They now use `--color-text-default` (`#333333`), the same colour as the FAQ accordion lines.
+  - Mobile: the darker lines showed that the 2-column grid was about 80 px wider than a 390 px screen and that tiles in a row had different heights. Columns can now shrink (`minmax(0, 1fr)`), mobile tiles drop the square shape so each row lines up, logos get a fixed 96 px height, and tile text is centred.
+- **Why:** user's request. Claude's addition: the mobile overflow fix, because the new lines made the broken grid visible.
+- **How AI was used:** Claude compared the computed font sizes and weights on the brands page with the FAQ, promotions and home pages using Playwright, then reused existing shared classes instead of adding new type styles.
+- **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Playwright screenshots of `/brands` at 1440 and 390 px. Desktop: 4 × 2 grid with clearly visible lines; brand names are 20 px/600. Mobile: 2 columns inside the 16 px gutters, no sideways scroll, rows aligned, counts centred.
+- **Decision record:** none.

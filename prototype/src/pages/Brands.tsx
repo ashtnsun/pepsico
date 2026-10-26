@@ -20,7 +20,7 @@ export function BrandsIndex() {
           return (
             <Link key={b.slug} to={`/brands/${b.slug}`}>
               <img src={b.logo} alt="" />
-              <span>{b.name}</span>
+              <h2 className="h3">{b.name}</h2>
               <span className="brands-grid__count">{n ? `${n} active promotion${n > 1 ? 's' : ''}` : 'No active promotions'}</span>
             </Link>
           )
