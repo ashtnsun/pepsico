@@ -305,3 +305,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc -b`. Playwright screenshots of `/brands` at 1440 and 390 px. Desktop: 4 × 2 grid with clearly visible lines; brand names are 20 px/600. Mobile: 2 columns inside the 16 px gutters, no sideways scroll, rows aligned, counts centred.
 - **Decision record:** none.
+
+### Change 12 — All brands page: no intro line, no grid lines — 2026-10-26
+
+- **Prompt (verbatim):** Remove the Pick a brand to see its promotions and news. label. remove the table/borders on the brands
+- **What changed:** the line "Pick a brand to see its promotions and news." under "Our brands" is gone. The lines around and between the brand tiles are gone (this undoes the darker lines from change 11). Brands now sit on plain white: logo, brand name, and active-promotion count. The layout (4 per row on desktop, 2 on phones), the brand-name style and the hover effects stay as they were.
+- **Why:** user's request.
+- **How AI was used:** Claude removed the paragraph from `Brands.tsx` and the border rules from `.brands-grid`, then checked the page with Playwright.
+- **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Playwright screenshots of `/brands` at 1440 and 390 px: no intro line, no borders, rows still evenly spaced, no sideways scroll on mobile.
+- **Decision record:** none.

@@ -13,7 +13,7 @@ export function BrandsIndex() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Brands' }]} />
-      <div className="page-head"><h1 className="h1">Our brands</h1><p>Pick a brand to see its promotions and news.</p></div>
+      <div className="page-head"><h1 className="h1">Our brands</h1></div>
       <div className="brands-grid">
         {brands.map((b) => {
           const n = activeCount(b.slug)
