@@ -16,7 +16,7 @@ export function SigningIn({ onDone }: { onDone: () => void }) {
   useEffect(() => { const t = window.setTimeout(onDone, 1300); return () => window.clearTimeout(t) }, [onDone])
   return (
     <div className="signing-in" role="status">
-      <div className="signing-in__card"><img src="./images/global/joy-logo-white.png" alt="JOY" /><p>Signing in...</p></div>
+      <div className="signing-in__card"><img src="./images/global/joy-logo-white.png" alt="JOY" /><p>Signing in<span className="dots" aria-hidden><span>.</span><span>.</span><span>.</span></span></p></div>
     </div>
   )
 }

@@ -216,3 +216,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/pages.css`.
 - **Checked by:** Playwright screenshot at 1425 px.
 - **Decision record:** none.
+
+### Change 4 — Animated dots on the "Signing in..." screen — 2026-10-26
+
+- **Prompt (verbatim):** On the loading screen after signin/login, add animations to the ... to show loading
+- **What changed:** on the blue "Signing in..." screen after login or register, the three dots now take turns bouncing up and fading in, one after another, on a 1.2-second loop. People who turn on "reduce motion" on their device see still dots.
+- **Why:** user's reason: still dots don't show that something is loading. Claude's addition: the reduce-motion fallback (accessibility), which matches the existing loading-shapes animation.
+- **How AI was used:** Claude wrapped each dot in its own element in `SigningIn` and added a CSS keyframe animation with a small delay between dots. Screen readers still hear "Signing in", because the dots are hidden from them. The Playwright browser was busy in another session, so Claude checked the animation on a test page with headless Chromium, taking screenshots at two moments.
+- **Files:** `prototype/src/pages/Auth.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc --noEmit`; two headless Chromium frames showing the dots at different heights and fades. Not yet watched live inside the app.
+- **Decision record:** none.

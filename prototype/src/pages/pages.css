@@ -112,6 +112,11 @@
 .signing-in__card { background: #fff; border-radius: var(--radius-container); padding: 32px 80px; text-align: center; }
 .signing-in__card img { width: 62px; margin: 0 auto 30px; filter: brightness(0) saturate(100%) invert(19%) sepia(96%) saturate(5546%) hue-rotate(232deg) brightness(102%) contrast(101%); }
 .signing-in__card p { font-size: var(--font-size-24); font-weight: 600; }
+.dots span { display: inline-block; animation: dot-bounce 1.2s infinite ease-in-out; }
+.dots span:nth-child(2) { animation-delay: .15s; }
+.dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes dot-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-6px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .dots span { animation: none; } }
 
 .country-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px 20px; max-width: 1300px; margin: 0 auto; padding: 0 16px 100px; }
 .country-grid button { background: none; border: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 14px; font-size: 16px; color: var(--color-text-default); padding: 8px; border-radius: var(--radius-container); }
