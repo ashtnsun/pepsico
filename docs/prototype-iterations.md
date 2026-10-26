@@ -183,3 +183,14 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Checked by:** `tsc --noEmit`; screenshot of `/register` (red asterisks, no breadcrumb, new heading, no "(required)/(optional)"). The Onboarding step uses the same `Req` marker and checkbox list but needs a social sign-in to reach, so it wasn't screenshotted.
 - **Decision record:** none.
 - **Open question:** the Login page still says "Log in with your favourite Social Media." Should it become "Log in with:" for the same reason? Its "E-mail*" asterisk is also still black.
+
+### Change 3 — Login page: "Log in with:" and red asterisk — 2026-10-26
+
+- **Prompt (verbatim):** yes
+  (Answer to Claude's open question from Change 2: should Login also say "Log in with:" and use a red asterisk on E-mail?)
+- **What changed:** on Login, "Log in with your favourite Social Media." now reads "Log in with:", and the `*` after E-mail is red, the same as on Register.
+- **Why:** same reasons as Change 2: "Social Media" doesn't fit a Google account, and every required mark in the sign-in flow should look the same.
+- **How AI was used:** Claude made the two edits in `Auth.tsx`, typechecked, and took a headless Chromium screenshot of `/login` at 1440 px.
+- **Files:** `prototype/src/pages/Auth.tsx`.
+- **Checked by:** `tsc --noEmit`; screenshot of `/login`.
+- **Decision record:** none.

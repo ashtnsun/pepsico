@@ -89,7 +89,7 @@ export function Login() {
           <p className="auth__lead">Select a login method.</p>
           <form onSubmit={submit} noValidate>
             <div className="field">
-              <label htmlFor="login-email" className="field__label">E-mail*</label>
+              <label htmlFor="login-email" className="field__label">E-mail<Req /></label>
               <input id="login-email" type="email" autoComplete="email" className="field__input" placeholder="mail@mail.com" value={email}
                 onChange={(e) => { setEmail(e.target.value); setError(null); setNoAccount(false) }}
                 aria-invalid={!!error} aria-describedby={error ? 'login-error' : undefined} />
@@ -104,7 +104,7 @@ export function Login() {
             <button type="submit" className="btn btn--primary btn--block">Login with Joy account</button>
           </form>
           <p className="auth__or">OR</p>
-          <p className="auth__lead" style={{ margin: '0 0 12px' }}>Log in with your favourite Social Media.</p>
+          <p className="auth__lead" style={{ margin: '0 0 12px' }}>Log in with:</p>
           <SocialButtons onPick={pick} />
           <div className="auth__switch">
             <p>Don't have an account yet?</p>
