@@ -167,3 +167,19 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Checked by:** `tsc --noEmit`; browser check that there is 1 slide, no dots, no Walkers block, no cyan band and the new text; screenshots compared with the live captures.
 - **Decision record:** D40.
 - **Note:** the new text says "flavors" (US spelling), as typed; the rest of the site uses UK spelling ("flavours").
+
+### Change 2 — Register and onboarding forms: red asterisks, "Register with:", no breadcrumbs — 2026-10-26
+
+- **Prompt (verbatim):** On the register screen form, for the required questions, make the asterixes red. Also for the agree to terms section, instead of (required) or (optional), make them use asterixes. This should also apply to the onboarding screen if a user chose facebook/google and they have to accept terms and fill country. Change "Log in with your favourite Social Media." to "Register with: " since social media doesn't necessarily represent google account, also it's not logging in with them, it's registering an account with them.
+  Follow-up (same turn): Also remove the breadcrumbs bar for all the onboarding pages, it's unncessary.
+- **What changed:**
+  - **Red asterisks:** on Register, the `*` after E-mail, Name, Last Name and Country is now red (`--color-feedback-error`). On the social Onboarding step, the `*` after "1. Select country" and "2. Terms & Conditions" is red too.
+  - **Consents:** the Terms and Privacy checkbox ends with a red `*` instead of "(required)". The two marketing checkboxes lost "(optional)" and have no mark, so the rule is the same as the fields above: asterisk = required, nothing = optional. Register and Onboarding share this checkbox list, so both changed.
+  - **Social heading:** on Register, "Log in with your favourite Social Media." now reads "Register with:". The Login page keeps its own wording.
+  - **Breadcrumbs removed** from Login, "Check your inbox", Register and the social Onboarding step.
+- **Why:** user's reasons: a red asterisk is the familiar way to show a required field; "Social Media" doesn't fit a Google account, and on this page you register, not log in; breadcrumbs add nothing on these one-step pages. Claude's addition: none.
+- **How AI was used:** Claude found the labels and consent text in `Auth.tsx`, added a small `Req` marker (one red `*`) used everywhere a required mark appears, typechecked, and took a headless Chromium screenshot of Register at 1440 px.
+- **Files:** `prototype/src/pages/Auth.tsx`, `prototype/src/styles/site.css`.
+- **Checked by:** `tsc --noEmit`; screenshot of `/register` (red asterisks, no breadcrumb, new heading, no "(required)/(optional)"). The Onboarding step uses the same `Req` marker and checkbox list but needs a social sign-in to reach, so it wasn't screenshotted.
+- **Decision record:** none.
+- **Open question:** the Login page still says "Log in with your favourite Social Media." Should it become "Log in with:" for the same reason? Its "E-mail*" asterisk is also still black.

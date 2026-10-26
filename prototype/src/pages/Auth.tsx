@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { CircleAlert, Info, MailCheck } from 'lucide-react'
 import { COUNTRIES } from '../data/config'
 import { useStore, type User } from '../state/store'
-import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { Modal } from '../components/ui/Modal'
 import { useToast } from '../components/ui/Toast'
 import './pages.css'
@@ -25,6 +24,9 @@ export function SigningIn({ onDone }: { onDone: () => void }) {
 function Err({ id, children }: { id: string; children: ReactNode }) {
   return <p id={id} className="field__error"><CircleAlert size={16} aria-hidden /> Error: {children}</p>
 }
+
+/** Red asterisk that marks a required field or consent. */
+const Req = () => <span className="req">*</span>
 
 function SocialButtons({ onPick }: { onPick: (p: 'google' | 'facebook') => void }) {
   return (
@@ -80,7 +82,6 @@ export function Login() {
 
   return (
     <>
-      <Breadcrumb items={[{ label: 'Login' }]} />
       <div className="auth">
         <div className="auth__card">
           <h1>Log In</h1>
@@ -127,7 +128,6 @@ export function CheckEmail() {
   if (!st?.email) return <Login />
   return (
     <>
-      <Breadcrumb items={[{ label: 'Login' }]} />
       <div className="auth">
         <div className="auth__card" style={{ textAlign: 'center' }}>
           <MailCheck size={56} color="#1443FF" aria-hidden style={{ margin: '0 auto 16px' }} />
@@ -149,9 +149,9 @@ export function CheckEmail() {
 }
 
 const CONSENTS = [
-  { key: 'terms', required: true, text: <>I confirm that I am at least 18 years old. I have read and accept the <Link to="/terms" target="_blank" className="link">Terms and Conditions</Link> and the <Link to="/privacy" target="_blank" className="link">Privacy Policy</Link>, which explains how PepsiCo processes my data and my privacy rights. My data will be used for promotion participation and, if I consent below, for marketing purposes. (required)</> },
-  { key: 'marketing', required: false, text: <>I agree to receive direct marketing communications, such as e-mail and SMS from PepsiCo brands. (optional)</> },
-  { key: 'ads', required: false, text: <>I agree to personalized online advertising based on my interests and preferences, on both PepsiCo's digital assets and third-party platforms. (optional)</> },
+  { key: 'terms', required: true, text: <>I confirm that I am at least 18 years old. I have read and accept the <Link to="/terms" target="_blank" className="link">Terms and Conditions</Link> and the <Link to="/privacy" target="_blank" className="link">Privacy Policy</Link>, which explains how PepsiCo processes my data and my privacy rights. My data will be used for promotion participation and, if I consent below, for marketing purposes.<Req /></> },
+  { key: 'marketing', required: false, text: <>I agree to receive direct marketing communications, such as e-mail and SMS from PepsiCo brands.</> },
+  { key: 'ads', required: false, text: <>I agree to personalized online advertising based on my interests and preferences, on both PepsiCo's digital assets and third-party platforms.</> },
 ] as const
 
 type ConsentState = Record<'terms' | 'marketing' | 'ads', boolean>
@@ -223,18 +223,17 @@ export function Register() {
 
   return (
     <>
-      <Breadcrumb items={[{ label: 'Register' }]} />
       <div className="auth">
         <form className="auth__card auth__card--wide" onSubmit={submit} noValidate>
           <h1>Register here</h1>
           {reason === 'participate' && <p className="alert alert--info" style={{ marginTop: 24 }}><Info size={18} aria-hidden /> Create your free account to take part. You’ll go straight back to the promotion.</p>}
-          <p className="auth__lead">Log in with your favourite Social Media.</p>
+          <p className="auth__lead">Register with:</p>
           <SocialButtons onPick={pick} />
           <p className="auth__or">OR</p>
 
           <h2 className="h3" style={{ fontSize: 18, fontWeight: 700, marginBottom: 18 }}>1. Account information</h2>
           <div className="field">
-            <label htmlFor="reg-email" className="field__label">E-mail*</label>
+            <label htmlFor="reg-email" className="field__label">E-mail<Req /></label>
             <input type="email" autoComplete="email" className="field__input" placeholder="mail@mail.com" value={f.email} onChange={set('email')} {...errProps('email')} />
             {errors.email && <Err id="reg-email-error">{errors.email} {errors.email.includes('Log in') && <Link to="/login" state={location.state} className="link">Log in</Link>}</Err>}
           </div>
@@ -243,17 +242,17 @@ export function Register() {
             <h2>2. Personal information</h2>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="reg-firstName" className="field__label">Name*</label>
+                <label htmlFor="reg-firstName" className="field__label">Name<Req /></label>
                 <input autoComplete="given-name" className="field__input" placeholder="Name" value={f.firstName} onChange={set('firstName')} {...errProps('firstName')} />
                 {errors.firstName && <Err id="reg-firstName-error">{errors.firstName}</Err>}
               </div>
               <div className="field">
-                <label htmlFor="reg-lastName" className="field__label">Last Name*</label>
+                <label htmlFor="reg-lastName" className="field__label">Last Name<Req /></label>
                 <input autoComplete="family-name" className="field__input" placeholder="Last Name" value={f.lastName} onChange={set('lastName')} {...errProps('lastName')} />
                 {errors.lastName && <Err id="reg-lastName-error">{errors.lastName}</Err>}
               </div>
               <div className="field">
-                <label htmlFor="reg-country" className="field__label">Country*</label>
+                <label htmlFor="reg-country" className="field__label">Country<Req /></label>
                 <select className="field__input" value={f.country} onChange={set('country')} {...errProps('country')}>
                   <option value="">- Select -</option>
                   {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
@@ -333,12 +332,11 @@ export function Onboarding() {
   }
   return (
     <>
-      <Breadcrumb items={[{ label: 'Register' }]} />
       <div className="auth">
         <form className="auth__card auth__card--wide" onSubmit={finish} noValidate>
           <h1>Almost there, {user.firstName}!</h1>
           <p className="auth__lead">You’ve signed in with {user.provider === 'google' ? 'Google' : 'Facebook'}. We just need two more things.</p>
-          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 18 }}>1. Select country*</h2>
+          <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 18 }}>1. Select country<Req /></h2>
           <div className="field">
             <label htmlFor="ob-country" className="visually-hidden">Country</label>
             <select id="ob-country" className="field__input" value={country} onChange={(e) => { setCountry(e.target.value); setErrors({ ...errors, country: undefined }) }} aria-invalid={!!errors.country} aria-describedby={errors.country ? 'ob-country-error' : undefined}>
@@ -348,7 +346,7 @@ export function Onboarding() {
             {errors.country && <Err id="ob-country-error">{errors.country}</Err>}
           </div>
           <div className="auth__section">
-            <h2>2. Terms &amp; Conditions*</h2>
+            <h2>2. Terms &amp; Conditions<Req /></h2>
             <Consents value={consent} onChange={(v) => { setConsent(v); setErrors({ ...errors, consent: undefined }) }} error={errors.consent} />
           </div>
           <div className="auth__actions" style={{ gap: 12 }}>
