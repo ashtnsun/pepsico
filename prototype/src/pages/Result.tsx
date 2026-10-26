@@ -1,10 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
 import { Frown, PartyPopper, Ticket } from 'lucide-react'
-import { getPromo, promos } from '../data/promos'
-import { REWARD_EVERY, formatDate, isActive } from '../data/config'
+import { getPromo } from '../data/promos'
+import { REWARD_EVERY, formatDate } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
-import { PromoCard } from '../components/promo/PromoCard'
 import NotFound from './NotFound'
 import { promoCrumbs } from './PromoDetail'
 import './pages.css'
@@ -21,8 +20,6 @@ export default function Result() {
   const total = myEntries.length
   const left = REWARD_EVERY - (total % REWARD_EVERY)
   const unlocked = total % REWARD_EVERY === 0
-  const entered = new Set(myEntries.map((e) => e.promo))
-  const next = promos.filter((p) => isActive(p) && !entered.has(p.slug))
 
   return (
     <>
@@ -76,13 +73,6 @@ export default function Result() {
             <Link to="/profile#entries" className="link link--caps">See all my entries</Link>
           </div>
         </div>
-
-        {next.length > 0 && (
-          <section className="result__next container" aria-labelledby="next-title">
-            <h2 id="next-title" className="h1">Try another promotion</h2>
-            <div className="card-grid">{next.map((p) => <PromoCard key={p.slug} promo={p} />)}</div>
-          </section>
-        )}
       </div>
     </>
   )

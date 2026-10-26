@@ -344,3 +344,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Participate.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc -b`. Playwright at 1440 × 900: the form, and after submitting a code the loading screen, both centred, with the footer starting at 941 px (below the 900 px screen). At 390 × 844 on a Doritos promotion: red strip, form fits the gutters, no sideways scroll, footer starts at 907 px (below the 844 px screen).
 - **Decision record:** none.
+
+### Change 15 — Result page: no "Try another promotion" section — 2026-10-26
+
+- **Prompt (verbatim):** on the promo results page, remove the Try another promotion section
+- **What changed:** the "Try another promotion" heading and the grid of promotion cards under the result card are gone. The result page now ends with the result card ("Return to homepage" and "See all my entries"), then the footer. This applies to all three outcomes (win, no win, entered into the draw).
+- **Why:** user's request.
+- **How AI was used:** Claude removed the section from `Result.tsx`, along with the code that picked which promotions to show and its now-unused imports, and deleted the two `.result__next` style rules from `pages.css`.
+- **Files:** `prototype/src/pages/Result.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Playwright at 1440 × 900 on a "Not this time" result for Avengers Doomsday: the result card shows as before, no "Try another promotion" text or card grid, and the footer follows the card's grey section.
+- **Decision record:** none.
