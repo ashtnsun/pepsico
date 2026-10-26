@@ -246,3 +246,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Home.tsx`.
 - **Checked by:** `tsc --noEmit`; Playwright full-page screenshot of the logged-in home at 1440 px (sections: progress tracker, Suggested for you, Your entries, then the newsletter footer).
 - **Decision record:** none.
+
+### Change 7 — "Home" tab in the navbar, tabs centred on the screen — 2026-10-26
+
+- **Prompt (verbatim):** for the nav bar, add a Home tab to the left of promotions. This is so home is more visible/accessible instead of assuming that peoepl know to clikc the joy icon. Make sure the 3 tabs home,promos,brands are all centered in the screen.
+- **What changed:** the navbar now reads Home · Promotions · Brands. Home is underlined only on the home page, not on every page. The three tabs are centred on the screen. Before, they were centred in the space between the logo and the Login/Register (or "Hi Sam") buttons, so they shifted when someone logged in. The mobile menu also gets a Home link at the top.
+- **Why:** user's reason: Home should be easy to see and reach, instead of assuming people know the JOY logo goes home. Claude's addition: the Home link in the mobile menu, to keep the two menus the same.
+- **How AI was used:** Claude added a `NavLink` with `end` (so it only matches `/`) to `Navbar.tsx`. In the CSS, the tab list is placed at 50% of the navbar and shifted back by half its own width. Then Claude measured the tab centre and the gaps to the logo and buttons at 992, 1200, 1440 and 1920 px, logged in and logged out, with Playwright.
+- **Files:** `prototype/src/components/layout/Navbar.tsx`, `prototype/src/components/layout/layout.css`.
+- **Checked by:** `tsc --noEmit`. Playwright: the tab centre matches the screen centre within 1 px at every width. The tightest spot is 992 px logged out, where the tabs end 15 px before the Login button (no overlap). Clicking Home goes to `/` and underlines Home. The mobile menu lists Home, Promotions, Brands.
+- **Decision record:** none.

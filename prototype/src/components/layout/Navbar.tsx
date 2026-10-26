@@ -36,6 +36,7 @@ export function Navbar() {
         </Link>
 
         <ul className="navbar__links">
+          <li><NavLink to="/" end className="navbar__link">Home</NavLink></li>
           <li><NavLink to="/promotions" className="navbar__link">Promotions</NavLink></li>
           <li>
             <button
@@ -88,6 +89,7 @@ export function Navbar() {
 
       {mobileOpen && (
         <div className="mobile-menu">
+          <NavLink to="/" end className="mobile-menu__link">Home</NavLink>
           <NavLink to="/promotions" className="mobile-menu__link">Promotions</NavLink>
           <NavLink to="/brands" className="mobile-menu__link">Brands</NavLink>
           <div className="mobile-menu__brands">

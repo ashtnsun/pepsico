@@ -8,7 +8,8 @@
 }
 .navbar__logo { display: flex; margin-left: 24px; }
 .navbar__logo img { width: 51px; height: 42px; object-fit: contain; }
-.navbar__links { list-style: none; display: flex; margin: 0 auto; padding: 0; height: 100%; }
+/* Centred on the screen, not between the logo and the session buttons (their widths differ). */
+.navbar__links { list-style: none; display: flex; margin: 0; padding: 0; height: 100%; position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
 .navbar__links li { display: flex; }
 .navbar__link {
   display: inline-flex; align-items: center; gap: 4px; margin: 0 24px; padding: 8px 0; height: 100%;
@@ -18,7 +19,7 @@
 .navbar__link::after { content: ''; position: absolute; left: -24px; right: -24px; bottom: 0; height: 5px; border-radius: 5px 5px 0 0; background: transparent; }
 .navbar__link.active::after, .navbar__link:hover::after { background: var(--color-surface-default); }
 .navbar__link .rot { transform: rotate(180deg); }
-.navbar__session { display: flex; gap: var(--spacing-8); align-items: center; }
+.navbar__session { display: flex; margin-left: auto; gap: var(--spacing-8); align-items: center; }
 .navbar__session .btn { height: 45px; padding: 0 24px; }
 .navbar__burger { display: none; margin-left: auto; background: none; border: 0; color: inherit; cursor: pointer; padding: 8px; }
 
