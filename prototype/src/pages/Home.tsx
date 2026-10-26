@@ -51,31 +51,6 @@ function Packshots({ text }: { text: string }) {
   )
 }
 
-/** Live-site home content blocks below the promotions (logged-in home). */
-function HomeContent() {
-  return (
-    <>
-      <section className="content-card container" aria-labelledby="duaf-title">
-        <h2 id="duaf-title" className="section-title">Walkers Do Us A Flavour.</h2>
-        <div className="content-card__row">
-          <img className="content-card__media" src="./images/home/walkers-duaf.jpg" alt="Two Walkers Do Us A Flavour packs: Grilled Cheese & Chilli Jam and Salt & Pepper Chicken" />
-          <div>
-            <h3 className="h1 content-card__title">Its Crunch time. Pick your winner.</h3>
-            <p className="content-card__text">Only One Can Stay.</p>
-            <Link to="/brands/walkers" className="btn btn--primary">Discover Walkers</Link>
-          </div>
-        </div>
-      </section>
-      <Packshots text="All the classics you love & new flavours waiting to be discovered" />
-      <section className="cyan-band">
-        <img className="cyan-band__deco cyan-band__deco--l" src="./images/global/band-left.svg" alt="" />
-        <img className="cyan-band__deco cyan-band__deco--r" src="./images/global/band-right.svg" alt="" />
-        <p>Joy is where you can enjoy all your favourite snacks and beverages in one place</p>
-      </section>
-    </>
-  )
-}
-
 export default function Home() {
   const { user, myEntries } = useStore()
 
@@ -132,8 +107,6 @@ export default function Home() {
           </div>
         )}
       </section>
-      <HeroCarousel slides={active.map((p) => ({ kind: 'promo' as const, promo: p }))} />
-      <HomeContent />
     </>
   )
 }

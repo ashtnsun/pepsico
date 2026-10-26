@@ -236,3 +236,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/pages.css`.
 - **Checked by:** two headless Chromium frames (bigger dots, still animating, card height unchanged).
 - **Decision record:** none.
+
+### Change 6 — Logged-in home ends after "Your entries" — 2026-10-26
+
+- **Prompt (verbatim):** On the logged-in home page, remove all the sections between the Your entries section and the stay up to date with... footer
+- **What changed:** the logged-in home page now ends with "Your entries". Removed below it: the promotion hero carousel, the "Walkers Do Us A Flavour." block, the "Creating Joy with every sip and every bite" pack photo block, and the cyan "Joy is where you can enjoy…" band. The logged-out home page is unchanged.
+- **Why:** user's request.
+- **How AI was used:** Claude removed the carousel and the `HomeContent` block from the logged-in branch of `Home.tsx`, then deleted the now-unused `HomeContent` function. Its CSS (`.content-card`, `.cyan-band`) is left in `pages.css` for now; nothing uses it.
+- **Files:** `prototype/src/pages/Home.tsx`.
+- **Checked by:** `tsc --noEmit`; Playwright full-page screenshot of the logged-in home at 1440 px (sections: progress tracker, Suggested for you, Your entries, then the newsletter footer).
+- **Decision record:** none.
