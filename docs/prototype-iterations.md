@@ -226,3 +226,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Auth.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc --noEmit`; two headless Chromium frames showing the dots at different heights and fades. Not yet watched live inside the app.
 - **Decision record:** none.
+
+### Change 5 — Bigger loading dots — 2026-10-26
+
+- **Prompt (verbatim):** the dots are slightly too small
+- **What changed:** the animated dots on the "Signing in..." screen are now 1.5× the text size. Their line height is set to 0, so the bigger dots don't make the card taller.
+- **Why:** user's reason: the dots were too small to read as a loading animation.
+- **How AI was used:** Claude added one CSS rule and checked two headless Chromium frames on a test page.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** two headless Chromium frames (bigger dots, still animating, card height unchanged).
+- **Decision record:** none.
