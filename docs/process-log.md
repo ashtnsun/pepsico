@@ -799,3 +799,32 @@ The wireframes are there for broad reference only, they are not visually polishe
 - Where to host for testing (Vercel, GitHub Pages or Netlify). The build is a static folder; deploying puts real brand assets on a public URL, so confirm first.
 - Galano Grotesque is still unlicensed (Inter used).
 - Not covered: the two "D/ PROMOTION LANDINGPAGE EU" wireframe frames (skipped), cookie banner, the "terms updated" pop-up, languages other than English.
+
+---
+## Session 20 — Save state 1: screenshots and prototype iteration log — 2026-10-26
+
+### Prompt (verbatim)
+Take full screen screenshots of the current dev site, put them in a folder somewhere. I am working on this project, and will need to document how I utilized AI, and all the changes that I'm making behind the prototype and the rationale behind them. Moving forward, I will be iterating on the current site, but will need you to document every change/prompt/rationale every time somewhere. This doc needs to be updated every change, and across different sessions. Make sure you know this/continue with this docuemntation from now on. This is the first "save state" which is after 1 prompt. I will probably mention another save state in the future.
+
+Follow-up during the session:
+Also for this 1 prompt "save state", include a summary and references to anything/context that led to this first state. Just try to docuemtn the process behind getting to this save state as well.
+
+### What I did
+- Used the dev server that was already running on `localhost:5173` (code at commit `549bfe3`, working tree clean).
+- Took full-page screenshots of 27 pages and states at 1440 px and 390 px with Playwright (54 files). Each page got its own test data in `localStorage` (logged out, or test user Sam Taylor with entries), loaded on a neutral page first so the app couldn't overwrite it. The first run had one stale-data shot (mobile participate showed the login page), so I fixed the script and retook all 54.
+- Created `docs/prototype-iterations.md`: how AI is used, the save state 1 summary (background from Prompts 0–16, inputs, Prompt 17 verbatim, process, decisions D36–D39, features, placeholders, screenshot list) and an empty change log with an entry template.
+- Added an "Iteration log (required)" rule to the Prototype phase section of `CLAUDE.md` and a memory note, so later sessions keep the log up to date.
+
+### Changes
+- Repo: `docs/prototype-iterations.md` (new), `docs/save-states/save-state-1/desktop-1440/` and `mobile-390/` (27 PNGs each), `CLAUDE.md`, `docs/process-log.md`.
+- Figma: none.
+
+### Decisions
+- Iteration log lives in its own file (`docs/prototype-iterations.md`) next to the process log — it's the document the user needs for their AI-use write-up; `process-log.md` stays the full session diary. Process choice, not an architecture decision, so not added to `decisions.md`.
+
+### Verification
+- Checked each shot's final URL and stored user; opened sample screenshots (logged-in home, win result, mobile promotion page).
+- Logged-out "participate" redirects to Log in, as designed; that shot shows the login page.
+
+### Open questions / next steps
+- The exact wording of Claude's 7 questions in Prompt 17 wasn't saved; questions 3, 6 and 7 can't be reconstructed. Fill them in if you have them.

@@ -110,6 +110,7 @@ From Prompt 17 we also build an interactive web prototype of the redesigned site
 - **Images:** real assets from the live site in `prototype/public/images/` (internal testing only). Font: Inter.
 - **Data:** fake, stored in the browser (`localStorage`). A hidden moderator panel (`Shift + M`) resets data and forces a win or a loss.
 - Run with `cd prototype && npm install && npm run dev`.
+- **Iteration log (required):** after every prototype change, append an entry to `docs/prototype-iterations.md` (prompt verbatim, what changed, why, how AI was used, files, checks). When I say "save state N", take full-page screenshots of every route at 1440 and 390 px into `docs/save-states/save-state-N/` and add a save-state summary there (what changed since the last save state and the context behind it).
 
 ## Logging (required, every session)
 
