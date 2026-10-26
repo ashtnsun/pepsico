@@ -18,7 +18,10 @@
 .packshots { text-align: center; padding: 40px 0 0; }
 .packshots__title { font-size: 60px; line-height: 64px; font-weight: 700; max-width: 560px; margin: 0 auto; padding: 0 16px; }
 .packshots__sub { margin: 20px auto 0; max-width: 760px; font-size: var(--font-size-20); padding: 0 16px; }
-.packshots img { width: 100%; margin-top: -140px; }
+/* The text sits down among the packs: the middle of the pack photo is empty, so the photo is pulled up under the text
+   (the Doritos pack ends up about 100px below the subtitle up to 1920px wide; the packs sit about 27vw down the photo). */
+.packshots__title, .packshots__sub { position: relative; z-index: 1; }
+.packshots img { width: 100%; margin-top: max(calc(100px - 27vw), -420px); pointer-events: none; } /* its transparent top can overlap the button above */
 @media (max-width: 767px) { .packshots__title { font-size: 36px; line-height: 40px; } .packshots img { margin-top: 16px; } }
 
 .cyan-band { position: relative; overflow: hidden; background: var(--site-cyan); padding: 120px var(--spacing-20); text-align: center; }

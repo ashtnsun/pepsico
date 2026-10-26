@@ -194,3 +194,15 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Auth.tsx`.
 - **Checked by:** `tsc --noEmit`; screenshot of `/login`.
 - **Decision record:** none.
+
+### Change 2 — "Creating Joy" text moved down among the packs — 2026-10-26
+
+- **Prompt (verbatim):** Move the [pasted text: "Log in with your favourite Social Media."] and every bite text content section down, just to make the white space feel less awkward
+  - The pasted text looks like a clipboard mix-up; Claude read it as the "Creating Joy with every sip and every bite" section.
+- **What changed:** on desktop and tablet (768 px and up), the title and text now sit lower among the pack photos instead of above them. Before, there was about 240 px of empty white between the text and the Doritos pack (the live site has about 95 px). Now it's about 100 px at every width up to 1920 px. Mobile is unchanged.
+- **Why:** user's reason: the white space looked awkward. It got worse in Change 1, because the longer merged text wraps onto two lines and pushes the text block up against the empty middle of the photo.
+- **How it was done:** the pack photo is pulled up under the text by an amount that grows with the screen width (`margin-top: max(calc(100px - 27vw), -420px)`), and the text is drawn on top of it. Claude's additions: the photo ignores clicks, because at wide screens its transparent top overlaps the "See all promotions" button; and the pull stops at the 1920 px amount so ultra-wide screens don't push the packs into the section above.
+- **How AI was used:** Claude compared the live capture with the prototype at 992, 1425 and 1920 px in Playwright, made the CSS change, and checked that the button can still be clicked at 992 to 2560 px.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc --noEmit`; Playwright screenshots at 992 / 1425 / 1920 px; click test on "See all promotions" at 992 / 1425 / 1920 / 2560 px.
+- **Decision record:** none (layout fix).

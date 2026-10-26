@@ -853,3 +853,25 @@ See `docs/prototype-iterations.md`, Change 1 (full prompt there).
 ### Open questions / next steps
 - Should the logged-in home also lose the Walkers block and cyan band and use the merged text?
 - "flavors" vs the site's UK "flavours".
+
+---
+## Session 20 (follow-up) — Prototype change 2: "Creating Joy" text spacing — 2026-10-26
+
+### Prompt (verbatim)
+See `docs/prototype-iterations.md`, Change 2.
+
+### What I did
+- Pulled the pack photo up under the "Creating Joy" text on desktop (`margin-top: max(calc(100px - 27vw), -420px)`), text drawn on top, photo ignores clicks.
+
+### Changes
+- Repo: `prototype/src/pages/pages.css`, `docs/prototype-iterations.md`, `docs/process-log.md`.
+- Figma: none.
+
+### Decisions
+- None.
+
+### Verification
+- Playwright screenshots at 992 / 1425 / 1920 px (gap text → Doritos ≈ 100 px); "See all promotions" still clickable at 992–2560 px.
+
+### Open questions / next steps
+- Mobile left as is; the user's prompt pasted the wrong text, so confirm that the section was the one meant.
