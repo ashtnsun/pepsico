@@ -5,7 +5,7 @@ import { isActive, isEnded } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { HeroCarousel } from '../components/promo/HeroCarousel'
-import { PromoTeaser } from '../components/promo/PromoTeaser'
+import { PromoCard } from '../components/promo/PromoCard'
 import './pages.css'
 
 const ACTIVE = promos.filter(isActive)
@@ -16,8 +16,8 @@ const SORTS = { recommended: 'Recommended', newest: 'Newest', ending: 'Ending so
 type Sort = keyof typeof SORTS
 
 /**
- * Live-site promotions page, plus the wireframe "Promo Gallery" ideas: one list of all promotions
- * that can be filtered and sorted. Ended promotions always come last, greyed out and labelled "Ended".
+ * Live-site promotions page, plus the wireframe "Promo Gallery" ideas: a grid of all promotions
+ * (the same PromoCard as the home page) that can be filtered and sorted. Ended promotions always come last.
  */
 export default function Promotions() {
   const { myEntries } = useStore()
@@ -42,6 +42,7 @@ export default function Promotions() {
   }, [brand, type, sort, myEntries])
 
   const filtering = brand !== '' || type !== ''
+  const latestEntry = (slug: string) => [...myEntries].reverse().find((e) => e.promo === slug)
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function Promotions() {
       <h1 className="visually-hidden">Promotions</h1>
       <HeroCarousel slides={ACTIVE.map((p) => ({ kind: 'promo' as const, promo: p }))} start={1} />
 
-      <section aria-labelledby="all-title" style={{ paddingBottom: 64 }}>
+      <section className="container" aria-labelledby="all-title" style={{ paddingBottom: 64 }}>
         <h2 id="all-title" className="section-title listing-section-title">All promotions</h2>
         <div className="listing-tools" role="group" aria-label="Filter and sort promotions">
           <div className="field listing-tools__field">
@@ -77,7 +78,7 @@ export default function Promotions() {
           </div>
         </div>
         <div aria-live="polite">
-          {list.length ? list.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)
+          {list.length ? <div className="card-grid">{list.map((p) => <PromoCard key={p.slug} promo={p} entry={latestEntry(p.slug)} />)}</div>
             : <div className="empty-state"><h3 className="h3">No promotions match</h3><p>Try another brand or promotion type.</p></div>}
         </div>
       </section>

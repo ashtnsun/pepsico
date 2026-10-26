@@ -31,7 +31,7 @@
 @media (max-width: 767px) { .cyan-band { padding: 64px var(--spacing-16); } .cyan-band p { font-size: var(--font-size-24); line-height: var(--line-height-28); } .cyan-band__deco { opacity: .4; } }
 
 /* ---------- Promotions listing ---------- */
-.listing-tools { max-width: calc(var(--site-content) + 40px); margin: 0 auto; padding: 0 var(--spacing-20); display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+.listing-tools { margin-bottom: var(--spacing-32); display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
 .listing-tools__field { margin-bottom: 0; flex: 0 1 220px; }
 .listing-tools__field .field__label { font-weight: 600; }
 .listing-tools__clear { height: 42px; display: inline-flex; align-items: center; gap: 4px; }

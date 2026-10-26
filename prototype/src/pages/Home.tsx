@@ -98,7 +98,7 @@ export default function Home() {
         </div>
         {latestEntries.length ? (
           <div className="card-grid">
-            {latestEntries.slice(0, 4).map((e) => { const p = getPromo(e.promo); return p ? <PromoCard key={e.id} promo={p} entry={e} /> : null })}
+            {latestEntries.slice(0, 3).map((e) => { const p = getPromo(e.promo); return p ? <PromoCard key={e.id} promo={p} entry={e} /> : null })}
           </div>
         ) : (
           <div className="empty-state">
