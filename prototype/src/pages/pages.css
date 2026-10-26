@@ -123,11 +123,13 @@
 @media (max-width: 767px) { .country-grid { grid-template-columns: repeat(2, 1fr); } }
 
 /* ---------- Participate ---------- */
-.participate { display: grid; grid-template-columns: 4fr 6fr; min-height: 640px; }
-.participate__brand { position: relative; overflow: hidden; background: var(--promo-bg); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px 32px; text-align: center; gap: 24px; }
-.participate__brand img.card-art { width: min(360px, 80%); aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
-.participate__brand img.logo { max-height: 72px; max-width: 280px; object-fit: contain; }
-.participate__main { background: var(--color-surface-subtle); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+/* Fills the screen under the navbar, so the footer only appears after scrolling */
+.participate { background: var(--color-surface-subtle); min-height: calc(100svh - var(--site-nav-height)); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+.participate__main { width: 100%; max-width: 560px; }
+.participate__promo { display: flex; align-items: center; gap: 16px; background: var(--promo-bg); color: #fff; border-radius: var(--radius-card); padding: 16px 24px; margin-bottom: 16px; }
+.participate__art { width: 72px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; flex: none; }
+.participate__promo .date-line { font-size: var(--font-size-14); line-height: 18px; margin: 4px 0 0; }
+.participate__kicker { font-size: var(--font-size-14); line-height: 18px; text-transform: uppercase; opacity: .85; }
 .panel { background: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); padding: 44px 48px; width: 100%; max-width: 560px; }
 .panel h1 { font-size: 30px; line-height: 36px; font-weight: 700; margin-bottom: 8px; }
 .panel__lead { color: var(--color-text-secondary); line-height: 21px; margin-bottom: 28px; }
@@ -136,11 +138,10 @@
 .panel .btn--block { margin-top: 8px; }
 .code-input { font-size: 20px !important; letter-spacing: 3px; text-transform: uppercase; height: 52px !important; }
 @media (max-width: 991px) {
-  .participate { grid-template-columns: 1fr; }
-  .participate__brand { padding: 28px 16px; flex-direction: row; gap: 16px; }
-  .participate__brand img.card-art { width: 96px; }
-  .participate__brand .h2 { font-size: 18px; line-height: 22px; text-align: left; }
-  .participate__brand img.logo, .participate__brand .date-line { display: none; }
+  .participate { align-items: flex-start; padding: 24px 16px 48px; }
+  .participate__promo { padding: 14px 16px; }
+  .participate__art { width: 56px; }
+  .participate__promo .h3 { font-size: 18px; line-height: 22px; }
   .panel { padding: 28px 20px; }
 }
 

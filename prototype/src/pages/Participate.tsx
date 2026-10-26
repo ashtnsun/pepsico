@@ -10,7 +10,7 @@ import NotFound from './NotFound'
 import { promoCrumbs } from './PromoDetail'
 import './pages.css'
 
-/** Wireframe "Promo Loading": branding on the left, the entry form / "calculating" card on the right. */
+/** Wireframe "Promo Loading", as one centred column: a small promo strip on top, then the entry form / "calculating" card. */
 export default function Participate() {
   const { slug } = useParams()
   const promo = getPromo(slug)
@@ -46,16 +46,16 @@ export default function Participate() {
     <div style={promoStyle(promo)}>
       <Breadcrumb items={promoCrumbs(promo.slug, [{ label: 'Participation' }])} />
       <div className="participate">
-        <aside className="participate__brand">
-          <img className="logo" src={promo.images.logo} alt={`${promo.brandLabel} logo`} />
-          <img className="card-art" src={promo.images.card} alt="" />
-          <div>
-            <p className="h2">{promo.teaserTitle}</p>
-            <DateLine promo={promo} />
-          </div>
-        </aside>
-
         <div className="participate__main">
+          <section className="participate__promo" aria-label="Promotion you’re entering">
+            <img className="participate__art" src={promo.images.card} alt="" />
+            <div>
+              <p className="participate__kicker">You’re entering</p>
+              <p className="h3">{promo.teaserTitle}</p>
+              <DateLine promo={promo} />
+            </div>
+          </section>
+
           {phase === 'loading' ? (
             <div className="panel" role="status" aria-live="assertive" style={{ textAlign: 'center' }}>
               <h1>{promo.mechanic === 'instant' ? 'Calculating your instant results…' : 'Submitting your entry…'}</h1>

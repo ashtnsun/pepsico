@@ -329,3 +329,18 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/PromoDetail.tsx`, `prototype/src/components/promo/promo.css`.
 - **Checked by:** `tsc -b`. Headless Chromium (the shared Playwright browser was in use by another session) on Avengers Doomsday, Doritos & F1® and an ended Pepsi promotion at 1920, 1440, 1425, 390 and 375 px: the section order and menu order are as above at every width, with no sideways scroll. The hero curve traced from the prototype matches the live capture exactly at 1920 px (edge 477 px → centre 554 px below the image top) and within 3 px at 1425 px (curve depth 37 px vs 38 px live).
 - **Decision record:** none.
+
+### Change 14 — Participate page: one centred column, footer below the fold — 2026-10-26
+
+- **Prompt (verbatim):** On the participate screens, I want to change the layout of the page so that it's one main screen, not two side by side. I still want some info at the top to show the user what promo they're participating on, but the form should be centered on the screen. Also this section's height should be taller so that the footer isn't taking up so much of the page, footer shouldn't be visible until you scroll down to it.
+  - Follow-up (verbatim): same for the loading screen, it should follow this new format
+- **What changed:**
+  - Before, the page had two halves: the promotion's logo, a big round image, the title and dates on the left in the brand colour, and the form on the right on grey. Now it's one grey section with a single column in the middle, 560 px wide.
+  - At the top of the column there is a small strip in the promotion's colour with a small round image, "You're entering", the promotion title and its dates. The entry form card sits under it. The brand logo is no longer shown, because the round image already includes it.
+  - The loading screen ("Calculating your instant results…" / "Submitting your entry…") and the "You've already entered" message use the same layout: same strip on top, card centred under it.
+  - The section is now at least the height of the screen minus the navbar, so with the breadcrumb above it the footer always starts below the fold. On desktop the column is centred vertically. On phones it starts at the top, with 16 px side gutters.
+- **Why:** user's request: one focused screen with the form centred, and the footer kept out of view while entering a code. Claude's addition: the promo strip uses the promotion's colour, which follows the rule that brand colour only fills promotion surfaces.
+- **How AI was used:** Claude replaced the two-column grid in `Participate.tsx` and `pages.css` with one column and a new `.participate__promo` strip. It checked the form, loading and mobile layouts with Playwright, and caught and fixed a style rule that had stretched the calendar icon.
+- **Files:** `prototype/src/pages/Participate.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Playwright at 1440 × 900: the form, and after submitting a code the loading screen, both centred, with the footer starting at 941 px (below the 900 px screen). At 390 × 844 on a Doritos promotion: red strip, form fits the gutters, no sideways scroll, footer starts at 907 px (below the 844 px screen).
+- **Decision record:** none.
