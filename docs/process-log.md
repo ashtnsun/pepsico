@@ -875,3 +875,25 @@ See `docs/prototype-iterations.md`, Change 2.
 
 ### Open questions / next steps
 - Mobile left as is; the user's prompt pasted the wrong text, so confirm that the section was the one meant.
+
+---
+## Session 20 (follow-up) — Prototype change 3: "Creating Joy" text nudged up — 2026-10-26
+
+### Prompt (verbatim)
+you moved it slightly too far down, move it back up slightly
+
+### What I did
+- Reduced the pack-photo pull by 40 px (`max(calc(140px - 27vw), -380px)`).
+
+### Changes
+- Repo: `prototype/src/pages/pages.css`, `docs/prototype-iterations.md`, `docs/process-log.md`.
+- Figma: none.
+
+### Decisions
+- None.
+
+### Verification
+- Playwright screenshot at 1425 px: gap text → Doritos ≈ 140 px.
+
+### Open questions / next steps
+- None.

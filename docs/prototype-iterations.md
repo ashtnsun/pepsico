@@ -206,3 +206,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc --noEmit`; Playwright screenshots at 992 / 1425 / 1920 px; click test on "See all promotions" at 992 / 1425 / 1920 / 2560 px.
 - **Decision record:** none (layout fix).
+
+### Change 3 — "Creating Joy" text nudged back up — 2026-10-26
+
+- **Prompt (verbatim):** you moved it slightly too far down, move it back up slightly
+- **What changed:** the "Creating Joy" text sits 40 px higher relative to the packs than in Change 2. The gap from the text to the Doritos pack is now about 140 px (Change 2: about 100 px; before Change 2: about 240 px). The cap for very wide screens moved from -420 px to -380 px to match.
+- **Why:** user feedback: Change 2 went slightly too far.
+- **How AI was used:** Claude changed one CSS value (`margin-top: max(calc(140px - 27vw), -380px)`) and checked it with a Playwright screenshot at 1425 px.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** Playwright screenshot at 1425 px.
+- **Decision record:** none.
