@@ -268,3 +268,14 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Promotions.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc --noEmit`. Playwright at 1440 and 390 px: the dropdowns sit under the heading, lined up with the cards. Ending soonest and Newest both put "Win £100" (ends 25.11, started 27.09) first. Doritos shows one card. Doritos + Instant win shows "No active promotions match". Clear filters resets both filters, and the ended section stays at two cards throughout. No sideways scroll at 390 px.
 - **Decision record:** none.
+
+### Change 9 — Promotions page: one "All promotions" list, ended promotions last — 2026-10-26
+
+- **Prompt (verbatim):** Rename the Active Promotions heading to All Promotions. Remove the "These promos are over section" The expired promos should go in the same list as the all promotions, the expried promos should always be at the end. The filter/sort functionality should be the applied/functional.
+- **What changed:** the heading now reads "All promotions". The "These promos are over:" section and its "Load more +" button are gone. All six promotions are in one list, and ended ones always come after the active ones. Ended cards still look as before: greyed out, with the red "Ended" label and a "View promo" button. Brand, Promotion type and Sort by now apply to the whole list, ended promotions included. The Brand list now offers JOY, Doritos, Pepsi and Walkers. The empty message reads "No promotions match".
+  - Sorting inside each group: **Recommended** shows active promotions in the curated order, with ones you haven't entered first; ended ones follow, most recently ended first. **Newest** puts the latest start date first in both groups. **Ending soonest** puts the nearest end date first among active promotions; ended ones follow, most recently ended first.
+- **Why:** user's request. Claude's additions: "Load more" was removed because the full list is only six cards. For ended promotions, "Ending soonest" shows the most recently ended first, since oldest-first would bury the ones people are most likely to look for.
+- **How AI was used:** Claude merged the two lists in `Promotions.tsx` into one filtered list that is split into active and ended, sorts each part, and joins them. Then Claude tested every sort and some filter combinations with Playwright.
+- **Files:** `prototype/src/pages/Promotions.tsx`.
+- **Checked by:** `tsc --noEmit`. Playwright at 1440 px: the only section heading is "All promotions". Ended cards come last under all three sorts. Pepsi shows its two ended promotions. Doritos + Instant win shows the ended Doritos & F1® promotion. Walkers + Prize draw shows "No promotions match". Checked with a full-page screenshot.
+- **Decision record:** none.

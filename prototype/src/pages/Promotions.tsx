@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { X } from 'lucide-react'
-import { promos, type Mechanic } from '../data/promos'
+import { promos, type Mechanic, type Promo } from '../data/promos'
 import { isActive, isEnded } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
@@ -9,35 +9,38 @@ import { PromoTeaser } from '../components/promo/PromoTeaser'
 import './pages.css'
 
 const ACTIVE = promos.filter(isActive)
-// Only offer options that match at least one active promotion, so no filter leads to an empty list.
-const BRAND_FILTERS = [...new Map(ACTIVE.map((p) => [p.brand, p.brandLabel])).entries()]
+const BRAND_FILTERS = [...new Map(promos.map((p) => [p.brand, p.brandLabel])).entries()]
 const TYPE_LABELS: Record<Mechanic, string> = { instant: 'Instant win', draw: 'Prize draw' }
-const TYPE_FILTERS = [...new Set(ACTIVE.map((p) => p.mechanic))]
+const TYPE_FILTERS = [...new Set(promos.map((p) => p.mechanic))]
 const SORTS = { recommended: 'Recommended', newest: 'Newest', ending: 'Ending soonest' }
 type Sort = keyof typeof SORTS
 
 /**
- * Live-site promotions page, plus the wireframe "Promo Gallery" ideas: filters and sorting for
- * active promotions, and ended promotions kept in their own clearly labelled section.
+ * Live-site promotions page, plus the wireframe "Promo Gallery" ideas: one list of all promotions
+ * that can be filtered and sorted. Ended promotions always come last, greyed out and labelled "Ended".
  */
 export default function Promotions() {
   const { myEntries } = useStore()
   const [brand, setBrand] = useState('')
   const [type, setType] = useState('')
   const [sort, setSort] = useState<Sort>('recommended')
-  const [showAllEnded, setShowAllEnded] = useState(false)
 
-  const active = useMemo(() => {
+  const list = useMemo(() => {
     const entered = (slug: string) => myEntries.some((e) => e.promo === slug)
-    const list = ACTIVE.filter((p) => (!brand || p.brand === brand) && (!type || p.mechanic === type))
+    const matches = promos.filter((p) => (!brand || p.brand === brand) && (!type || p.mechanic === type))
+    const live = matches.filter((p) => !isEnded(p))
+    const ended = matches.filter(isEnded)
+    if (sort === 'newest') {
+      const newest = (a: Promo, b: Promo) => b.start.localeCompare(a.start)
+      return [...live.sort(newest), ...ended.sort(newest)]
+    }
     // Recommended: the curated order, with promotions you haven't entered yet first.
-    if (sort === 'recommended') return list.sort((a, b) => Number(entered(a.slug)) - Number(entered(b.slug)))
-    if (sort === 'newest') return list.sort((a, b) => b.start.localeCompare(a.start))
-    return list.sort((a, b) => a.end.localeCompare(b.end))
+    // Ending soonest: nearest end date first.
+    live.sort(sort === 'recommended' ? (a, b) => Number(entered(a.slug)) - Number(entered(b.slug)) : (a, b) => a.end.localeCompare(b.end))
+    // Ended promotions: the one that ended most recently first.
+    return [...live, ...ended.sort((a, b) => b.end.localeCompare(a.end))]
   }, [brand, type, sort, myEntries])
 
-  const ended = promos.filter(isEnded).sort((a, b) => b.end.localeCompare(a.end))
-  const shownEnded = showAllEnded ? ended : ended.slice(0, 2)
   const filtering = brand !== '' || type !== ''
 
   return (
@@ -46,9 +49,9 @@ export default function Promotions() {
       <h1 className="visually-hidden">Promotions</h1>
       <HeroCarousel slides={ACTIVE.map((p) => ({ kind: 'promo' as const, promo: p }))} start={1} />
 
-      <section aria-labelledby="active-title">
-        <h2 id="active-title" className="section-title listing-section-title">Active promotions</h2>
-        <div className="listing-tools" role="group" aria-label="Filter and sort active promotions">
+      <section aria-labelledby="all-title" style={{ paddingBottom: 64 }}>
+        <h2 id="all-title" className="section-title listing-section-title">All promotions</h2>
+        <div className="listing-tools" role="group" aria-label="Filter and sort promotions">
           <div className="field listing-tools__field">
             <label htmlFor="promo-brand" className="field__label">Brand</label>
             <select id="promo-brand" className="field__input" value={brand} onChange={(e) => setBrand(e.target.value)}>
@@ -74,17 +77,9 @@ export default function Promotions() {
           </div>
         </div>
         <div aria-live="polite">
-          {active.length ? active.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)
-            : <div className="empty-state"><h3 className="h3">No active promotions match</h3><p>Try another brand or promotion type.</p></div>}
+          {list.length ? list.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)
+            : <div className="empty-state"><h3 className="h3">No promotions match</h3><p>Try another brand or promotion type.</p></div>}
         </div>
-      </section>
-
-      <section aria-labelledby="ended-title" style={{ paddingBottom: 64 }}>
-        <h2 id="ended-title" className="section-title listing-section-title">These promos are over:</h2>
-        {shownEnded.map((p) => <PromoTeaser key={p.slug} promo={p} side="right" />)}
-        {!showAllEnded && ended.length > 2 && (
-          <div className="center"><button type="button" className="btn btn--primary btn--wide" onClick={() => setShowAllEnded(true)}>Load more +</button></div>
-        )}
       </section>
     </>
   )
