@@ -37,7 +37,21 @@ function HowItWorks() {
   )
 }
 
-/** Live-site home content blocks below the promotions. */
+/** Live-site "Creating Joy" block with the pack photos. */
+function Packshots({ text }: { text: string }) {
+  return (
+    <section className="packshots" aria-labelledby="packshots-title">
+      <h2 id="packshots-title" className="packshots__title">Creating Joy with every sip and every bite</h2>
+      <p className="packshots__sub">{text}</p>
+      <picture>
+        <source media="(max-width: 767px)" srcSet="./images/home/packshots-mobile.webp" />
+        <img src="./images/home/packshots-desktop.webp" alt="Walkers, Doritos, Popworks and Quaker packs" />
+      </picture>
+    </section>
+  )
+}
+
+/** Live-site home content blocks below the promotions (logged-in home). */
 function HomeContent() {
   return (
     <>
@@ -52,14 +66,7 @@ function HomeContent() {
           </div>
         </div>
       </section>
-      <section className="packshots" aria-labelledby="packshots-title">
-        <h2 id="packshots-title" className="packshots__title">Creating Joy with every sip and every bite</h2>
-        <p className="packshots__sub">All the classics you love &amp; new flavours waiting to be discovered</p>
-        <picture>
-          <source media="(max-width: 767px)" srcSet="./images/home/packshots-mobile.webp" />
-          <img src="./images/home/packshots-desktop.webp" alt="Walkers, Doritos, Popworks and Quaker packs" />
-        </picture>
-      </section>
+      <Packshots text="All the classics you love & new flavours waiting to be discovered" />
       <section className="cyan-band">
         <img className="cyan-band__deco cyan-band__deco--l" src="./images/global/band-left.svg" alt="" />
         <img className="cyan-band__deco cyan-band__deco--r" src="./images/global/band-right.svg" alt="" />
@@ -73,21 +80,20 @@ export default function Home() {
   const { user, myEntries } = useStore()
 
   if (!user) {
-    const slides: HeroSlide[] = [
-      { kind: 'joy', title: 'Register to participate', text: 'Create a free JOY account to enter promotions from all your favourite PepsiCo brands.', cta: { label: 'Register now', to: '/register' } },
-      ...active.map((p) => ({ kind: 'promo' as const, promo: p })),
-    ]
+    // Logged out: one JOY register hero, not a carousel.
+    const hero: HeroSlide = { kind: 'joy', title: 'Register to participate', text: 'Create a free JOY account to enter promotions from all your favourite PepsiCo brands.', cta: { label: 'Register now', to: '/register' } }
     return (
       <>
         <h1 className="visually-hidden">JOY by PepsiCo</h1>
-        <HeroCarousel slides={slides} />
+        <HeroCarousel slides={[hero]} />
         <HowItWorks />
         <section aria-labelledby="current-title" className="home-promos">
           <h2 id="current-title" className="section-title">Current promotions</h2>
           {active.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
           <div className="center"><Link to="/promotions" className="btn btn--primary btn--wide">See all promotions</Link></div>
         </section>
-        <HomeContent />
+        {/* The cyan band message is merged into this text (no separate band or Walkers block when logged out). */}
+        <Packshots text="Joy is where you can enjoy all your favourite snacks and beverages in one place with all the classics you love & new flavors waiting to be discovered!" />
       </>
     )
   }

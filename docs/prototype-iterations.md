@@ -151,4 +151,19 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Decision record:** <D-number in docs/decisions.md, if any>
 -->
 
-_No changes yet._
+### Change 1 — Logged-out home clean-up: hero and merged sections — 2026-10-26
+
+- **Prompt (verbatim):** Just move on, I will start making some iterations, feel free to ask any questions at any time for additional context as needed. The following changes will all be for the purpose of cleaning up the site to a point where I can precisely define all future features/changes. Right now there are just structural issues and sections that should exist. I'm just returning to a state of zero, where I can start working on the major changes from there. Starting on the non-logged in page, the curve on the hero should be accurate the current existing site, not to the wireframe curve. The hero should no longer be a carosel, it should just be the joy rewards register hero. Remove the Walekrs do us a flavor section. In the text section of the Creating Joy with every sip and every bite section, change it to this: "Joy is where you can enjoy all your favourite snacks and beverages in one place with all the classics you love & new flavors waiting to be discovered!" Remove the Joy is where you can enjoy all your favourite snacks and beverages in one place" section. We consoldiated these two sections because the information on them don't seem releveant enough to be two separate sections.
+- **Goal of this round:** clean the site back to a "state zero" (fix structural problems, keep only sections that should exist), so later features and changes can be defined precisely.
+- **What changed:**
+  - **Hero curve:** the bottom curve now matches the live site. The live site cuts the hero with a wide ellipse (`clip-path: ellipse(200% 100% at 50% 0)` on mobile, `ellipse(120% 97% at 50% 0)` from 973 px, `ellipse(98% 97% at 50% 0)` from 1441 px), so the curve meets the page edges at an angle. Before, it was a rounded-corner shape (`border-radius: 50% 90px`) that turned vertical at the edges. On mobile, the extra curve on the hero image was removed too; the live site's mobile image is a plain rectangle.
+  - **Hero:** the logged-out home shows only the JOY "Register to participate" hero. No promotion slides and no dots. Screen readers no longer hear it called a carousel.
+  - **Removed:** the "Walkers Do Us A Flavour" block and the cyan "Joy is where you can enjoy…" band.
+  - **Merged text:** the "Creating Joy with every sip and every bite" subtitle now reads the user's sentence word for word. Claude capped its width at 760 px so the longer sentence wraps onto two lines on desktop instead of running across the full page.
+- **Why:** user's reasons: the hero should copy the existing site, not the wireframe; the two text sections didn't have enough relevant information to be separate, so they were consolidated. Claude's additions: the width cap (readability) and dropping the carousel labels for a single slide (accessibility).
+- **How AI was used:** Claude measured the live curve in the saved live-site screenshot (`references/live-site/capture/home--desktop.png`, `home--mobile.png`) pixel by pixel, found the matching `clip-path` rules in the saved live CSS, made the edits, then checked them with Playwright screenshots at 375, 1425 and 1920 px. The new curve's drop from edge to centre matches the live site within about 2 px.
+- **Files:** `prototype/src/pages/Home.tsx`, `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/pages/pages.css`.
+- **Side effects:** the curve fix is on the shared hero, so the Promotions page hero and the logged-in home carousel get the live-site curve too. The logged-in home still has the Walkers block and the cyan band (this change was for the logged-out page only).
+- **Checked by:** `tsc --noEmit`; browser check that there is 1 slide, no dots, no Walkers block, no cyan band and the new text; screenshots compared with the live captures.
+- **Decision record:** D40.
+- **Note:** the new text says "flavors" (US spelling), as typed; the rest of the site uses UK spelling ("flavours").

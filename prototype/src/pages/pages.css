@@ -17,7 +17,7 @@
 
 .packshots { text-align: center; padding: 40px 0 0; }
 .packshots__title { font-size: 60px; line-height: 64px; font-weight: 700; max-width: 560px; margin: 0 auto; padding: 0 16px; }
-.packshots__sub { margin-top: 20px; font-size: var(--font-size-20); padding: 0 16px; }
+.packshots__sub { margin: 20px auto 0; max-width: 760px; font-size: var(--font-size-20); padding: 0 16px; }
 .packshots img { width: 100%; margin-top: -140px; }
 @media (max-width: 767px) { .packshots__title { font-size: 36px; line-height: 40px; } .packshots img { margin-top: 16px; } }
 

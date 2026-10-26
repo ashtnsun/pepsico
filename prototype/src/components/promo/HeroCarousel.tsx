@@ -12,10 +12,13 @@ export type HeroSlide =
 export function HeroCarousel({ slides, start = 0 }: { slides: HeroSlide[]; start?: number }) {
   const [i, setI] = useState(Math.min(start, slides.length - 1))
   const s = slides[i]
+  // A single slide is a plain hero, so it isn't announced as a carousel.
+  const multi = slides.length > 1
+  const slideProps = multi ? { 'aria-roledescription': 'slide', 'aria-label': `${i + 1} of ${slides.length}` } : {}
   return (
-    <section className="hero-carousel" aria-roledescription="carousel" aria-label="Featured promotions">
+    <section className="hero-carousel" aria-roledescription={multi ? 'carousel' : undefined} aria-label={multi ? 'Featured promotions' : undefined}>
       {s.kind === 'promo' ? (
-        <div className="hero-slide" style={promoStyle(s.promo)} aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`}>
+        <div className="hero-slide" style={promoStyle(s.promo)} {...slideProps}>
           {s.promo.theme.deco && <img className="hero-slide__deco" src={s.promo.theme.deco} alt="" />}
           <div className="hero-slide__content">
             <img className="hero-slide__logo" src={s.promo.images.logo} alt={`${s.promo.brandLabel} logo`} />
@@ -32,7 +35,7 @@ export function HeroCarousel({ slides, start = 0 }: { slides: HeroSlide[]; start
           </div>
         </div>
       ) : (
-        <div className="hero-slide" style={{ '--promo-bg': '#0E38DF', '--promo-cta-bg': '#FFE600', '--promo-cta-text': '#0E38DF' } as CSSProperties} aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`}>
+        <div className="hero-slide" style={{ '--promo-bg': '#0E38DF', '--promo-cta-bg': '#FFE600', '--promo-cta-text': '#0E38DF' } as CSSProperties} {...slideProps}>
           <img className="hero-slide__deco" src="./images/global/teaser-deco-default.webp" alt="" />
           <div className="hero-slide__content">
             <img className="hero-slide__logo hero-slide__logo--joy" src="./images/global/joy-logo-white.png" alt="JOY" />
@@ -48,7 +51,7 @@ export function HeroCarousel({ slides, start = 0 }: { slides: HeroSlide[]; start
           </div>
         </div>
       )}
-      {slides.length > 1 && (
+      {multi && (
         <div className="dots">
           {slides.map((sl, n) => (
             <button

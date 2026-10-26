@@ -828,3 +828,28 @@ Also for this 1 prompt "save state", include a summary and references to anythin
 
 ### Open questions / next steps
 - The exact wording of Claude's 7 questions in Prompt 17 wasn't saved; questions 3, 6 and 7 can't be reconstructed. Fill them in if you have them.
+
+---
+## Session 20 (follow-up) — Prototype change 1: logged-out home clean-up — 2026-10-26
+
+### Prompt (verbatim)
+See `docs/prototype-iterations.md`, Change 1 (full prompt there).
+
+### What I did
+- Measured the live hero curve from the saved captures and matched it to the live CSS `clip-path` ellipses; replaced the rounded-corner curve on `.hero-slide`.
+- Logged-out home: single JOY register hero; removed the Walkers block and the cyan band; new merged packshots text.
+- `HeroCarousel` drops carousel ARIA labels when it has one slide.
+
+### Changes
+- Repo: `prototype/src/pages/Home.tsx`, `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/pages/pages.css`, `docs/prototype-iterations.md`, `docs/decisions.md` (D40), `docs/process-log.md`.
+- Figma: none.
+
+### Decisions
+- D40 — single register hero and merged "Creating Joy" section on the logged-out home (user request).
+
+### Verification
+- `tsc --noEmit` passes. Playwright at 375 / 1425 / 1920 px: 1 slide, no dots, the right clip-path at each width, removed sections gone, new text present. Curve drop matches the live capture within about 2 px.
+
+### Open questions / next steps
+- Should the logged-in home also lose the Walkers block and cyan band and use the merged text?
+- "flavors" vs the site's UK "flavours".

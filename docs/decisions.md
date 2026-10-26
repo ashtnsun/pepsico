@@ -282,3 +282,10 @@ Every project decision goes here: what we decided, what else we considered, why,
 - **Options considered:** leave these out until the team defines them.
 - **Why:** The user wants the major tasks to work end to end. The reward rule is labelled as a placeholder in `prototype/README.md` and `src/data/config.ts`.
 - **Date:** 2026-10-23
+
+## D40 — Logged-out home: single register hero, one merged "Creating Joy" section
+
+- **Decision:** The logged-out home starts with one JOY "Register to participate" hero (no carousel, no dots). The "Walkers Do Us A Flavour" block and the cyan "Joy is where you can enjoy…" band are removed; the band's message is merged into the "Creating Joy with every sip and every bite" text. The hero's bottom curve now uses the live site's ellipse clip instead of rounded corners.
+- **Options considered:** keep the carousel with promotions; keep both text sections.
+- **Why:** User request (prototype change 1). The two text sections didn't carry enough information to stand alone, so they were consolidated. This is part of getting the site back to a clean "state zero" before the major changes are defined.
+- **Date:** 2026-10-26
