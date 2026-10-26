@@ -37,8 +37,8 @@ export default function PromoDetail() {
   const ctaClass = promo.theme.ctaBg === '#FFE600' ? 'btn--yellow' : 'btn--promo'
 
   const links = [
-    promo.steps.length ? { id: 'steps', label: 'Steps' } : null,
     { id: 'prizes', label: 'Prizes' },
+    promo.steps.length ? { id: 'steps', label: 'Steps' } : null,
     promo.faqs.length ? { id: 'faqs', label: 'FAQs' } : null,
     { id: 'terms', label: 'Terms and conditions' },
   ].filter(Boolean) as { id: string; label: string }[]
@@ -103,9 +103,16 @@ export default function PromoDetail() {
         cta={ended ? undefined : blocked ? { label: 'Already entered', to: '#', disabled: true } : { label: 'Participate here', to: user ? participateTo : '/login' }}
       />
 
-      <Steps promo={promo} />
-      {!ended && <CtaBanner promo={promo} to={user ? participateTo : '/login'} label="Participate here" />}
+      {/* Order: prizes, steps with their legal text, then the contact and T&C links right under it, participate, FAQs */}
       <Prizes promo={promo} />
+      <Steps promo={promo} />
+
+      <div id="terms" className="promo-links" style={{ paddingTop: promo.steps.length ? 0 : 40 }}>
+        <Link to="/contact" className="link link--caps">Contact (promotion)</Link>
+        <Link to={`/promotions/${promo.slug}/terms`} className="link link--caps">Terms and conditions (promotion)</Link>
+      </div>
+
+      {!ended && <CtaBanner promo={promo} to={user ? participateTo : '/login'} label="Participate here" />}
 
       {promo.faqs.length > 0 && (
         <section id="faqs" className="promo-faq" aria-labelledby="faq-title">
@@ -115,13 +122,8 @@ export default function PromoDetail() {
         </section>
       )}
 
-      <div id="terms" className="promo-links" style={{ paddingTop: promo.faqs.length ? 0 : 60 }}>
-        <Link to="/contact" className="link link--caps">Contact (promotion)</Link>
-        <Link to={`/promotions/${promo.slug}/terms`} className="link link--caps">Terms and conditions (promotion)</Link>
-      </div>
-
       {ended && others.length > 0 && (
-        <section aria-labelledby="others-title" style={{ paddingBottom: 48 }}>
+        <section aria-labelledby="others-title" style={{ padding: '40px 0 48px' }}>
           <h2 id="others-title" className="section-title">Check out other promotions:</h2>
           {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
         </section>

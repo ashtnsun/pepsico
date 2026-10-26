@@ -315,3 +315,17 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc -b`. Playwright screenshots of `/brands` at 1440 and 390 px: no intro line, no borders, rows still evenly spaced, no sideways scroll on mobile.
 - **Decision record:** none.
+
+### Change 13 — Promotion pages: prizes first, T&C links under the legal text, live-site hero curve — 2026-10-26
+
+- **Prompt (verbatim):** On all specific promo pages, change the order of the content sections so that it's Prizes first, then Steps, Participate here, FAQ. The Contact (promotion) Terms and conditions (promotion) should go under the [the promotion's legal text, pasted: "UK & ROI, 18+ only. Main Period: 08:00 – 20:00 daily between 20/07/26 – 27/09/26. … Promoter: Walkers Snacks Limited."] text section. Also the curve on the hero needs to be accurate to actual site. These reorderings are made to follow a more logical order for users, and moving the terms/contact higher/more logical placement to promote visibilty.
+- **What changed:**
+  - Every promotion page now runs: hero → section menu → **Prizes** → **Steps** (with the small legal text under them) → **Contact (promotion)** and **Terms and conditions (promotion)** links → **Participate here** banner → **FAQs**. Before, it was Steps → Participate here → Prizes → FAQs, with the two links at the very bottom.
+  - The section menu under the hero follows the same order: Prizes, Steps, FAQs, Terms and conditions.
+  - Promotions without steps (the ended Pepsi and Walkers ones) show Prizes, then the two links, then "Check out other promotions" (now with 40 px of space above it).
+  - **Hero curve:** the bottom edge of the hero image was a rounded-corner shape (`border-radius: 50% 40px`), which is flat in the middle and drops sharply at the sides. The live site cuts the image with an ellipse instead (`clip-path: ellipse(…)` in its `style.css`, rule `.top-row .hero-image img`). The prototype now uses the same three ellipses and breakpoints: `200% 100%` on phones, `120% 97%` from 973 px (plus a 20 px band-coloured gap under the image, as on the live site) and `98% 97%` from 1441 px.
+- **Why:** user's reasons: prizes before steps is a more logical reading order, and the contact and T&C links are easier to find right under the legal text than at the bottom of the page. The curve was copied from the live site's CSS rather than estimated.
+- **How AI was used:** Claude reordered the sections in `PromoDetail.tsx`, then searched the captured live-site CSS (`references/live-site/css/`) for how the hero curve is drawn, found the `clip-path` ellipses, and confirmed them by tracing the curve's edge pixel by pixel in the live-site screenshots before copying them.
+- **Files:** `prototype/src/pages/PromoDetail.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc -b`. Headless Chromium (the shared Playwright browser was in use by another session) on Avengers Doomsday, Doritos & F1® and an ended Pepsi promotion at 1920, 1440, 1425, 390 and 375 px: the section order and menu order are as above at every width, with no sideways scroll. The hero curve traced from the prototype matches the live capture exactly at 1920 px (edge 477 px → centre 554 px below the image top) and within 3 px at 1425 px (curve depth 37 px vs 38 px live).
+- **Decision record:** none.

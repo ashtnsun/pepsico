@@ -75,10 +75,10 @@
 
 /* ---------- Promotion page hero ---------- */
 .promo-hero__image { background: var(--promo-bg); }
-.promo-hero__image img {
-  width: 100%; aspect-ratio: 2880 / 858; object-fit: cover;
-  border-bottom-left-radius: 50% 40px; border-bottom-right-radius: 50% 40px;
-}
+/* Curved bottom edge: same clip-path ellipses and breakpoints as the live site's promo hero image (style.css, .top-row .hero-image img). */
+.promo-hero__image img { width: 100%; aspect-ratio: 2880 / 858; object-fit: cover; clip-path: ellipse(200% 100% at 50% 0); }
+@media (min-width: 973px) { .promo-hero__image { padding-bottom: 20px; } .promo-hero__image img { clip-path: ellipse(120% 97% at 50% 0); } }
+@media (min-width: 1441px) { .promo-hero__image { padding-bottom: 0; } .promo-hero__image img { clip-path: ellipse(98% 97% at 50% 0); } }
 .promo-hero__band { position: relative; overflow: hidden; background: var(--promo-bg); color: #fff; text-align: center; padding: 60px var(--spacing-20) 80px; }
 .promo-hero__band-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
 .promo-hero__band .date-line { justify-content: center; }
@@ -92,7 +92,7 @@
 .promo-hero__note { margin-top: 16px; font-size: var(--font-size-16); line-height: 21px; max-width: 520px; }
 .promo-hero__note a { color: inherit; font-weight: 600; }
 @media (max-width: 767px) {
-  .promo-hero__image img { aspect-ratio: 780 / 860; border-bottom-left-radius: 50% 24px; border-bottom-right-radius: 50% 24px; }
+  .promo-hero__image img { aspect-ratio: 780 / 860; }
   .promo-hero__band { padding: 40px var(--spacing-16) 48px; }
   .promo-hero__title { font-size: var(--font-size-36); line-height: var(--line-height-40); }
   .promo-hero__subtitle { font-size: var(--font-size-16); line-height: 21px; }
@@ -164,7 +164,7 @@
 /* ---------- FAQ block on promo page ---------- */
 .promo-faq { padding: 80px var(--spacing-20); }
 .promo-faq__all { display: flex; max-width: 870px; margin: 20px auto 0; }
-.promo-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 0 var(--spacing-20) 60px; }
+.promo-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 0 var(--spacing-20) 20px; }
 
 /* ---------- Compact card (logged-in home, profile) ---------- */
 /* Shared by every promotion card row (home, promotions, result): 3 per row, 2 on tablets, 1 on phones. */
