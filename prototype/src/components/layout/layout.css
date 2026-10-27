@@ -27,6 +27,11 @@
 
 .user-menu { position: relative; }
 .user-menu__toggle { display: flex; align-items: center; gap: 10px; background: none; border: 0; color: #fff; text-transform: uppercase; font-size: var(--font-size-16); cursor: pointer; padding: 10px 0; }
+/* Same as the navbar links: hover underlines "Hi Sam"; on the profile page or with the menu open it is also bold. */
+.user-menu__toggle span { text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.user-menu__toggle:hover span, .user-menu__toggle.active span { text-decoration-line: underline; }
+.user-menu__toggle.active { font-weight: 700; }
+.user-menu__toggle .rot { transform: rotate(180deg); }
 .user-menu__list {
   position: absolute; right: 0; top: calc(100% + 14px); list-style: none; margin: 0; padding: var(--spacing-8) 0; min-width: 220px;
   background: #fff; border-radius: var(--radius-container); box-shadow: 0 8px 24px rgba(0,0,0,.18);

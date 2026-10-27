@@ -26,6 +26,7 @@ export function Navbar() {
   }, [])
 
   const onBrands = location.pathname.startsWith('/brands')
+  const onProfile = location.pathname.startsWith('/profile')
   const doLogout = () => { logout(); navigate('/') }
 
   return (
@@ -51,8 +52,8 @@ export function Navbar() {
         <div className="navbar__session">
           {user ? (
             <div className="user-menu">
-              <button type="button" className="user-menu__toggle" aria-expanded={userOpen} onClick={() => { setUserOpen(!userOpen); setBrandsOpen(false) }}>
-                <UserIcon size={24} fill="currentColor" aria-hidden /> <span>Hi {user.firstName}</span> <ChevronDown size={16} aria-hidden />
+              <button type="button" className={`user-menu__toggle ${onProfile || userOpen ? 'active' : ''}`} aria-expanded={userOpen} onClick={() => { setUserOpen(!userOpen); setBrandsOpen(false) }}>
+                <UserIcon size={24} fill="currentColor" aria-hidden /> <span>Hi {user.firstName}</span> <ChevronDown size={16} className={userOpen ? 'rot' : ''} aria-hidden />
               </button>
               {userOpen && (
                 <ul className="user-menu__list">

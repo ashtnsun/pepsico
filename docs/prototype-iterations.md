@@ -415,3 +415,16 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/state/design.tsx`, `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/hero-variants.css`.
 - **Checked by:** `tsc -b`. Playwright with the saved choice cleared and the test user at 3 entries: at 1440 × 900 the home shows the Big track hero (600 px tall, no buttons in it) and 5 Poster cards; at 390 × 844 the hero fits with no sideways scroll.
 - **Decision record:** none.
+
+### Change 19 — "Hi Sam" profile button: hover and active states — 2026-10-26
+
+- **Prompt (verbatim):** On the hi same/profile button on the nav bar, add hover and active state
+- **What changed:**
+  - Hover: the "Hi Sam" text is underlined (2 px, 6 px below the text), the same as the Home, Promotions and Brands links since change 16. The person icon and arrow are not underlined.
+  - Active: on the profile page (`/profile`), or while its dropdown menu is open, the text is underlined and bold (700 instead of 400). This matches how Brands counts as active while its menu is open.
+  - The small arrow turns upside down while the menu is open, as the Brands arrow does.
+- **Why:** user's request. Claude matched the existing navbar link styles so the whole bar behaves the same way. The flipping arrow was Claude's addition, copied from Brands.
+- **How AI was used:** Claude added an `active` class in `Navbar.tsx` (on the profile route or with the menu open) and the hover/active rules in `layout.css`, then checked them in the browser with Playwright.
+- **Files:** `prototype/src/components/layout/Navbar.tsx`, `prototype/src/components/layout/layout.css`.
+- **Checked by:** `tsc -b`. Playwright at 1440 × 900 with the test user logged in, reading the computed styles: on Home with no hover, not underlined, weight 400. On hover, underlined. On `/profile`, underlined and 700. On Promotions with the menu open, underlined and 700, and the arrow is flipped. Screenshots of the hover and profile states checked.
+- **Decision record:** none.
