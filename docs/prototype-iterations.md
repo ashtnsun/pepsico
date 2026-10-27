@@ -863,3 +863,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/pages.css`.
 - **Checked by:** Playwright banner screenshots at 390, 600, 1024, 1440 and 1920 px, logged in as the test user: no logo is cut at any width.
 - **Decision record:** none.
+
+### Change 44 — Promotion page: the two "Already entered" buttons match — 2026-10-27
+
+- **Prompt (verbatim):** on the doritos promo page, look at the two buttons, they are inconsistent with each other? why? fix this
+- **What changed:** on a brand-themed promotion page (for example Doritos) after you have entered, the "Already entered" button in the section menu no longer has a black outline. It now looks the same as the one in the red band: grey fill, grey border, white text.
+- **Why:** both buttons use the same disabled grey, but a brand-theme rule (`.page-main[data-page-theme] .btn--primary`, change 25) sets the border of every primary button to the brand's button border colour, black for Doritos. It was more specific than the disabled rule, so it won on the section-menu button (a primary button). The band button is a white button, so the rule never touched it. The theme rule now skips disabled buttons.
+- **How AI was used:** Claude compared the computed styles of the two buttons, traced the black border to the theme rule, and checked the fix in Playwright.
+- **Files:** `prototype/src/styles/site.css`.
+- **Checked by:** Playwright at 1440 px on `#/promotions/las-vegas-wrap`, logged in with an entry already made: both buttons now have the same background, border and text colour (grey `#A7A7A7`, white text) and the same height (45 px). Screenshot matches. Still different on purpose: the band button is wider (wide padding, 240 px minimum) than the compact section-menu button, the same as the "Participate here" pair.
+- **Decision record:** none.

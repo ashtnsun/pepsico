@@ -252,7 +252,8 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
   --site-ink: var(--color-text-link);
   --site-focus: var(--color-border-focus);
 }
-.page-main[data-page-theme] .btn--primary { border-color: var(--site-blue-border); }
+/* Not on disabled buttons: they keep the disabled grey border, like every other disabled button */
+.page-main[data-page-theme] .btn--primary:not(:disabled):not([aria-disabled="true"]) { border-color: var(--site-blue-border); }
 .page-main[data-page-theme] :focus-visible { outline-color: var(--site-focus); }
 /* Button on a brand band or art: the theme's "on dark background" button (Doritos: black pill with a white border).
    btn--own keeps a brand's own live-site colours (Walkers yellow). */
