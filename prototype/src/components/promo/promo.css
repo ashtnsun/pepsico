@@ -8,10 +8,6 @@
 /* Slides share one grid cell. The chosen slide fades in on top; the one it replaces stays fully visible underneath
    until the fade is done, so there's never a white gap between two brand colours. */
 .hero-carousel__slides { display: grid; }
-/* Clicking the left/right half changes slide (HeroCarousel); the arrow cursor shows which way */
-.hero-carousel__slides[data-side="prev"] { cursor: w-resize; }
-.hero-carousel__slides[data-side="next"] { cursor: e-resize; }
-.hero-carousel__slides a, .hero-carousel__slides button { cursor: pointer; }
 .hero-carousel__slides > .hero-slide { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity 0s .6s, visibility 0s .6s; }
 .hero-carousel__slides > .hero-slide.is-active { z-index: 1; opacity: 1; visibility: visible; transition: opacity .6s var(--ease-out); }
 /* The new slide's text rises in one line after another and its photo settles from a slight zoom */

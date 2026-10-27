@@ -17,22 +17,16 @@ export function HeroCarousel({ slides, start = 0 }: { slides: HeroSlide[]; start
   // A single slide is a plain hero, so it isn't announced as a carousel.
   const multi = slides.length > 1
   // Mouse shortcut: a click on the left half of the hero goes back a slide, the right half goes forward (wrapping).
-  // Links inside the slide keep working; keyboard and screen-reader users have the dots.
-  const side = (e: MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    return e.clientX < r.left + r.width / 2 ? 'prev' : 'next'
-  }
+  // Links inside the slide keep working; keyboard and screen-reader users have the dots. The cursor stays the normal arrow (change 56).
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('a, button')) return
-    const step = side(e) === 'prev' ? -1 : 1
+    const r = e.currentTarget.getBoundingClientRect()
+    const step = e.clientX < r.left + r.width / 2 ? -1 : 1
     setI((n) => (n + step + slides.length) % slides.length)
   }
   return (
     <section className="hero-carousel" aria-roledescription={multi ? 'carousel' : undefined} aria-label={multi ? 'Featured promotions' : undefined}>
-      <div
-        className="hero-carousel__slides"
-        {...(multi ? { onClick, onMouseMove: (e: MouseEvent<HTMLDivElement>) => { e.currentTarget.dataset.side = side(e) } } : {})}
-      >
+      <div className="hero-carousel__slides" onClick={multi ? onClick : undefined}>
         {slides.map((s, n) => (
           <HeroSlideView key={n} s={s} active={n === i} {...(multi ? { 'aria-roledescription': 'slide', 'aria-label': `${n + 1} of ${slides.length}` } : {})} />
         ))}
