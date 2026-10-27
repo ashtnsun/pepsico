@@ -115,16 +115,20 @@
 }
 
 /* ---------- Section menu (live .promo-submenu, made sticky) ---------- */
+/* Change 28: same colours as the breadcrumb bar (--crumb-*, layout.css), was white with a blue line under it */
 .section-nav {
-  position: sticky; top: var(--site-nav-height); z-index: 30; background: #fff;
+  position: sticky; top: var(--site-nav-height); z-index: 30; background: var(--crumb-bg); color: var(--crumb-text);
   display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
-  padding: 31px 20px; border-bottom: 1px solid var(--site-ink);
+  padding: 31px 20px;
   transition: padding var(--dur-base) var(--ease-out), box-shadow var(--dur-base);
 }
 .section-nav.is-stuck { padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 .section-nav__links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-.section-nav__links a { color: var(--site-ink); font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
-.section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: var(--site-ink); }
+.section-nav__links a { color: inherit; font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
+.section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: currentColor; }
+.section-nav :focus-visible { outline-color: currentColor; }
+/* On the dark bar the button is the theme's "on dark background" one (JOY: white with blue text) */
+.section-nav__cta.btn--primary:not([aria-disabled="true"]) { background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse); }
 .section-nav__cta { margin-left: 24px; animation: cta-in var(--dur-slow) var(--ease-out); }
 @keyframes cta-in { from { opacity: 0; transform: translateX(12px); } }
 @media (max-width: 767px) {
@@ -164,7 +168,8 @@
 @media (max-width: 767px) { .cta-banner { margin: 24px 16px; } .cta-banner .btn { bottom: 16px; } }
 
 /* ---------- Prize band ---------- */
-.prizes { background: var(--promo-bg); color: #fff; padding: 69px 0; text-align: center; }
+/* Change 28: white, not the brand colour (was var(--promo-bg) with white text, as on the live site) */
+.prizes { background: var(--color-surface-default); color: var(--color-text-default); padding: 69px 0; text-align: center; }
 .prizes__title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; letter-spacing: -0.72px; padding: 0 16px; }
 .prizes__subtitle { margin-top: 14px; font-size: var(--font-size-20); font-weight: 600; }
 .prizes__row { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 36px; padding: 0 20px; }
@@ -281,8 +286,7 @@
 /* ---------- Brand theme (changes 26 and 27): dark brands sit on the brand colour (data-page-canvas) ----------
    Brand-colour blocks that would vanish on it (step circles, teaser cards) use the DERIVED second shade from
    state/chrome.ts. Text on the brand colour is --chrome-text (white, or black on light brands). */
-.page-main[data-page-theme] :is(.promo-hero__band, .prizes) { color: var(--chrome-text); }
-.page-main[data-page-canvas] .section-nav { background: var(--chrome-bg); border-bottom-color: color-mix(in srgb, var(--chrome-text) 25%, transparent); }
+.page-main[data-page-theme] .promo-hero__band { color: var(--chrome-text); }
 .page-main[data-page-canvas] .steps__circle { background: var(--chrome-shade); color: var(--chrome-shade-text); }
 .page-main[data-page-canvas] .teaser:not([data-brand="joy"] *) .teaser__card { background: var(--chrome-shade); color: var(--chrome-shade-text); }
 .page-main[data-page-canvas] .promo-faq__text { color: var(--site-muted); }

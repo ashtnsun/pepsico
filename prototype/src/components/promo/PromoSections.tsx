@@ -57,7 +57,7 @@ export function Prizes({ promo }: { promo: Promo }) {
       <h2 id="prizes-title" className="prizes__title">{promo.prizesTitle}</h2>
       {promo.prizesSubtitle && <p className="prizes__subtitle">{promo.prizesSubtitle}</p>}
       <div className="prizes__row">
-        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Previous prizes" onClick={() => { setDir(-1); setPage((p - 1 + pages) % pages) }}><ChevronLeft size={24} strokeWidth={3} /></button>}
+        {pages > 1 && <button type="button" className="round-arrow" aria-label="Previous prizes" onClick={() => { setDir(-1); setPage((p - 1 + pages) % pages) }}><ChevronLeft size={24} strokeWidth={3} /></button>}
         <ul key={p} className="prizes__list" aria-live="polite" style={{ '--dir': dir } as CSSProperties}>
           {shown.map((pr, n) => (
             <li key={pr.name} className="prizes__item" style={{ '--i': n } as CSSProperties}>
@@ -66,7 +66,7 @@ export function Prizes({ promo }: { promo: Promo }) {
             </li>
           ))}
         </ul>
-        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Next prizes" onClick={() => { setDir(1); setPage((p + 1) % pages) }}><ChevronRight size={24} strokeWidth={3} /></button>}
+        {pages > 1 && <button type="button" className="round-arrow" aria-label="Next prizes" onClick={() => { setDir(1); setPage((p + 1) % pages) }}><ChevronRight size={24} strokeWidth={3} /></button>}
       </div>
       {pages > 1 && <p className="prizes__count">{p + 1} / {pages}</p>}
     </section>

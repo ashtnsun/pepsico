@@ -653,3 +653,15 @@ Add one entry per prompt, newest at the bottom. Template:
 
   Full-page screenshots of Doritos & F1 (matches change 25) and Quaker (navy throughout).
 - **Decision record:** none yet.
+
+### Change 28 — White prizes section and a section menu in the breadcrumb colour on promotion pages — 2026-10-27
+
+- **Prompt (verbatim):** For all the individual promo pages, chnage the background of the prizes section to be white, and change the secondary nav bar to be the same color as the breadcrumbs bar background color.
+- **What changed:** on every promotion page:
+  - **Prizes:** the section is now white instead of the brand colour, with dark text (`--color-text-default`). The previous/next arrows are filled buttons in the theme's button colour instead of white circles, which would vanish on white: JOY blue, Doritos black, Pepsi black. On dark brands that sit on the brand colour (change 27), the prizes section is a full-width white band.
+  - **Section menu** (Prizes · Steps · FAQs · Terms and conditions): it now has the breadcrumb bar's background and text colour instead of white with a blue line. That is JOY dark blue `#0E38DF` with "JOY blue" or on Avengers, Doritos dark red with brand options A and B, Doritos red with C, and black on Pepsi. Links and the current-section underline are in the bar's text colour. When the menu sticks, its "Participate here" button uses the theme's dark-background style: white with blue text on JOY, a black pill with a white border on Doritos.
+- **Why:** user's request.
+- **How AI was used:** Claude moved the breadcrumb bar's colours into two variables (`--crumb-bg`, `--crumb-text`) on the page wrapper, with one value per brand-theme option in `layout.css`. The section menu reads the same variables, so it always matches the breadcrumb. The prize arrows now use the filled `round-arrow`, whose icon colour follows the theme (`--site-on-blue`) instead of fixed white.
+- **Files:** `prototype/src/components/promo/promo.css`, `PromoSections.tsx`, `prototype/src/components/layout/layout.css`, `prototype/src/styles/site.css`.
+- **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px compared the breadcrumb and section menu background colours on Doritos & F1, Pepsi EA and Avengers with each of the four config options (JOY blue, A, B, C). All 12 match, and the prizes are white with `#333` text on all of them. Screenshots: the Doritos and Pepsi EA prize sections, the Avengers section menu, and the stuck Doritos menu with its button.
+- **Decision record:** none.
