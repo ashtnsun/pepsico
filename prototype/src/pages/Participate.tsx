@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { CircleAlert, Info } from 'lucide-react'
-import { getPromo } from '../data/promos'
+import { getPromo, type Promo } from '../data/promos'
 import { isEnded } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
@@ -10,6 +10,20 @@ import { BrandLoader } from '../components/promo/BrandLoader'
 import NotFound from './NotFound'
 import { promoCrumbs } from './PromoDetail'
 import './pages.css'
+
+/** The promotion's art, name and dates, straight on the brand colour above the white card (participation and result pages) */
+export function PromoStrip({ promo, kicker }: { promo: Promo; kicker: string }) {
+  return (
+    <section className="participate__promo" aria-label={kicker}>
+      <img className="participate__art" src={promo.images.card} alt="" />
+      <div>
+        <p className="participate__kicker">{kicker}</p>
+        <p className="h3">{promo.teaserTitle}</p>
+        <DateLine promo={promo} />
+      </div>
+    </section>
+  )
+}
 
 /** Wireframe "Promo Loading", as one centred column: a small promo strip on top, then the entry form / "calculating" card. */
 export default function Participate() {
@@ -48,14 +62,7 @@ export default function Participate() {
       <Breadcrumb items={promoCrumbs(promo.slug, [{ label: 'Participation' }])} />
       <div className="participate">
         <div className="participate__main">
-          <section className="participate__promo" aria-label="Promotion you’re entering">
-            <img className="participate__art" src={promo.images.card} alt="" />
-            <div>
-              <p className="participate__kicker">You’re entering</p>
-              <p className="h3">{promo.teaserTitle}</p>
-              <DateLine promo={promo} />
-            </div>
-          </section>
+          <PromoStrip promo={promo} kicker="You’re entering" />
 
           {phase === 'loading' ? (
             <div className="panel" role="status" aria-live="assertive" style={{ textAlign: 'center' }}>

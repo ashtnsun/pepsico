@@ -723,3 +723,103 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/layout/layout.css`, `prototype/src/data/brands.ts`, `prototype/src/state/chrome.ts`, `prototype/public/images/brands/logo-rockstar-on-dark.webp`, `prototype/public/images/brands/logo-quaker-on-dark.webp`.
 - **Checked by:** `tsc -b`. Playwright navbar screenshots at 1440 px of all 8 brand pages (Doritos, Rockstar, Pepsi, Walkers, 7UP, Lipton, Quaker, Popworks) and the Las Vegas (Doritos), Walkers GDK and Pepsi EA promotion pages (Walkers and Pepsi on black). Phone width (390 px): Doritos, 7UP, Rockstar, Quaker. Every logo is readable with no bubble. Rockstar and Popworks still look small, because their image files have a lot of empty space around the logo.
 - **Decision record:** none.
+
+### Change 33 — Promotion page: Participate banner fits the content width, terms at the bottom — 2026-10-27
+
+- **Prompt (verbatim):** on the individal promo pages, make the participate here section/banner fit the content container width, right now it's wider than anything else in the page, feels unbalanced/awkawrd. [Image #1]. Also move the terms section to the very bottom of the page.
+- **What changed:**
+  - **Banner width:** the "Participate here" banner (`.cta-banner`) is now as wide as the other content blocks: 1130 px, centred (`--site-content`), with 20 px either side on smaller screens and 16 px on phones. Before, it ran almost edge to edge (25 px margins), wider than the FAQs and the legal box.
+  - **Terms last:** the legal text with the contact and T&C links moved from between the steps and the banner to the very end of the page, after the FAQs (and after "Other promotions" on ended promotions). It now carries the bottom space (64 px, 48 px on phones) and has no extra top space when it follows the FAQs.
+  - **Section menu order:** "Terms and conditions" moved to the end of the sticky section menu, so the links still follow the page order (change 29).
+- **Why:** user's request. Every block on the page now shares the same left and right edges, and the long legal text no longer sits in the middle of the page between the steps and the call to action.
+- **How AI was used:** Claude found the banner's margins in `promo.css`, gave it the same width rule as the FAQ and legal blocks, and moved the terms section in `PromoDetail.tsx`.
+- **Files:** `prototype/src/components/promo/promo.css`, `prototype/src/pages/PromoDetail.tsx`.
+- **Checked by:** `tsc --noEmit`. Playwright on the Avengers Doomsday page: at 1440 px the banner, FAQs and terms all measure x 147, width 1130; at 390 px all three are x 16, width 343, no sideways scroll. Screenshots show the banner lined up with the FAQ edges and the terms as the last block above the newsletter. Not checked: an ended promotion with "Other promotions".
+- **Decision record:** none.
+
+### Change 34 — Promotion page: one even gap between sections — 2026-10-27
+
+- **Prompt (verbatim):** White space and gap between the sections on the individual promo pages needs to be auditted and fixed so that things are consistent and looks visually balanced
+- **Audit (before):** each section had its own top and bottom space, and some were added together, so the visible space between one section's content and the next varied a lot. Desktop (1440 px) / phone (390 px), in px:
+
+  | Between | Desktop | Phone |
+  | --- | --- | --- |
+  | Section menu → Prizes | 69 | 48 |
+  | Prizes → Steps | 119 | 98 |
+  | Steps → Participate banner | 40 | 24 |
+  | Participate banner → FAQs | 120 | 80 |
+  | FAQs → Terms | 88 | 64 |
+  | Prizes → Other promotions (ended, dark brands) | 109 | 88 |
+  | Other promotions → Terms | 78 | 72 |
+  | Terms → Newsletter | 64 | 48 |
+
+- **What changed:**
+  - **One gap:** a new `--promo-gap` (`--spacing-80` on desktop and tablet, `--spacing-48` under 768 px) is the only space between sections. Each section (prizes, steps, Participate banner, FAQs, other promotions, terms) puts it above itself only; the terms box, now always last, also puts it below, before the newsletter.
+  - **Prize band on dark-brand pages:** the white band keeps the gap inside it, above and below its content, so the space from the band's edge to the next heading matches.
+  - **Other promotions:** its inline padding (40/48) became a `promo-others` class, and the last teaser card no longer adds its own 40 px under itself.
+  - Spacing inside sections (heading to content, between cards, between steps) is unchanged.
+- **Why:** user's request. A single gap gives the page an even rhythm, so no section looks crammed (the banner under the steps was 40 px) or stranded (the FAQs had 120 px above them).
+- **How AI was used:** Claude measured the visible gap between every pair of sections with a Playwright script on all 6 promotions, found where the spacing came from in `promo.css`, and replaced the separate values with one shared one.
+- **Files:** `prototype/src/components/promo/promo.css`, `prototype/src/pages/PromoDetail.tsx`.
+- **Checked by:** `tsc --noEmit`. The same Playwright script after the fix, on all 6 promotions (active, ended, and the three dark-brand pages) at 1440, 900 and 390 px: every gap is 80 px (48 px on phones), no sideways scroll. Full-page screenshots of Avengers Doomsday (1440, 390) and Pepsi Music (1440) look even.
+- **Decision record:** none.
+
+### Change 35 — Promotion page: more space around the Participate banner — 2026-10-27
+
+- **Prompt (verbatim):** maybe larger gap bewteen around the participate here banner
+- **What changed:** the space above and below the "Participate here" banner is now 1.5 times the section gap from change 34: 120 px on desktop and tablet, 72 px on phones (was 80 / 48). It's a new `--promo-gap-wide`, worked out from `--promo-gap`, so the two stay in proportion. The section after the banner (FAQs, or the terms box when a promotion has no FAQs) starts after the wide gap. All other gaps stay at 80 / 48.
+- **Why:** user's request. The banner is a call to action between two content sections. Extra space sets it apart, so it reads as its own moment instead of part of the steps or the FAQs.
+- **How AI was used:** Claude added one derived variable and applied it to the banner and to whichever section follows it, then measured the result with Playwright.
+- **Files:** `prototype/src/components/promo/promo.css`.
+- **Checked by:** Playwright on Avengers Doomsday: steps → banner and banner → FAQs both 120 px at 1440 px and 72 px at 390 px. Screenshot at 1440 px shows equal space above and below the banner. Not checked: an active promotion without FAQs (the banner → terms rule).
+- **Decision record:** none.
+
+### Change 36 — No gradients on the promotion cards or the logged-in home hero — 2026-10-27
+
+- **Prompt (verbatim):** ON the promo cards (small) get rid of the gradient on it. same with the logged in home page hero, the gradients feel/look ai-gen
+- **What changed:**
+  - **Promotion card (A · Poster, the default):** removed the overlay that put a white glow behind the art and darkened the bottom of the card. The card is now one flat brand colour.
+  - **Logged-in home hero (C · Big track, the default):** the background is flat JOY blue instead of a blue-to-navy fade. The progress bar fill is solid JOY yellow instead of a sky-to-green-to-yellow fade with moving diagonal stripes and a glow. The fill still grows in when the page loads.
+- **Why:** user's request. The gradients looked AI-made. The live site uses flat colour bands, so flat fills also match it better.
+- **How AI was used:** Claude found which card and hero designs are the defaults, removed only their gradient rules in CSS, and checked the result in the browser with Playwright.
+- **Files:** `prototype/src/components/promo/card-variants.css`, `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** Playwright at 1440 px, logged in as the test user with 2 entries: the hero is flat blue with a solid yellow bar; the JOY and Doritos cards are flat brand colour (the card's `::before` overlay is gone). Not changed: the other card and hero designs in the config menu (press C) still have their own gradients.
+- **Decision record:** none.
+
+### Change 37 — Logged-in home hero: bigger "Hi Sam!" greeting — 2026-10-27
+
+- **Prompt (verbatim):** in the logged in hero, the HI SAM is too small, maybe also change to Hi Sam! (case)
+- **What changed:** in the logged-in home hero (C · Big track, the default), the greeting above the headline now reads "Hi Sam!" in sentence case instead of "HI SAM" in small spaced capitals. It is 36 px bold on desktop and tablet, 26 px on phones (was 14 px), still in JOY sky blue. It has its own class, `.hv-track__hello`, so the small "Your JOY rewards" labels on the other hero designs stay as they were.
+- **Why:** user's request. At 14 px in capitals the greeting read like a small label and got lost next to the 64 px headline. Sentence case with an exclamation mark sounds friendlier, like a greeting.
+- **How AI was used:** Claude found which hero was the default, gave its greeting a new style, and checked the size and text with a Playwright script.
+- **Files:** `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** Playwright at 1440 and 390 px, logged in as the test user with 2 entries: the text is "Hi Sam!", 36 px and 26 px, no uppercase. Screenshots at both widths show it reading clearly above the headline. Not changed: the "HI SAM" in the navbar (still capitals, like the other navbar links).
+- **Decision record:** none.
+
+### Change 38 — Logged-in home hero: darker blue so it stands apart from the navbar — 2026-10-27
+
+- **Prompt (verbatim):** On the home logged in hero, the nav bar blends in with the hero, is there a way to be able to distinguish them
+- **What changed:** the logged-in home hero (C · Big track, the default) is now the live site's darker blue, `--site-blue-dark` (#0E38DF), instead of JOY blue (#1443FF). The navbar stays JOY blue, so there is a clear edge where the hero starts. The hero is still one flat colour (change 36). The "Entry 3" dot that hasn't been reached yet now uses JOY blue, because the old darker blue would have disappeared into the new background.
+- **Why:** user's request. Since change 36, the navbar and the hero were the same flat JOY blue, and the home page has no breadcrumb bar between them, so they read as one block. On every other page the breadcrumb bar in `--site-blue-dark` separates the navbar from the content. Using the same blue here follows a pattern the site already has instead of adding a new one.
+- **Options considered (tried in the browser at 1440 px before choosing):** (1) darker site blue on the hero, chosen; (2) the brand sheet's dark navy #0A0F36 on the hero: the strongest contrast, but a much heavier look than the live site; (3) a thin white line and a shadow under the navbar: a smaller change, but it adds a shadow style the site doesn't use and the two blues still match.
+- **How AI was used:** Claude rendered the three options with Playwright by injecting CSS, compared the screenshots, applied the one that follows the live site's existing pattern, and checked it again.
+- **Files:** `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** Playwright at 1440 and 390 px, logged in as the test user with 2 entries: navbar `rgb(20, 67, 255)`, hero `rgb(14, 56, 223)`. Screenshots at both widths show a visible edge under the navbar, and the progress dots, yellow bar and decorations are all still readable. Not changed: the other hero designs in the config menu.
+- **Decision record:** none.
+
+### Change 39 — Result page hierarchy and reward progress bar; participation pages on the brand colour — 2026-10-27
+
+- **Prompt (verbatim):** ON the promo results page, work on the info heirarchy of the text. I also want to visually show the progress bar on it to show entries away from next reward. Also theres heavy ai-gen aesthetics, especially with the icon and the You're 3 entries... label. Also on all the participation pages, the background needs to be in theme, right now it's just grey.
+- **What changed:**
+  - **Result page order:** every outcome now reads in the same order: headline → the prize (or the draw) → what happens next → progress towards the next JOY reward → buttons → code and date (small, last).
+    - **Won:** "You’ve won!", then the real prize picture with the prize name in large blue text, then "We’ve emailed you how to claim your prize. **Claim it within 14 days.**" The draw prize is a quieter line under it. Before, the prize name sat under a long paragraph and a divider.
+    - **Lost:** "No win this time" (was "Not this time") and one short line. If the promotion has a draw, a line says in bold that you're still in it and when winners are picked.
+    - **Entered (draw only):** "You’re in the draw!" with the prize in bold, then when the winner is picked.
+  - **Removed the AI-looking parts:** the big icon in a pastel circle that popped in (party popper, frown, ticket) and the blue info box ("You’re 3 entries away…").
+  - **Reward progress bar (new):** a section with a divider above it: a heading ("1 more entry to your next JOY reward", or "You’ve unlocked a JOY reward"), a "3 of 4" count, a bar with one segment per entry in the button colour, and one small line explaining the rule. The segment this entry filled grows in, so you can see the entry counted. It uses the theme's button colour, so it's JOY blue on JOY promotions and black on Doritos and Pepsi.
+  - **Participation and result pages on the brand colour:** both pages now sit on the promotion's brand colour (JOY blue, Doritos red, Pepsi black, and so on) instead of grey, with the form or result on a white card. The promotion strip above the card ("You’re entering" / "Your result", art, name, dates) is now white text straight on the brand colour instead of a coloured box. The result page has the strip too, so both pages look like steps of the same flow.
+- **Why:** user's request. The old result page gave the long paragraph and the prize the same weight, so the most important fact (what you won, or that you're still in the draw) didn't stand out. The reward progress was a sentence in an info box; a bar shows it at a glance and matches the home page tracker. The icon and the info box were generic UI-kit pieces that read as AI-made; a real prize picture is more specific. The grey background made the participation pages look like they left the promotion; the brand colour keeps them part of it, like the dark-brand promotion pages already did.
+- **How AI was used:** Claude rewrote the result page layout and the progress section, moved the promotion strip into a shared component, changed the page backgrounds in CSS, and checked the result with Playwright screenshots.
+- **Files:** `prototype/src/pages/Result.tsx`, `prototype/src/pages/Participate.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc --noEmit`. Playwright at 1440 and 390 px, logged in as the test user with 3 entries: won result on Avengers Doomsday (JOY blue page, prize picture, 3 of 4 bar), lost result on Las Vegas Wrap (red page, black bar and button, draw line), lost result on Pepsi Music (black page), and the Las Vegas Wrap entry form (red page, white card). No sideways scroll at either width. Not checked in the browser: the "entered" (draw only) result and the "reward unlocked" state (4th entry).
+- **Decision record:** none.

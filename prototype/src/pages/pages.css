@@ -134,9 +134,10 @@
 
 /* ---------- Participate ---------- */
 /* Fills the screen under the navbar, so the footer only appears after scrolling */
-.participate { background: var(--color-surface-subtle); min-height: calc(100svh - var(--site-nav-height)); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+/* Change 39: participation and result pages sit on the promotion's brand colour (was grey), with the form or result on a white card */
+.participate { background: var(--promo-bg); min-height: calc(100svh - var(--site-nav-height)); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
 .participate__main { width: 100%; max-width: 560px; }
-.participate__promo { display: flex; align-items: center; gap: 16px; background: var(--promo-bg); color: #fff; border-radius: var(--radius-card); padding: 16px 24px; margin-bottom: 16px; }
+.participate__promo { display: flex; align-items: center; gap: 16px; color: var(--chrome-text, #fff); padding: 0 8px; margin-bottom: 24px; }
 .participate__art { width: 72px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; flex: none; }
 .participate__promo .date-line { font-size: var(--font-size-14); line-height: 18px; margin: 4px 0 0; }
 .participate__kicker { font-size: var(--font-size-14); line-height: 18px; text-transform: uppercase; opacity: .85; }
@@ -150,30 +151,44 @@
 .code-input { font-size: 20px !important; letter-spacing: 3px; text-transform: uppercase; height: 52px !important; }
 @media (max-width: 991px) {
   .participate { align-items: flex-start; padding: 24px 16px 48px; }
-  .participate__promo { padding: 14px 16px; }
+  .participate__promo { padding: 0 4px; margin-bottom: 20px; }
   .participate__art { width: 56px; }
   .participate__promo .h3 { font-size: 18px; line-height: 22px; }
   .panel { padding: 28px 20px; }
 }
 
 /* ---------- Result ---------- */
-.result { background: var(--color-surface-subtle); padding: 48px 16px 80px; }
-.result__card { max-width: 640px; margin: 0 auto; background: #fff; border-radius: var(--radius-card); box-shadow: 0 0 20px rgba(0,0,0,.08); padding: 40px 48px; text-align: center; }
-/* The result icon pops in with a little overshoot once the page has arrived */
-.result__icon { width: 84px; height: 84px; margin: 0 auto 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: pop-in .55s cubic-bezier(.34, 1.56, .64, 1) .2s backwards; }
-.result__prize img { animation: rise-in .6s var(--ease-out) .35s backwards; }
-.result__icon--won { background: #E6F6EC; color: var(--site-success); }
-.result__icon--lost { background: var(--color-surface-subtle); color: var(--color-text-secondary); }
-.result__icon--entered { background: color-mix(in srgb, var(--site-ink) 10%, #fff); color: var(--site-ink); }
+.result { background: var(--promo-bg); min-height: calc(100svh - var(--site-nav-height)); display: flex; justify-content: center; padding: 48px 24px 80px; }
+.result__card { background: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); padding: 40px 48px; text-align: center; animation: rise-in var(--dur-slow) var(--ease-out) backwards; }
 .result__card h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
-.result__lead { margin-top: 14px; color: var(--color-text-secondary); line-height: 22px; }
-.result__prize { border-top: 1px solid var(--color-border-default); margin-top: 28px; padding-top: 24px; }
-.result__prize h2 { font-size: var(--font-size-20); font-weight: 700; }
-.result__prize h2 strong { color: var(--site-ink); }
-.result__prize img { width: 240px; margin: 12px auto 0; }
-.result__code { margin-top: 18px; font-size: var(--font-size-14); color: var(--color-text-secondary); }
-.result__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 28px; }
-@media (max-width: 767px) { .result__card { padding: 32px 20px; } .result__card h1 { font-size: var(--font-size-24); line-height: var(--line-height-28); } }
+.result__prize { margin-top: 20px; }
+.result__prize img { width: 220px; margin: 0 auto; animation: rise-in .6s var(--ease-out) .25s backwards; }
+.result__prize-name { margin-top: 12px; font-size: var(--font-size-24); line-height: var(--line-height-28); font-weight: 700; color: var(--site-ink); }
+.result__lead { margin-top: 12px; font-size: 18px; line-height: 26px; }
+.result__note { margin-top: 12px; color: var(--color-text-secondary); line-height: 22px; }
+.result__note strong { color: var(--color-text-default); }
+.result__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 32px; }
+.result__code { margin-top: 24px; font-size: var(--font-size-14); color: var(--color-text-secondary); }
+/* Progress towards the next JOY reward: one segment per entry in the action colour */
+.reward { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--color-border-default); text-align: left; }
+.reward__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.reward__head h2 { font-size: var(--font-size-20); line-height: 26px; font-weight: 700; }
+.reward__count { flex: none; font-size: var(--font-size-14); font-weight: 600; color: var(--color-text-secondary); }
+.reward__bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
+.reward__bar span { height: 12px; border-radius: var(--radius-control); background: color-mix(in srgb, var(--site-blue) 14%, #fff); overflow: hidden; }
+.reward__bar span.is-done::after { content: ''; display: block; height: 100%; background: var(--site-blue); }
+.reward__bar span.is-new::after { transform-origin: left; animation: reward-fill .7s var(--ease-out) .5s backwards; }
+@keyframes reward-fill { from { transform: scaleX(0); } }
+.reward__text { margin-top: 12px; font-size: var(--font-size-14); line-height: var(--line-height-18); color: var(--color-text-secondary); }
+@media (max-width: 767px) {
+  .result { padding: 24px 16px 48px; }
+  .result__card { padding: 32px 20px; }
+  .result__card h1 { font-size: var(--font-size-24); line-height: var(--line-height-28); }
+  .result__prize img { width: 180px; }
+  .result__prize-name { font-size: var(--font-size-20); line-height: 26px; }
+  .result__lead { font-size: var(--font-size-16); line-height: 22px; }
+  .reward__head h2 { font-size: var(--font-size-16); line-height: 22px; }
+}
 
 /* ---------- Profile ---------- */
 .profile-banner img { width: 100%; height: 172px; object-fit: cover; }
@@ -213,8 +228,6 @@
 .faq-group h2 { font-size: var(--font-size-24); margin-bottom: 0; }
 
 /* ---------- Brand theme (changes 26 and 27): on dark brands, no white or grey page sections ---------- */
-.page-main[data-page-canvas] :is(.participate, .result) { background: transparent; }
-.page-main[data-page-canvas] .participate__promo { background: var(--chrome-shade); color: var(--chrome-shade-text); }
 .page-main[data-page-canvas] :is(.empty-state, .page-head p) { color: var(--site-muted); }
 .page-main[data-page-canvas] .empty-state h3 { color: inherit; }
 .page-main[data-page-canvas] .text-page { border-radius: var(--radius-card); padding: 8px 40px 40px; margin-bottom: 80px; }
