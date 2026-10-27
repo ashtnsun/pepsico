@@ -833,3 +833,23 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/promo/card-variants.css`.
 - **Checked by:** Playwright at 1440 px on the Promotions page, logged in as the test user: computed background is transparent with a 1 px white 50% border; screenshot shows the outline reading clearly on the blue, red and grey (ended) cards. Not changed: the prize boxes on the other card designs in the config menu.
 - **Decision record:** none.
+
+### Change 40 — Promotion cards: titles and prize boxes line up across a row — 2026-10-27
+
+- **Prompt (verbatim):** On the promo cards (small) the titles and prizes label should always be aligned with each other across cards, no matter if the title ends up being 2 lines
+- **What changed:** in a card grid (Promotions page, logged-in home "Suggested" and "Your entries"), the cards in one row now share the same rows (CSS subgrid): top chips, picture, brand label, title, prize box, footer. A 2-line title makes the title row taller for every card in that row, so all titles start at the same height, all prize boxes start at the same height, and the time left and buttons line up at the bottom. Each prize box stays the height of its own text. Applies to the default card design (A · Poster) only. Outside a card grid the card looks the same as before.
+- **Why:** user's request. When one title wrapped to 2 lines, its prize box and everything below moved down, so the row looked uneven and harder to scan.
+- **How AI was used:** Claude chose CSS subgrid because it lines rows up for any title length, not just 2 lines (a fixed 2-line minimum height would break with 3 lines). It then measured where each title, prize box and footer starts with a Playwright script.
+- **Files:** `prototype/src/components/promo/card-variants.css`.
+- **Checked by:** `tsc --noEmit`. Playwright on the Promotions page at 1440, 900 and 390 px: in every row the titles, prize boxes and footers start at the same position, even where 1-line and 2-line titles share a row. No sideways scroll. A screenshot at 1440 px looks even. Not checked: the other card designs in the config menu (press C), which are unchanged.
+- **Decision record:** none.
+
+### Change 41 — Promotion cards: prize label back to its fill (undoes change 40) — 2026-10-27
+
+- **Prompt (verbatim):** why did you restyle it? / hug text / hug text but fill width of the container
+- **What changed:** the prize box on the promotion card (A · Poster) has its see-through white fill again and no outline. It is the full width of the card's content area, and its height fits the text (one or two lines). This is the same as before change 40.
+- **Why:** change 40 misread "fill". The user asked for the box to fit its text, not for the background to be replaced with an outline. Claude should have asked before adding the outline.
+- **How AI was used:** Claude restored the rule and measured the box in Playwright.
+- **Files:** `prototype/src/components/promo/card-variants.css`.
+- **Checked by:** Playwright on the Promotions page (1440 and 390 px) and the logged-in home page (1440 px): box width equals the card body's content width (303 of 347 px; 22 px padding each side), heights 40 px for one line and 60 px for two, background `rgba(255, 255, 255, 0.14)`, no border.
+- **Decision record:** none.
