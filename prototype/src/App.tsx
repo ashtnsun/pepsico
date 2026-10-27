@@ -57,6 +57,7 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
         id="main"
         className="page-main"
         data-page-theme={themed && theme.page ? '' : undefined}
+        data-page-canvas={themed && theme.page?.canvas ? '' : undefined}
         data-brand={themed ? theme.page?.mode : undefined}
         style={themed ? theme.page?.vars : undefined}
       >

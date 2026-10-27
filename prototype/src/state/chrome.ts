@@ -28,7 +28,11 @@ export type ChromeTheme = {
  * Doritos and Rockstar use their design system Theme mode (tokens.css `[data-brand]`, from the brand sheets).
  * Other brands get DERIVED token values from their brand colour (`vars`).
  */
-export type PageTheme = { mode?: 'doritos' | 'rockstar'; vars?: CSSProperties; /** Text and link colour on white */ ink: string }
+export type PageTheme = {
+  mode?: 'doritos' | 'rockstar'; vars?: CSSProperties; /** Text and link colour on white */ ink: string
+  /** Change 27: only dark brands (black or navy) put the whole page on the brand colour; the others keep white sections. */
+  canvas: boolean
+}
 
 const luminance = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map((i) => {
@@ -55,7 +59,7 @@ const colours = (bg: string) => {
  * light brands). Links, outlines and focus rings in the brand colour darkened in 5% steps until it passes 4.5:1 on
  * white (7UP green turns dark green); if that takes more than 40% black (Lipton yellow turns olive), black instead.
  */
-const derivedPage = (bg: string): PageTheme => {
+const derivedPage = (bg: string): Omit<PageTheme, 'canvas'> => {
   const onBg = readableText(bg)
   let ink = bg
   for (let n = 1; onWhite(ink) < 4.5; n++) ink = n > 8 ? '#000000' : mix(bg, 0, n * 0.05)
@@ -77,9 +81,12 @@ const derivedPage = (bg: string): PageTheme => {
     } as CSSProperties,
   }
 }
-// ink = --color-text-link of the Theme mode (tokens.css)
-const pageTheme = (slug: string, bg: string): PageTheme =>
-  slug === 'doritos' ? { mode: slug, ink: '#030303' } : slug === 'rockstar' ? { mode: slug, ink: '#000000' } : derivedPage(bg)
+// ink = --color-text-link of the Theme mode (tokens.css). Dark = luminance under 0.05: black, Quaker and Popworks navy
+// (Doritos and Walkers red are 0.12 to 0.17, so they keep white sections).
+const pageTheme = (slug: string, bg: string): PageTheme => ({
+  ...(slug === 'doritos' ? { mode: slug, ink: '#030303' } : slug === 'rockstar' ? { mode: slug, ink: '#000000' } : derivedPage(bg)),
+  canvas: luminance(bg) < 0.05,
+})
 
 export function useChromeTheme(): ChromeTheme | null {
   const { pathname } = useLocation()

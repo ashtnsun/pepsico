@@ -205,14 +205,27 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 .toast.is-leaving { opacity: 0; transform: translate(-50%, 12px); }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 16px); } }
 
-/* ---------- Brand theme for page content (changes 25 and 26) ----------
+/* ---------- Brand theme for page content (changes 25 to 27) ----------
   On promotion and brand pages with a brand theme picked in the config menu, <main> carries data-page-theme and
   either data-brand (Doritos, Rockstar: their Theme mode in tokens.css) or DERIVED --color-* values inline
   (state/chrome.ts). The site values above are re-pointed at those tokens.
-  Change 26: the whole page sits on the brand colour (--chrome-bg, no white sections), so buttons, links and outlines
-  there use the theme's "on dark background" set. Forms, FAQ boxes, the legal panel, the result and the T&C text are
-  white cards that use the theme's light-background set. Other brands' promotions keep JOY (data-brand="joy"). */
-.page-main[data-page-theme] {
+  Change 25: white page, so buttons, links and outlines use the theme's light-background set.
+  Changes 26 and 27: on dark brands only (black or navy: Rockstar, Pepsi, Quaker, Popworks), <main> also carries
+  data-page-canvas and the whole page sits on the brand colour, with no white sections. Buttons, links and outlines
+  there use the theme's "on dark background" set; forms, FAQ boxes, the legal panel, the result and the T&C text are
+  white cards that go back to the light-background set. Other brands' promotions keep JOY (data-brand="joy"). */
+.page-main[data-page-theme],
+.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page) {
+  --site-blue: var(--color-action-primary);
+  --site-blue-hover: var(--color-action-primary-hover);
+  --site-on-blue: var(--color-text-on-action);
+  --site-blue-border: var(--color-action-primary);
+  --site-blue-dark: var(--color-text-link);
+  --site-blue-disabled: color-mix(in srgb, var(--color-action-primary) 35%, #fff);
+  --site-ink: var(--color-text-link);
+  --site-focus: var(--color-border-focus);
+}
+.page-main[data-page-canvas] {
   background: var(--chrome-bg); color: var(--chrome-text);
   display: flow-root;   /* keeps the last section's bottom margin inside, so no white strip shows above the newsletter */
   --site-blue: var(--color-action-inverse);
@@ -225,16 +238,8 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
   --site-focus: var(--color-border-focus-inverse);
   --site-muted: color-mix(in srgb, var(--chrome-text) 82%, var(--chrome-bg));   /* secondary text on the brand colour */
 }
-.page-main[data-page-theme] :is(.pterms, .accordion__item, .panel, .result__card, .text-page) {
+.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page) {
   background: var(--color-surface-default); color: var(--color-text-default);
-  --site-blue: var(--color-action-primary);
-  --site-blue-hover: var(--color-action-primary-hover);
-  --site-on-blue: var(--color-text-on-action);
-  --site-blue-border: var(--color-action-primary);
-  --site-blue-dark: var(--color-text-link);
-  --site-blue-disabled: color-mix(in srgb, var(--color-action-primary) 35%, #fff);
-  --site-ink: var(--color-text-link);
-  --site-focus: var(--color-border-focus);
 }
 /* Same as :root, so the JOY tokens tokens.css restores on [data-brand="joy"] reach the site values again */
 .page-main[data-page-theme] [data-brand="joy"] {

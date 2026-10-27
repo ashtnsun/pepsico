@@ -631,3 +631,25 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/styles/site.css`, `components/promo/promo.css`, `pages/pages.css`, `state/chrome.ts`.
 - **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px, full-page screenshots: Doritos & F1, 7UP, Lipton, Rockstar, Pepsi EA (ended, with the other promotions), and the Doritos T&C page (the strip under the card measured 0 px after the fix). Also the Doritos participate page with a test account, which was then removed. No sideways scroll on any page. Not screenshotted: the result page and phone width. The result page uses the same card rules as the participate form.
 - **Decision record:** none yet. With changes 21 and 25, keeping this would replace D36.
+
+### Change 27 — Brand-colour page only for dark brands — 2026-10-27
+
+- **Prompt (verbatim):** undo this change for the non-dark themed brands/promos
+- **What changed:** change 26 (whole page on the brand colour, white cards, no white sections) now applies only to dark brands. These are brands whose colour is black or navy:
+  - Rockstar, Pepsi and Quaker brand pages, plus Popworks;
+  - the Pepsi promotions and Walkers' black "walkers-gdk" promotion, because promotion pages follow the promotion's hero colour.
+
+  The colourful brands go back to change 25: white sections, with buttons, links and menus in the brand theme. These are Doritos red (brand page and both promotions), Walkers red (brand page), 7UP green and Lipton yellow.
+- **Why:** user's request. Claude read "dark-themed" as black or near-black brands, which look like a dark mode when the whole page is in their colour. The rule is luminance under 0.05: black is 0, Quaker navy 0.02 and Popworks navy 0.03, while Doritos and Walkers red are 0.12–0.17. **Check:** if "non-dark" was meant to be only the light brands (7UP, Lipton), with Doritos and Walkers red keeping the full red page, that is a one-number change.
+- **How AI was used:**
+  - `state/chrome.ts` adds `canvas` to the page theme, true when the brand colour's luminance is under 0.05. `App.tsx` adds `data-page-canvas` to `<main>` when it is true.
+  - In `site.css`, change 25's light-background set applies to every brand-themed page again. The brand-colour page set from change 26 applies only with `data-page-canvas`.
+  - Change 26's rules in `promo.css` and `pages.css` (section menu, step circles, teaser cards, participate and result backgrounds, empty state, T&C card) now also need `data-page-canvas`.
+- **Files:** `prototype/src/state/chrome.ts`, `App.tsx`, `styles/site.css`, `components/promo/promo.css`, `pages/pages.css`.
+- **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px read the page background and button colours on 11 pages:
+  - **White page:** Doritos & F1 and the Doritos, Walkers, 7UP and Lipton brand pages.
+  - **Brand-colour page:** the Rockstar, Pepsi, Quaker and Popworks brand pages and Pepsi EA.
+  - **Not themed:** Avengers.
+
+  Full-page screenshots of Doritos & F1 (matches change 25) and Quaker (navy throughout).
+- **Decision record:** none yet.

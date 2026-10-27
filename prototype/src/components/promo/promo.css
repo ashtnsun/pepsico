@@ -278,11 +278,11 @@
   .tracker__bar { margin: 40px 24px 24px; }
 }
 
-/* ---------- Brand theme (change 26): everything sits on the brand colour ----------
+/* ---------- Brand theme (changes 26 and 27): dark brands sit on the brand colour (data-page-canvas) ----------
    Brand-colour blocks that would vanish on it (step circles, teaser cards) use the DERIVED second shade from
    state/chrome.ts. Text on the brand colour is --chrome-text (white, or black on light brands). */
 .page-main[data-page-theme] :is(.promo-hero__band, .prizes) { color: var(--chrome-text); }
-.page-main[data-page-theme] .section-nav { background: var(--chrome-bg); border-bottom-color: color-mix(in srgb, var(--chrome-text) 25%, transparent); }
-.page-main[data-page-theme] .steps__circle { background: var(--chrome-shade); color: var(--chrome-shade-text); }
-.page-main[data-page-theme] .teaser:not([data-brand="joy"] *) .teaser__card { background: var(--chrome-shade); color: var(--chrome-shade-text); }
-.page-main[data-page-theme] .promo-faq__text { color: var(--site-muted); }
+.page-main[data-page-canvas] .section-nav { background: var(--chrome-bg); border-bottom-color: color-mix(in srgb, var(--chrome-text) 25%, transparent); }
+.page-main[data-page-canvas] .steps__circle { background: var(--chrome-shade); color: var(--chrome-shade-text); }
+.page-main[data-page-canvas] .teaser:not([data-brand="joy"] *) .teaser__card { background: var(--chrome-shade); color: var(--chrome-shade-text); }
+.page-main[data-page-canvas] .promo-faq__text { color: var(--site-muted); }
