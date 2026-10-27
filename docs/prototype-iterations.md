@@ -428,3 +428,19 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/layout/Navbar.tsx`, `prototype/src/components/layout/layout.css`.
 - **Checked by:** `tsc -b`. Playwright at 1440 × 900 with the test user logged in, reading the computed styles: on Home with no hover, not underlined, weight 400. On hover, underlined. On `/profile`, underlined and 700. On Promotions with the menu open, underlined and 700, and the arrow is flipped. Screenshots of the hover and profile states checked.
 - **Decision record:** none.
+
+### Change 19 — Brands page: brand cards with each brand's own art — 2026-10-26
+
+- **Prompt (verbatim):** on the all brands page, make visually better
+- **What changed:**
+  - The Brands page (`/brands`) was a plain grid of logos floating on white. Each brand is now a white card with rounded corners (20 px) and a soft shadow. The top of the card is the brand's own hero art from the live site (the phone crop already in `public/images/brands/`), and a 4 px line in the brand's band colour (the same colour as the "Welcome" band on its brand page) separates the art from the text.
+  - Under the art: the brand name (bold) and its status. A brand with running promotions shows the green design-system "Active" badge ("1 active promotion"); the others say "No active promotions" in grey. A blue arrow sits on the right.
+  - Hover (like the Poster promotion cards): the card lifts 6 px, its shadow takes the brand colour, the art zooms in slightly, the name turns JOY blue and the arrow moves right. Keyboard focus shows a dark outline. Movement is switched off for people who ask for reduced motion.
+  - A short line under the heading: "Pick a brand to see its promotions and latest news."
+  - Layout: 4 cards per row on desktop, 2 on tablets and phones. On phones the arrow is hidden and the badge reads "1 active" (screen readers still hear "1 active promotion").
+  - The cards are now a list (`ul`/`li`), so screen readers announce "list, 8 items".
+- **Why:** user's request. The live site's own hero art makes each brand recognisable at a glance and reuses real assets instead of new artwork. Claude's additions: Rockstar's art is a tall photo, so it is cropped lower (new optional `coverPosition` in `brands.ts`) to show the can and logo instead of cut-off headline text; Quaker and Popworks art end in a transparent curve, so the space under the curve is filled with the brand colour (otherwise a white gap showed above the colour line).
+- **How AI was used:** Claude looked at the old page and a contact sheet of all 8 brand hero images, rewrote the Brands index markup and styles, and checked it with Playwright at 1440 and 390 px. It fixed what the first screenshots showed: the Rockstar crop, the white gap under the Quaker and Popworks curve, the badge wrapping onto two lines on phones and the intro line touching the screen edges.
+- **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`, `prototype/src/data/brands.ts`.
+- **Checked by:** `tsc -b`. Playwright at 1440 × 900 (4 × 2 grid, Doritos shows the Active badge) and 390 × 844 (2 columns, badge on one line, page 390 px wide with no sideways scroll).
+- **Decision record:** none.

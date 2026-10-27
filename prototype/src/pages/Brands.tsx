@@ -1,4 +1,6 @@
+import type { CSSProperties } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import { brands, getBrand } from '../data/brands'
 import { promos } from '../data/promos'
 import { isActive, isEnded } from '../data/config'
@@ -13,19 +15,29 @@ export function BrandsIndex() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Brands' }]} />
-      <div className="page-head"><h1 className="h1">Our brands</h1></div>
-      <div className="brands-grid">
+      <div className="page-head brands-index-head">
+        <h1 className="h1">Our brands</h1>
+        <p>Pick a brand to see its promotions and latest news.</p>
+      </div>
+      <ul className="brands-grid">
         {brands.map((b) => {
           const n = activeCount(b.slug)
           return (
-            <Link key={b.slug} to={`/brands/${b.slug}`}>
-              <img src={b.logo} alt="" />
-              <h2 className="h3">{b.name}</h2>
-              <span className="brands-grid__count">{n ? `${n} active promotion${n > 1 ? 's' : ''}` : 'No active promotions'}</span>
-            </Link>
+            <li key={b.slug}>
+              <Link to={`/brands/${b.slug}`} className="brand-card" style={{ '--brand-band': b.band } as CSSProperties}>
+                <span className="brand-card__media"><img src={b.heroMobile} alt="" style={{ objectPosition: b.coverPosition }} /></span>
+                <span className="brand-card__body">
+                  <span className="brand-card__name">{b.name}</span>
+                  {n
+                    ? <span className="badge badge--active">{n} active<span className="brand-card__long"> promotion{n > 1 ? 's' : ''}</span></span>
+                    : <span className="brand-card__none">No active promotions</span>}
+                  <ArrowRight className="brand-card__arrow" size={20} aria-hidden="true" />
+                </span>
+              </Link>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </>
   )
 }
