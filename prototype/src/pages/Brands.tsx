@@ -1,9 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import { brands, getBrand } from '../data/brands'
 import { promos } from '../data/promos'
-import { isActive, isEnded } from '../data/config'
+import { isActive } from '../data/config'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { PromoTeaser } from '../components/promo/PromoTeaser'
+import { PromoCarousel } from '../components/promo/PromoCarousel'
 import NotFound from './NotFound'
 import './pages.css'
 
@@ -32,7 +33,8 @@ export function BrandsIndex() {
 
 /**
  * Live-site brand page (hero, welcome band, news, "want to know more") with the wireframe "Brand"
- * structure: active promotions first, ended ones in their own section.
+ * structure: active promotions first. Prototype change: instead of this brand's ended promotions, the page ends with
+ * a carousel of the other brands' active promotions.
  */
 export function BrandPage() {
   const { slug } = useParams()
@@ -40,7 +42,6 @@ export function BrandPage() {
   if (!brand) return <NotFound />
   const mine = promos.filter((p) => p.brand === brand.slug)
   const active = mine.filter(isActive)
-  const ended = mine.filter(isEnded)
   const others = promos.filter((p) => p.brand !== brand.slug && isActive(p))
   const tall = brand.hero.includes('rockstar') || brand.hero.includes('lipton')
 
@@ -92,19 +93,7 @@ export function BrandPage() {
         <a href={brand.website} target="_blank" rel="noreferrer" className="btn btn--primary btn--wide">Visit brand website<span className="visually-hidden"> (opens in a new tab)</span></a>
       </section>
 
-      {ended.length > 0 && (
-        <section aria-labelledby="brand-ended-title" style={{ paddingBottom: 48 }}>
-          <h2 id="brand-ended-title" className="section-title">Ended promotions</h2>
-          {ended.map((p) => <PromoTeaser key={p.slug} promo={p} />)}
-        </section>
-      )}
-
-      {active.length === 0 && others.length > 0 && (
-        <section aria-labelledby="brand-others-title" style={{ paddingBottom: 48 }}>
-          <h2 id="brand-others-title" className="section-title">Check out other brand promotions:</h2>
-          {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
-        </section>
-      )}
+      {others.length > 0 && <PromoCarousel id="brand-others-title" title="Promos from other brands" promos={others} />}
     </>
   )
 }

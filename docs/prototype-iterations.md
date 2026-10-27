@@ -454,3 +454,19 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`, `prototype/src/data/brands.ts`.
 - **Checked by:** `tsc -b`; `git diff 3a3d11f~1 -- prototype/src` is empty.
 - **Decision record:** none.
+
+### Change 21 — Brand page: "Promos from other brands" carousel instead of ended promotions — 2026-10-26
+
+- **Prompt (verbatim):** On the individual brands page, instead of ended promos, make it a Promos from other Brands carosel with cards of the other active promos
+- **What changed:**
+  - The "Ended promotions" section at the bottom of each brand page (`/brands/:slug`) is gone. In its place, after "Want to know more about …?", is **"Promos from other brands"**: a sideways-scrolling row of every active promotion from the other brands.
+  - The cards are the same promotion cards as the home and Promotions pages, so they follow the design config menu (C); by default that is A · Poster. If the logged-in user has entered one, the card shows it (Entered, You won), as on the Promotions page.
+  - Same card widths as the card grids: 3 in view on desktop, 2 on tablets. On phones a card is 85% wide so the next one peeks in, which shows people they can swipe. Cards snap into place when scrolling.
+  - Two round blue arrows (the live site's `round-arrow` style) sit next to the heading and move one card at a time. They only show when there are more cards than fit, and each greys out at its end.
+  - The old "Check out other brand promotions:" list, which only showed on brands with no active promotion, is removed too, because the carousel now covers it on every brand page.
+- **Why:** user's request. Claude's additions: removing the duplicate "Check out other brand promotions" list; arrows that hide when there's nothing to scroll; the peeking card on phones; extra space inside the row so card shadows and the hover lift aren't cut off.
+- **Note for testing:** the prototype data has only 2 active promotions (JOY Avengers and Doritos Las Vegas Wrap). So a brand page shows 1 or 2 cards, and on desktop the arrows never appear. On phones, brands with 2 other promotions (Pepsi, Walkers and the others) scroll. Adding more fake active promotions would make it look fuller.
+- **How AI was used:** Claude read the brand page, the card component and the existing carousel dots and arrows, then wrote a new `PromoCarousel` component and its styles. It checked the pages in a headless Chromium (the Playwright MCP browser was in use by another session).
+- **Files:** new `prototype/src/components/promo/PromoCarousel.tsx`; changed `prototype/src/pages/Brands.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 × 900: Pepsi shows 2 cards (347 px each, same as the card grid) and Doritos shows 1, with no arrows and no ended section. At 390 × 844: Pepsi's row scrolls (659 px of content in 390), the arrows show, and "Next" moves it 269 px to the second card; Doritos shows 1 card with no arrows; the page is 390 px wide with no sideways scroll. Screenshots checked.
+- **Decision record:** none.

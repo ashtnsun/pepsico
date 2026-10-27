@@ -171,6 +171,23 @@
 .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-24); }
 @media (max-width: 991px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 575px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* Prototype: card carousel (brand page "Promos from other brands"). Same card widths as .card-grid; on phones the
+   next card peeks in so people know they can swipe. Track padding leaves room for the card shadow and hover lift. */
+.promo-carousel { padding-top: 64px; padding-bottom: 48px; }
+.promo-carousel__head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px; }
+.promo-carousel__arrows { display: flex; gap: 12px; }
+.promo-carousel__track {
+  list-style: none; margin: 0 -20px; padding: 12px 20px 32px; display: grid; grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--spacing-24)) / 3); gap: var(--spacing-24);
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px; scrollbar-width: none;
+}
+.promo-carousel__track::-webkit-scrollbar { display: none; }
+.promo-carousel__track > li { scroll-snap-align: start; display: flex; }
+.promo-carousel__track > li > * { flex: 1; }
+@media (max-width: 991px) { .promo-carousel__track { grid-auto-columns: calc((100% - var(--spacing-24)) / 2); } }
+@media (max-width: 575px) { .promo-carousel__track { grid-auto-columns: 85%; } .promo-carousel { padding-top: 48px; } }
+@media (prefers-reduced-motion: no-preference) { .promo-carousel__track { scroll-behavior: smooth; } }
 .pcard { display: flex; flex-direction: column; border-radius: var(--radius-card); overflow: hidden; background: #fff; box-shadow: var(--site-shadow-card); }
 .pcard__media { position: relative; background: var(--promo-bg); padding: 20px; display: flex; justify-content: center; }
 .pcard__media img { width: 72%; aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
