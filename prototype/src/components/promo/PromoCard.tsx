@@ -4,7 +4,11 @@ import type { Promo } from '../../data/promos'
 import type { Entry } from '../../state/store'
 import { daysLeft, formatRange, isEnded } from '../../data/config'
 import { promoStyle } from './PromoTeaser'
+import { useDesign } from '../../state/design'
+import { CardOffset, CardPoster, CardPrize, CardTicket, CardTimebar } from './CardVariants'
 import './promo.css'
+
+const VARIANTS = { poster: CardPoster, ticket: CardTicket, timebar: CardTimebar, prize: CardPrize, offset: CardOffset }
 
 export function StatusBadge({ promo, entry }: { promo: Promo; entry?: Entry }) {
   if (entry?.outcome === 'won') return <span className="badge badge--won">You won</span>
@@ -19,6 +23,11 @@ export function StatusBadge({ promo, entry }: { promo: Promo; entry?: Entry }) {
  * drawn in the live-site style: brand-color top with the round teaser art, white body.
  */
 export function PromoCard({ promo, entry }: { promo: Promo; entry?: Entry }) {
+  const { card } = useDesign()
+  if (card !== 'original') {
+    const Variant = VARIANTS[card]
+    return <Variant promo={promo} entry={entry} />
+  }
   const ended = isEnded(promo)
   return (
     <article className={`pcard ${ended ? 'pcard--ended' : ''}`} style={promoStyle(promo)}>

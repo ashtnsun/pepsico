@@ -1,12 +1,23 @@
 import { Check, Gift } from 'lucide-react'
 import { REWARD_EVERY, REWARD_NAME } from '../../data/config'
+import { useDesign } from '../../state/design'
+import { useStore } from '../../state/store'
+import { HeroBento, HeroCan, HeroRing, HeroStamps, HeroTrack } from './HeroVariants'
 import './promo.css'
+
+const VARIANTS = { ring: HeroRing, stamps: HeroStamps, track: HeroTrack, bento: HeroBento, can: HeroCan }
 
 /**
  * Wireframe "Home (Logged-in)": greeting with a progress bar towards the next reward.
  * Drawn on the live site's dark-blue band with the JOY yellow.
  */
 export function ProgressTracker({ name, entries }: { name: string; entries: number }) {
+  const { hero } = useDesign()
+  const { myEntries } = useStore()
+  if (hero !== 'original') {
+    const Variant = VARIANTS[hero]
+    return <Variant name={name} entries={entries} wins={myEntries.filter((e) => e.outcome === 'won').length} />
+  }
   const done = entries % REWARD_EVERY
   const rewards = Math.floor(entries / REWARD_EVERY)
   const left = REWARD_EVERY - done

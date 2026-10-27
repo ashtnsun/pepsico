@@ -5,6 +5,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import { StoreProvider } from './state/store'
+import { DesignProvider } from './state/design'
 import { ToastProvider } from './components/ui/Toast'
 import App from './App'
 
@@ -13,9 +14,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HashRouter>
       <StoreProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
+        <DesignProvider>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </DesignProvider>
       </StoreProvider>
     </HashRouter>
   </StrictMode>,

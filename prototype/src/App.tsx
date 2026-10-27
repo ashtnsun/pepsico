@@ -3,6 +3,7 @@ import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/layout/Navbar'
 import { Footer, Newsletter } from './components/layout/Footer'
 import { ModeratorPanel } from './moderator/ModeratorPanel'
+import { ConfigPanel } from './moderator/ConfigPanel'
 import Home from './pages/Home'
 import Promotions from './pages/Promotions'
 import PromoDetail from './pages/PromoDetail'
@@ -63,6 +64,7 @@ export default function App() {
         </Route>
       </Routes>
       <ModeratorPanel />
+      <ConfigPanel />
     </>
   )
 }
