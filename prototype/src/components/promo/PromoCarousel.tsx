@@ -1,53 +1,52 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { Promo } from '../../data/promos'
-import { useStore } from '../../state/store'
-import { PromoCard } from './PromoCard'
+import { PromoTeaser } from './PromoTeaser'
 import './promo.css'
 
 /**
- * Prototype: a sideways-scrolling row of promotion cards (the same PromoCard as the home page).
- * Swipe or scroll on touch; the round arrows only show when there are more cards than fit.
+ * Prototype: a sideways-scrolling row of wide promotion teasers (the same PromoTeaser as "Active promotions"),
+ * one per slide. Swipe or scroll on touch; below it, round arrows and the live-site dots when there is more than one.
  */
 export function PromoCarousel({ promos, title, id }: { promos: Promo[]; title: string; id: string }) {
-  const { myEntries } = useStore()
   const track = useRef<HTMLUListElement>(null)
-  const [edge, setEdge] = useState({ start: true, end: true })
+  const [current, setCurrent] = useState(0)
+  const multi = promos.length > 1
 
   useEffect(() => {
     const el = track.current
     if (!el) return
-    const update = () => setEdge({ start: el.scrollLeft <= 1, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 })
-    update()
+    const update = () => setCurrent(Math.round(el.scrollLeft / el.clientWidth))
     el.addEventListener('scroll', update, { passive: true })
-    const ro = new ResizeObserver(update)
-    ro.observe(el)
-    return () => { el.removeEventListener('scroll', update); ro.disconnect() }
+    return () => el.removeEventListener('scroll', update)
   }, [promos])
 
-  // Move by one card (card width plus the gap).
-  const move = (dir: 1 | -1) => {
+  const go = (n: number) => {
     const el = track.current
-    const card = el?.firstElementChild as HTMLElement | null
-    if (el && card) el.scrollBy({ left: dir * (card.offsetWidth + 24), behavior: 'smooth' })
+    if (el) el.scrollTo({ left: n * el.clientWidth })
   }
-  const latestEntry = (slug: string) => [...myEntries].reverse().find((e) => e.promo === slug)
-  const scrolls = !(edge.start && edge.end)
 
   return (
-    <section className="container promo-carousel" aria-labelledby={id} aria-roledescription="carousel">
-      <div className="promo-carousel__head">
-        <h2 id={id} className="h1">{title}</h2>
-        {scrolls && (
-          <div className="promo-carousel__arrows">
-            <button type="button" className="round-arrow" aria-label="Previous promotions" disabled={edge.start} onClick={() => move(-1)}><ChevronLeft size={22} aria-hidden /></button>
-            <button type="button" className="round-arrow" aria-label="Next promotions" disabled={edge.end} onClick={() => move(1)}><ChevronRight size={22} aria-hidden /></button>
-          </div>
-        )}
-      </div>
+    <section className="promo-carousel" aria-labelledby={id} aria-roledescription={multi ? 'carousel' : undefined}>
+      <h2 id={id} className="section-title">{title}</h2>
       <ul className="promo-carousel__track" ref={track}>
-        {promos.map((p) => <li key={p.slug}><PromoCard promo={p} entry={latestEntry(p.slug)} /></li>)}
+        {promos.map((p, n) => (
+          <li key={p.slug} {...(multi ? { 'aria-roledescription': 'slide', 'aria-label': `${n + 1} of ${promos.length}` } : {})}>
+            <PromoTeaser promo={p} />
+          </li>
+        ))}
       </ul>
+      {multi && (
+        <div className="promo-carousel__controls">
+          <button type="button" className="round-arrow" aria-label="Previous promotion" disabled={current === 0} onClick={() => go(current - 1)}><ChevronLeft size={22} aria-hidden /></button>
+          <div className="dots">
+            {promos.map((p, n) => (
+              <button key={p.slug} type="button" aria-current={n === current} aria-label={`Show slide ${n + 1}: ${p.teaserTitle}`} onClick={() => go(n)} />
+            ))}
+          </div>
+          <button type="button" className="round-arrow" aria-label="Next promotion" disabled={current === promos.length - 1} onClick={() => go(current + 1)}><ChevronRight size={22} aria-hidden /></button>
+        </div>
+      )}
     </section>
   )
 }

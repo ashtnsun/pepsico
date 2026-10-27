@@ -488,3 +488,16 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/PromoDetail.tsx`, `prototype/src/components/promo/PromoSections.tsx`, new `prototype/src/components/promo/promo-page.css`, `prototype/src/components/promo/promo.css` (old hero band, section menu, prize band and FAQ rules removed; the home page's step circles are kept).
 - **Checked by:** `tsc -b`. Playwright full-page screenshots of 6 promotions at 1440 and 390 px: no sideways scroll at either width (page width 1440 / 390). Scrolled screenshot: the section menu sticks under the navbar and highlights the current section.
 - **Decision record:** none.
+
+### Change 22 — "Promos from other brands": centred heading, wide teaser cards — 2026-10-26
+
+- **Prompt (verbatim):** the promos from other brands heading should be centered, adn the card for the promo should be the wide variant
+- **What changed:**
+  - The heading "Promos from other brands" is centred, in the same style as the other section titles on the page ("Active promotions", "Latest Brand news").
+  - Each slide is now the wide live-site promotion teaser (brand-colour card with the logo, dates, title, "Go to promo", share links and the big round image) instead of the small Poster card. It's the same teaser as under "Active promotions", so the two sections match. One teaser fills each slide, and it snaps into place when swiped.
+  - Because the heading is centred, the arrows moved from beside the heading to below the slides: a round arrow on each side of the live-site carousel dots (grey dots, blue pill for the current slide). The dots follow the slide shown, whether it was reached by arrow, dot or swipe. With only one other promotion (e.g. on Doritos), there are no arrows or dots.
+- **Why:** user's request. "Wide variant" was read as the wide teaser the page already uses, since the card design menu has no wide card. Claude's addition: arrows and dots underneath, because a centred heading leaves no place for arrows beside it.
+- **How AI was used:** Claude rewrote `PromoCarousel` to show `PromoTeaser` slides and replaced its styles, then checked it in a headless Chromium.
+- **Files:** `prototype/src/components/promo/PromoCarousel.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 × 900 and 390 × 844: heading centred; Pepsi shows 2 slides, and "Next" moves to the second one (scroll 1440 px or 390 px), lights the second dot and disables "Next"; scrolling back lights the first dot again. Doritos shows 1 slide with no controls. No sideways page scroll at either width. Screenshots checked.
+- **Decision record:** none.
