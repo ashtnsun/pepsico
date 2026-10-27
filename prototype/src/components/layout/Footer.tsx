@@ -2,6 +2,8 @@ import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { CircleAlert, CircleCheck } from 'lucide-react'
 import { useStore } from '../../state/store'
+import { useDesign } from '../../state/design'
+import { useChromeTheme } from '../../state/chrome'
 import './layout.css'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -10,6 +12,10 @@ export function Newsletter() {
   const { subscribe } = useStore()
   const [email, setEmail] = useState('')
   const [state, setState] = useState<'idle' | 'error' | 'ok' | 'already'>('idle')
+  // Visual exploration: with the brand-colour theme, the band shows the brand's own decoration shapes
+  const { chrome } = useDesign()
+  const theme = useChromeTheme()
+  const brandDeco = chrome === 'full' && theme ? theme.deco ?? null : undefined
 
   const submit = (e: FormEvent) => {
     e.preventDefault()
@@ -19,8 +25,17 @@ export function Newsletter() {
 
   return (
     <section className="newsletter" aria-labelledby="newsletter-title">
-      <img className="newsletter__deco newsletter__deco--left" src="./images/global/mailing-left.png" alt="" />
-      <img className="newsletter__deco newsletter__deco--right" src="./images/global/mailing-right.png" alt="" />
+      {brandDeco === undefined ? (
+        <>
+          <img className="newsletter__deco newsletter__deco--left" src="./images/global/mailing-left.png" alt="" />
+          <img className="newsletter__deco newsletter__deco--right" src="./images/global/mailing-right.png" alt="" />
+        </>
+      ) : brandDeco && (
+        <>
+          <img className="newsletter__brand-deco newsletter__brand-deco--l" src={brandDeco} alt="" />
+          <img className="newsletter__brand-deco newsletter__brand-deco--r" src={brandDeco} alt="" />
+        </>
+      )}
       <div className="newsletter__inner">
         <div>
           <h2 id="newsletter-title" className="h1">Stay up to date with your favorite brands</h2>

@@ -3,6 +3,8 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { ChevronDown, LogOut, Menu, Ticket, User as UserIcon, X } from 'lucide-react'
 import { brands } from '../../data/brands'
 import { useStore } from '../../state/store'
+import { useDesign } from '../../state/design'
+import { useChromeTheme } from '../../state/chrome'
 import './layout.css'
 
 export function Navbar() {
@@ -13,6 +15,9 @@ export function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const navRef = useRef<HTMLElement>(null)
+  const { chrome } = useDesign()
+  const theme = useChromeTheme()
+  const cobrand = chrome !== 'joy' && theme?.logo ? theme : null
 
   // Close every menu when the page changes
   useEffect(() => { setBrandsOpen(false); setUserOpen(false); setMobileOpen(false) }, [location.pathname])
@@ -35,6 +40,13 @@ export function Navbar() {
         <Link to="/" className="navbar__logo" aria-label="JOY by PepsiCo, home">
           <img src="./images/global/joy-logo-white.png" alt="" width={51} height={42} />
         </Link>
+        {/* Visual exploration: co-brand chip on promotion and brand pages */}
+        {cobrand && (
+          <Link to={`/brands/${cobrand.brandSlug}`} className="navbar__cobrand" aria-label={`${cobrand.name} on JOY`}>
+            <span className="navbar__cobrand-x" aria-hidden>×</span>
+            <span className="navbar__cobrand-chip"><img src={cobrand.logo} alt="" /></span>
+          </Link>
+        )}
 
         <ul className="navbar__links">
           <li><NavLink to="/" end className="navbar__link">Home</NavLink></li>

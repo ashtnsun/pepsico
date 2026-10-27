@@ -5,7 +5,7 @@ import { isActive, isEnded } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb, type Crumb } from '../components/layout/Breadcrumb'
 import { DateLine, PromoTeaser, promoStyle } from '../components/promo/PromoTeaser'
-import { CtaBanner, Prizes, SectionNav, Steps } from '../components/promo/PromoSections'
+import { CtaBanner, Prizes, PromoTerms, SectionNav, Steps } from '../components/promo/PromoSections'
 import { Accordion } from '../components/ui/Accordion'
 import { Share } from '../components/ui/Share'
 import NotFound from './NotFound'
@@ -103,22 +103,22 @@ export default function PromoDetail() {
         cta={ended ? undefined : blocked ? { label: 'Already entered', to: '#', disabled: true } : { label: 'Participate here', to: user ? participateTo : '/login' }}
       />
 
-      {/* Order: prizes, steps with their legal text, then the contact and T&C links right under it, participate, FAQs */}
+      {/* Order: prizes, steps, the legal text with the contact and T&C links right under it, participate, FAQs */}
       <Prizes promo={promo} />
       <Steps promo={promo} />
 
-      <div id="terms" className="promo-links" style={{ paddingTop: promo.steps.length ? 0 : 40 }}>
-        <Link to="/contact" className="link link--caps">Contact (promotion)</Link>
-        <Link to={`/promotions/${promo.slug}/terms`} className="link link--caps">Terms and conditions (promotion)</Link>
-      </div>
+      <PromoTerms promo={promo} />
 
       {!ended && <CtaBanner promo={promo} to={user ? participateTo : '/login'} label="Participate here" />}
 
       {promo.faqs.length > 0 && (
         <section id="faqs" className="promo-faq" aria-labelledby="faq-title">
-          <h2 id="faq-title" className="section-title">Frequently asked questions</h2>
+          <div className="promo-faq__side">
+            <h2 id="faq-title" className="promo-faq__title">Frequently asked questions</h2>
+            <p className="promo-faq__text">Can’t find your answer here? All FAQs cover your account, codes and prizes.</p>
+            <Link to="/faq" className="btn btn--outline">Go to all FAQs</Link>
+          </div>
           <Accordion items={promo.faqs} />
-          <div className="promo-faq__all"><Link to="/faq" className="btn btn--primary btn--block">Go to all FAQs</Link></div>
         </section>
       )}
 

@@ -79,10 +79,47 @@
 .promo-hero__image img { width: 100%; aspect-ratio: 2880 / 858; object-fit: cover; clip-path: ellipse(200% 100% at 50% 0); }
 @media (min-width: 973px) { .promo-hero__image { padding-bottom: 20px; } .promo-hero__image img { clip-path: ellipse(120% 97% at 50% 0); } }
 @media (min-width: 1441px) { .promo-hero__image { padding-bottom: 0; } .promo-hero__image img { clip-path: ellipse(98% 97% at 50% 0); } }
-@media (max-width: 767px) { .promo-hero__image img { aspect-ratio: 780 / 860; } }
-/* Hero band, section menu, prizes, steps, terms and FAQ for the promotion page: promo-page.css */
+.promo-hero__band { position: relative; overflow: hidden; background: var(--promo-bg); color: #fff; text-align: center; padding: 60px var(--spacing-20) 80px; }
+.promo-hero__band-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+.promo-hero__band .date-line { justify-content: center; }
+.promo-hero__title { font-size: var(--font-size-60); line-height: 62px; font-weight: 700; }
+.promo-hero__subtitle { margin-top: 24px; font-size: var(--font-size-20); line-height: 26px; }
+.promo-hero__band .btn { margin: 40px 0 44px; min-width: 240px; }
+.promo-hero__deco { position: absolute; top: 40px; width: 180px; pointer-events: none; }
+.promo-hero__deco--l { left: -10px; }
+.promo-hero__deco--r { right: -10px; transform: scaleX(-1); }
+.promo-hero__status { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
+.promo-hero__note { margin-top: 16px; font-size: var(--font-size-16); line-height: 21px; max-width: 520px; }
+.promo-hero__note a { color: inherit; font-weight: 600; }
+@media (max-width: 767px) {
+  .promo-hero__image img { aspect-ratio: 780 / 860; }
+  .promo-hero__band { padding: 40px var(--spacing-16) 48px; }
+  .promo-hero__title { font-size: var(--font-size-36); line-height: var(--line-height-40); }
+  .promo-hero__subtitle { font-size: var(--font-size-16); line-height: 21px; }
+  .promo-hero__deco { width: 90px; opacity: .6; }
+  .promo-hero__band .btn { margin: 28px 0 32px; width: 100%; }
+}
 
-/* ---------- Steps (home "How it works" circles) ---------- */
+/* ---------- Section menu (live .promo-submenu, made sticky) ---------- */
+.section-nav {
+  position: sticky; top: var(--site-nav-height); z-index: 30; background: #fff;
+  display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
+  padding: 31px 20px; border-bottom: 1px solid var(--site-blue);
+}
+.section-nav.is-stuck { padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.section-nav__links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.section-nav__links a { color: var(--site-blue); font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: var(--site-blue); }
+.section-nav__cta { margin-left: 24px; }
+@media (max-width: 767px) {
+  .section-nav { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding: 16px; gap: 16px; }
+  .section-nav.is-stuck { padding: 10px 16px; }
+  .section-nav__links { flex-wrap: nowrap; gap: 16px; }
+  .section-nav__links a { white-space: nowrap; font-size: var(--font-size-14); }
+  .section-nav__cta { margin-left: 0; height: 38px; padding: 0 16px; font-size: var(--font-size-14); }
+}
+
+/* ---------- Steps ---------- */
 .steps { max-width: 1260px; margin: 0 auto; padding: 50px var(--spacing-20) 0; }
 .steps__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center; }
 .steps__item { width: 100%; max-width: 407px; display: flex; justify-content: center; }
@@ -93,7 +130,6 @@
 .steps__index { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin: 30px 0 30px; border-radius: 50%; background: #fff; color: var(--color-text-default); font-size: 26px; font-weight: 600; }
 .steps__text { padding: 0 50px; font-size: var(--font-size-20); line-height: 26px; font-weight: 600; }
 .steps__image { position: absolute; bottom: -90px; left: 50%; transform: translateX(-50%); width: 288px; height: 152px; object-fit: contain; }
-.steps__legal { margin: 30px auto 16px; max-width: 1220px; }
 @media (max-width: 991px) {
   .steps__list { grid-template-columns: 1fr; gap: 0; }
   .steps__circle { width: 280px; height: 280px; }
@@ -106,6 +142,50 @@
 .cta-banner img { width: 100%; height: auto; }
 .cta-banner .btn { position: absolute; min-width: min(308px, 60%); }
 @media (max-width: 767px) { .cta-banner { margin: 24px 16px; } .cta-banner .btn { bottom: 16px; } }
+
+/* ---------- Prize band ---------- */
+.prizes { background: var(--promo-bg); color: #fff; padding: 69px 0; text-align: center; }
+.prizes__title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; letter-spacing: -0.72px; padding: 0 16px; }
+.prizes__subtitle { margin-top: 14px; font-size: var(--font-size-20); font-weight: 600; }
+.prizes__row { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 36px; padding: 0 20px; }
+.prizes__list { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; justify-content: center; flex: 1; max-width: 1130px; }
+.prizes__item { flex: 0 1 350px; display: flex; flex-direction: column; align-items: center; }
+.prizes__item img { width: 100%; max-width: 350px; aspect-ratio: 1; object-fit: contain; }
+.prizes__name { margin-top: 24px; font-size: var(--font-size-20); line-height: 26px; font-weight: 600; max-width: 330px; }
+.prizes__count { margin-top: 20px; font-weight: 600; }
+@media (max-width: 767px) {
+  .prizes { padding: 48px 0; }
+  .prizes__title { font-size: var(--font-size-24); line-height: var(--line-height-28); }
+  .prizes__row { gap: 8px; padding: 0 8px; }
+  .prizes__item img { max-width: 240px; }
+}
+
+/* ---------- Legal text and the promotion's links ---------- */
+.pterms { width: min(1130px, 100% - 40px); margin: 48px auto 0; padding: 24px 32px; border-radius: var(--radius-card); background: var(--color-surface-subtle); }
+.pterms__legal { font-size: 13px; line-height: 19px; color: var(--site-text-legal); }
+.pterms__links { display: flex; flex-wrap: wrap; gap: 8px 28px; }
+.pterms__legal + .pterms__links { margin-top: 16px; padding-top: 16px; border-top: 1px solid #E2E2E2; }
+@media (max-width: 767px) { .pterms { width: min(1130px, 100% - 32px); padding: 20px; margin-top: 32px; } }
+
+/* ---------- FAQs: heading on the left, questions on the right ---------- */
+.promo-faq { width: min(1130px, 100% - 40px); margin: 0 auto; padding: 80px 0 88px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 64px; align-items: start; }
+.promo-faq__side { position: sticky; top: 170px; }
+.promo-faq__title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 800; letter-spacing: -.5px; }
+.promo-faq__text { margin: 14px 0 24px; color: var(--color-text-secondary); line-height: 22px; }
+.promo-faq .accordion { max-width: none; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.promo-faq .accordion__item { border: 1px solid var(--color-border-default); border-radius: 16px; padding: 0 24px; background: #fff; transition: border-color .15s, box-shadow .15s; }
+.promo-faq .accordion__item:has([aria-expanded="true"]) { border-color: var(--site-blue); box-shadow: 0 6px 20px rgba(20, 67, 255, .1); }
+.promo-faq .accordion__question { padding: 20px 0; font-size: 18px; line-height: 24px; }
+.promo-faq .accordion__chevron { margin-right: 0; }
+.promo-faq .accordion__answer { padding: 0 0 22px; line-height: 23px; }
+@media (max-width: 991px) {
+  .promo-faq { grid-template-columns: 1fr; gap: 24px; width: min(1130px, 100% - 32px); padding: 56px 0 64px; }
+  .promo-faq__side { position: static; }
+  .promo-faq__title { font-size: var(--font-size-24); line-height: var(--line-height-28); }
+  .promo-faq__text { margin-bottom: 16px; }
+  .promo-faq .accordion__item { padding: 0 18px; }
+  .promo-faq .accordion__question { font-size: 16px; line-height: 22px; padding: 16px 0; }
+}
 
 /* ---------- Compact card (logged-in home, profile) ---------- */
 /* Shared by every promotion card row (home, promotions, result): 3 per row, 2 on tablets, 1 on phones. */

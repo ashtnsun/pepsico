@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, type CSSProperties } from 'react'
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/layout/Navbar'
 import { Footer, Newsletter } from './components/layout/Footer'
@@ -14,6 +14,8 @@ import { ChangeCountry, CheckEmail, Login, Onboarding, Register } from './pages/
 import Profile from './pages/Profile'
 import { ContactPage, FaqPage, PromoTerms, TermsPage } from './pages/TextPages'
 import NotFound from './pages/NotFound'
+import { useDesign } from './state/design'
+import { useChromeTheme } from './state/chrome'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -22,14 +24,23 @@ function ScrollToTop() {
 }
 
 function Layout({ newsletter = true }: { newsletter?: boolean }) {
+  // Visual exploration: on promotion and brand pages, the navbar, breadcrumb, newsletter and footer can take the brand colour
+  const { chrome } = useDesign()
+  const theme = useChromeTheme()
+  const themed = chrome !== 'joy' && theme
   return (
-    <>
+    <div
+      className="chrome"
+      data-chrome={themed ? chrome : undefined}
+      data-chrome-light={themed && theme.text === '#000000' ? '' : undefined}
+      style={themed ? { '--chrome-bg': theme.bg, '--chrome-text': theme.text, '--chrome-shade': theme.shade, '--chrome-shade-text': theme.shadeText } as CSSProperties : undefined}
+    >
       <a href="#main" className="visually-hidden">Skip to content</a>
       <Navbar />
       <main id="main" className="page-main"><Outlet /></main>
       {newsletter && <Newsletter />}
       <Footer />
-    </>
+    </div>
   )
 }
 

@@ -21,7 +21,19 @@ export function Steps({ promo }: { promo: Promo }) {
           </li>
         ))}
       </ol>
-      {promo.disclaimer && <p className="legal steps__legal">{promo.disclaimer}</p>}
+    </section>
+  )
+}
+
+/** Legal text with the promotion's contact and T&C links right under it. */
+export function PromoTerms({ promo }: { promo: Promo }) {
+  return (
+    <section id="terms" className="pterms" aria-label="Terms and conditions">
+      {promo.disclaimer && <p className="pterms__legal">{promo.disclaimer}</p>}
+      <div className="pterms__links">
+        <Link to="/contact" className="link">Contact (promotion)</Link>
+        <Link to={`/promotions/${promo.slug}/terms`} className="link">Terms and conditions (promotion)</Link>
+      </div>
     </section>
   )
 }

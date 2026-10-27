@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { useStore } from '../state/store'
-import { CARD_VARIANTS, HERO_VARIANTS, useDesign } from '../state/design'
+import { CARD_VARIANTS, CHROME_VARIANTS, HERO_VARIANTS, useDesign } from '../state/design'
 import './moderator.css'
 
 /**
@@ -65,6 +65,22 @@ export function ConfigPanel() {
       <div className="mod__row">
         <button type="button" onClick={() => navigate('/')}>Home</button>
         <button type="button" onClick={() => navigate('/promotions')}>Promotions</button>
+      </div>
+
+      <h3>Navbar and footer theme</h3>
+      <p className="mod__small">On promotion and brand pages.</p>
+      <div className="mod__list" role="radiogroup" aria-label="Navbar and footer theme">
+        {CHROME_VARIANTS.map((v) => (
+          <label key={v.id} className={design.chrome === v.id ? 'is-on' : ''}>
+            <input type="radio" name="cfg-chrome" checked={design.chrome === v.id} onChange={() => design.set({ chrome: v.id })} />
+            <span><b>{v.name}</b><small>{v.note}</small></span>
+          </label>
+        ))}
+      </div>
+      <div className="mod__row">
+        <button type="button" onClick={() => navigate('/promotions/las-vegas-wrap')}>Doritos promo</button>
+        <button type="button" onClick={() => navigate('/promotions/pepsi-music')}>Pepsi promo</button>
+        <button type="button" onClick={() => navigate('/brands/7up')}>7UP brand</button>
       </div>
     </aside>
   )

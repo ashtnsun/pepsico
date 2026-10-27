@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-// Visual exploration: which home hero and promotion card design to show.
+// Visual exploration: which home hero, promotion card and global-element (chrome) theme to show.
 // Chosen in the config menu (press C). Saved in this browser only, separate from the test data.
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 
@@ -21,13 +21,21 @@ export const CARD_VARIANTS = [
   { id: 'offset', name: 'E · Offset', note: 'Bold outline and brand-colour offset shadow, fact list.' },
 ] as const
 
+export const CHROME_VARIANTS = [
+  { id: 'joy', name: 'JOY blue', note: 'Live site: navbar, breadcrumb, newsletter and footer always JOY blue.' },
+  { id: 'full', name: 'A · Brand colour', note: 'Default. Navbar, breadcrumb, newsletter and footer in the brand colour, brand logo next to JOY.' },
+  { id: 'top', name: 'B · Brand top', note: 'Navbar and breadcrumb in the brand colour; newsletter and footer stay JOY.' },
+  { id: 'accent', name: 'C · Brand accent', note: 'JOY blue bars with a brand stripe, brand-colour breadcrumb and logo.' },
+] as const
+
 export type HeroVariant = (typeof HERO_VARIANTS)[number]['id']
 export type CardVariant = (typeof CARD_VARIANTS)[number]['id']
-type Design = { hero: HeroVariant; card: CardVariant }
+export type ChromeVariant = (typeof CHROME_VARIANTS)[number]['id']
+type Design = { hero: HeroVariant; card: CardVariant; chrome: ChromeVariant }
 
 // v2: defaults changed to Big track + Poster (change 18); the new key drops choices saved under the old defaults.
 const KEY = 'joy-prototype-design-v2'
-const initial: Design = { hero: 'track', card: 'poster' }
+const initial: Design = { hero: 'track', card: 'poster', chrome: 'full' }
 const load = (): Design => {
   try { return { ...initial, ...JSON.parse(localStorage.getItem(KEY) ?? '{}') } } catch { return initial }
 }
