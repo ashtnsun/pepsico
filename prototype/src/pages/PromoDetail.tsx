@@ -36,14 +36,16 @@ export default function PromoDetail() {
   const loginState = { from: participateTo, reason: 'participate' }
   const ctaClass = promo.theme.ctaBg === '#FFE600' ? 'btn--yellow' : 'btn--promo'
 
+  const others = promos.filter((p) => isActive(p) && p.slug !== promo.slug)
+
+  // Section menu: same order as the sections below (change 29)
   const links = [
     { id: 'prizes', label: 'Prizes' },
     promo.steps.length ? { id: 'steps', label: 'Steps' } : null,
-    promo.faqs.length ? { id: 'faqs', label: 'FAQs' } : null,
     { id: 'terms', label: 'Terms and conditions' },
+    promo.faqs.length ? { id: 'faqs', label: 'FAQs' } : null,
+    ended && others.length ? { id: 'others', label: 'Other promotions' } : null,
   ].filter(Boolean) as { id: string; label: string }[]
-
-  const others = promos.filter((p) => isActive(p) && p.slug !== promo.slug)
 
   return (
     <div style={promoStyle(promo)}>
@@ -123,7 +125,7 @@ export default function PromoDetail() {
       )}
 
       {ended && others.length > 0 && (
-        <section aria-labelledby="others-title" style={{ padding: '40px 0 48px' }} data-brand="joy">
+        <section id="others" aria-labelledby="others-title" style={{ padding: '40px 0 48px' }} data-brand="joy">
           <h2 id="others-title" className="section-title">Check out other promotions:</h2>
           {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
         </section>

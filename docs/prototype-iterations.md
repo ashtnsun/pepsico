@@ -665,3 +665,21 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/promo/promo.css`, `PromoSections.tsx`, `prototype/src/components/layout/layout.css`, `prototype/src/styles/site.css`.
 - **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px compared the breadcrumb and section menu background colours on Doritos & F1, Pepsi EA and Avengers with each of the four config options (JOY blue, A, B, C). All 12 match, and the prizes are white with `#333` text on all of them. Screenshots: the Doritos and Pepsi EA prize sections, the Avengers section menu, and the stuck Doritos menu with its button.
 - **Decision record:** none.
+
+### Change 29 — Section menu: same look before and after it sticks, links follow the page order — 2026-10-27
+
+- **Prompt (verbatim):** The secondar nav bar on the individual promo page needs to be the exact same as the one when it's made sticky, the transition needs to be seamless, right now the secondary nav changes and when the nav becomes sticky, theres a bounce that happens
+  - Follow-up sent while Claude was working: "also secondary nav bar needs to update based on new strucutre of the promo pages"
+- **What changed:**
+  - **No change when it sticks:** the section menu under the promotion hero always has its compact sticky look: 14 px padding (10 px on phones), the soft shadow, and the "Participate here" button (or "Already entered"). Before, it was taller (31 px padding) until it stuck, then shrank and slid the button in. That moved the page underneath by about 34 px: the bounce.
+  - **Links in page order:** Prizes · Steps · Terms and conditions · FAQs. Since change 21, the legal text with the T&C links sits under the steps, before the FAQs; the menu still listed Terms last. On ended promotions with other promotions to show, there is now also an "Other promotions" link to the "Check out other promotions" section. Links are only shown for sections the page has (Pepsi EA: Prizes · Terms and conditions · Other promotions).
+  - **Jump position:** clicking a link stops the section 16 px under the stuck menu, measured from the menu's real height. Before it was a fixed 150 px. The current-section underline uses the same line.
+- **Why:** user's request. Keeping one look is the only way sticking can't move anything. Claude's choices: the always-visible button means it now also shows just under the hero's own "Participate here" button; and an "Other promotions" link, because it is a section of the ended page.
+- **How AI was used:** Claude found the cause in the `is-stuck` class: it changed padding and added the button, so the menu's height changed when it stuck. It removed the stuck state from `SectionNav` and the CSS.
+- **Files:** `prototype/src/components/promo/PromoSections.tsx`, `promo.css`, `prototype/src/pages/PromoDetail.tsx`. The uncommitted brand-hero changes in `Brands.tsx` and `pages.css` aren't Claude's and are not part of this change.
+- **Checked by:** `tsc -b` and `vite build`. Playwright on Doritos & F1 at 1440 px:
+  - **Sticking:** scrolled in 10 px steps from 40 px before the stick point to 40 px after. The menu stayed 73 px tall the whole way, the prizes section's page position didn't change (1100 px), and the button was always there.
+  - **Links:** clicking each one put Steps, Terms and conditions and FAQs 16 px under the menu, and each became the current link. Prizes sits right under the menu, because it is the next section.
+  - **Pepsi EA (ended):** shows Prizes, Terms and conditions and Other promotions.
+  - **Phone (390 px):** the menu is 73 px and there is no sideways scroll.
+- **Decision record:** none.

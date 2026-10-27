@@ -89,20 +89,20 @@ export function CtaBanner({ promo, to, label }: { promo: Promo; to: string; labe
 
 /**
  * Section menu under the hero (live site: STEPS, PRIZES, FAQS...). Wireframe idea added:
- * it sticks under the navbar while scrolling and carries a Participate button.
+ * it sticks under the navbar while scrolling and carries a Participate button. Change 29: it looks the same before and
+ * after it sticks (the button is always there), so sticking causes no jump.
  */
 export function SectionNav({ links, cta }: { links: { id: string; label: string }[]; cta?: { label: string; to: string; disabled?: boolean } }) {
   const ref = useRef<HTMLDivElement>(null)
-  const [stuck, setStuck] = useState(false)
   const [active, setActive] = useState<string | null>(null)
+  // Space taken at the top of the window by the navbar (75px, --site-nav-height) plus this menu once stuck, with a little air
+  const offset = () => 75 + (ref.current?.offsetHeight ?? 73) + 16
   useEffect(() => {
     const onScroll = () => {
-      const top = ref.current?.getBoundingClientRect().top ?? 999
-      setStuck(top <= 76)
       let cur: string | null = null
       for (const l of links) {
         const el = document.getElementById(l.id)
-        if (el && el.getBoundingClientRect().top < 200) cur = l.id
+        if (el && el.getBoundingClientRect().top <= offset() + 1) cur = l.id
       }
       setActive(cur)
     }
@@ -112,16 +112,16 @@ export function SectionNav({ links, cta }: { links: { id: string; label: string 
   }, [links])
   const go = (id: string) => {
     const el = document.getElementById(id)
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 150, behavior: 'smooth' })
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset(), behavior: 'smooth' })
   }
   return (
-    <div ref={ref} className={`section-nav ${stuck ? 'is-stuck' : ''}`}>
+    <div ref={ref} className="section-nav">
       <nav aria-label="On this page" className="section-nav__links">
         {links.map((l) => (
           <a key={l.id} href={`#${l.id}`} aria-current={active === l.id ? 'location' : undefined} onClick={(e) => { e.preventDefault(); go(l.id) }}>{l.label}</a>
         ))}
       </nav>
-      {cta && stuck && (cta.disabled
+      {cta && (cta.disabled
         ? <span className="btn btn--primary section-nav__cta" aria-disabled="true">{cta.label}</span>
         : <Link to={cta.to} className="btn btn--primary section-nav__cta">{cta.label}</Link>)}
     </div>

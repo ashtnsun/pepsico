@@ -115,25 +115,22 @@
 }
 
 /* ---------- Section menu (live .promo-submenu, made sticky) ---------- */
-/* Change 28: same colours as the breadcrumb bar (--crumb-*, layout.css), was white with a blue line under it */
+/* Change 28: same colours as the breadcrumb bar (--crumb-*, layout.css), was white with a blue line under it.
+   Change 29: always the compact "stuck" look with its Participate button, so nothing changes size (no jump) when it sticks */
 .section-nav {
   position: sticky; top: var(--site-nav-height); z-index: 30; background: var(--crumb-bg); color: var(--crumb-text);
   display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
-  padding: 31px 20px;
-  transition: padding var(--dur-base) var(--ease-out), box-shadow var(--dur-base);
+  padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08);
 }
-.section-nav.is-stuck { padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 .section-nav__links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
 .section-nav__links a { color: inherit; font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
 .section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: currentColor; }
 .section-nav :focus-visible { outline-color: currentColor; }
 /* On the dark bar the button is the theme's "on dark background" one (JOY: white with blue text) */
 .section-nav__cta.btn--primary:not([aria-disabled="true"]) { background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse); }
-.section-nav__cta { margin-left: 24px; animation: cta-in var(--dur-slow) var(--ease-out); }
-@keyframes cta-in { from { opacity: 0; transform: translateX(12px); } }
+.section-nav__cta { margin-left: 24px; }
 @media (max-width: 767px) {
-  .section-nav { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding: 16px; gap: 16px; }
-  .section-nav.is-stuck { padding: 10px 16px; }
+  .section-nav { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding: 10px 16px; gap: 16px; }
   .section-nav__links { flex-wrap: nowrap; gap: 16px; }
   .section-nav__links a { white-space: nowrap; font-size: var(--font-size-14); }
   .section-nav__cta { margin-left: 0; height: 38px; padding: 0 16px; font-size: var(--font-size-14); }
