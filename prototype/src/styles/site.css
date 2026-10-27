@@ -8,6 +8,7 @@
   --site-blue: var(--color-action-primary);            /* #1443FF, nav, buttons, footer */
   --site-blue-dark: var(--color-surface-inverse);      /* #0E38DF, breadcrumb bar, newsletter band */
   --site-ink: var(--color-text-link);                  /* #1443FF, blue text, outlines and chevrons on white (change 25) */
+  --site-on-blue: var(--color-text-on-action);         /* text on --site-blue (change 26) */
   --site-blue-hover: #0023AD;                          /* .btn-primary:hover on the live site */
   --site-blue-disabled: #ADBDFF;                       /* .btn-primary:disabled */
   --site-white-hover: #F2F2F2;                         /* white button hover */
@@ -106,19 +107,19 @@ h1, h2, h3, h4, p { margin: 0; }
 .btn:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(.97); }
 .btn--wide { padding: 0 45px; }
 .btn--block { width: 100%; }
-.btn--primary { background: var(--site-blue); border-color: var(--site-blue); color: var(--color-text-on-action); }
+.btn--primary { background: var(--site-blue); border-color: var(--site-blue); color: var(--site-on-blue); }
 .btn--primary:hover { background: var(--site-blue-hover); border-color: var(--site-blue-hover); }
-.btn--white { background: var(--color-surface-default); border-color: var(--color-surface-default); color: var(--site-ink); }
+.btn--white { background: var(--color-surface-default); border-color: var(--color-surface-default); color: var(--color-text-link); }
 .btn--white:hover { background: var(--site-white-hover); border-color: var(--site-white-hover); }
 .btn--yellow { background: var(--site-yellow); border-color: var(--site-yellow); color: var(--site-blue-dark); }
 .btn--yellow:hover { background: var(--site-yellow-hover); border-color: var(--site-yellow-hover); }
 .btn--outline { background: transparent; border-color: var(--site-ink); color: var(--site-ink); }
-.btn--outline:hover { background: var(--site-blue); color: var(--color-text-on-action); }
+.btn--outline:hover { background: var(--site-blue); color: var(--site-on-blue); }
 .btn--outline-white { background: transparent; border-color: var(--color-surface-default); color: var(--color-text-on-inverse); }
-.btn--outline-white:hover { background: var(--color-surface-default); color: var(--site-ink); }
+.btn--outline-white:hover { background: var(--color-surface-default); color: var(--color-text-link); }
 .btn--promo { background: var(--promo-cta-bg, var(--color-surface-default)); border-color: var(--promo-cta-bg, var(--color-surface-default)); color: var(--promo-cta-text, var(--site-blue)); }
 .btn--promo:hover { filter: brightness(0.94); }
-.btn:disabled, .btn[aria-disabled="true"] { background: var(--site-blue-disabled); border-color: var(--site-blue-disabled); color: var(--color-text-on-action); cursor: not-allowed; filter: none; }
+.btn:disabled, .btn[aria-disabled="true"] { background: var(--site-blue-disabled); border-color: var(--site-blue-disabled); color: var(--site-on-blue); cursor: not-allowed; filter: none; }
 
 .link { color: var(--site-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; cursor: pointer; transition: color var(--dur-fast), text-decoration-color var(--dur-base); }
 /* Underlines that appear on hover fade in rather than switching on */
@@ -166,7 +167,7 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 }
 .badge--active { background: var(--color-feedback-active); color: var(--color-text-on-feedback-active); }
 .badge--expired { background: var(--color-feedback-expired); color: var(--color-text-on-feedback-expired); }
-.badge--entered { background: var(--site-blue); color: var(--color-text-on-action); }
+.badge--entered { background: var(--site-blue); color: var(--site-on-blue); }
 .badge--won { background: var(--site-success); color: #fff; }
 .badge--neutral { background: var(--color-surface-subtle); color: var(--color-text-default); }
 
@@ -182,7 +183,7 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 }
 .round-arrow:active:not(:disabled) { transform: scale(.92); }
 .round-arrow:hover { background: var(--site-blue-hover); }
-.round-arrow--white { background: #fff; color: var(--site-ink); width: 50px; height: 50px; }
+.round-arrow--white { background: #fff; color: var(--color-text-link); width: 50px; height: 50px; }
 .round-arrow--white:hover { background: var(--site-white-hover); }
 .round-arrow:disabled { opacity: .35; cursor: default; }
 
@@ -204,34 +205,57 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 .toast.is-leaving { opacity: 0; transform: translate(-50%, 12px); }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 16px); } }
 
-/* ---------- Brand theme for page content (change 25) ----------
+/* ---------- Brand theme for page content (changes 25 and 26) ----------
   On promotion and brand pages with a brand theme picked in the config menu, <main> carries data-page-theme and
   either data-brand (Doritos, Rockstar: their Theme mode in tokens.css) or DERIVED --color-* values inline
-  (state/chrome.ts). The site values above are re-pointed at those tokens so every button, link, menu, FAQ box and
-  focus ring on the page follows the brand. Other brands' promotions on the page keep JOY (data-brand="joy"). */
+  (state/chrome.ts). The site values above are re-pointed at those tokens.
+  Change 26: the whole page sits on the brand colour (--chrome-bg, no white sections), so buttons, links and outlines
+  there use the theme's "on dark background" set. Forms, FAQ boxes, the legal panel, the result and the T&C text are
+  white cards that use the theme's light-background set. Other brands' promotions keep JOY (data-brand="joy"). */
 .page-main[data-page-theme] {
+  background: var(--chrome-bg); color: var(--chrome-text);
+  display: flow-root;   /* keeps the last section's bottom margin inside, so no white strip shows above the newsletter */
+  --site-blue: var(--color-action-inverse);
+  --site-blue-hover: var(--color-action-inverse);   /* no colour change on hover; the underline below shows it */
+  --site-on-blue: var(--color-text-on-action-inverse);
+  --site-blue-border: var(--color-border-action-inverse);
+  --site-blue-dark: var(--chrome-text);
+  --site-blue-disabled: color-mix(in srgb, var(--color-action-inverse) 45%, var(--chrome-bg));
+  --site-ink: var(--color-text-on-inverse);
+  --site-focus: var(--color-border-focus-inverse);
+  --site-muted: color-mix(in srgb, var(--chrome-text) 82%, var(--chrome-bg));   /* secondary text on the brand colour */
+}
+.page-main[data-page-theme] :is(.pterms, .accordion__item, .panel, .result__card, .text-page) {
+  background: var(--color-surface-default); color: var(--color-text-default);
   --site-blue: var(--color-action-primary);
   --site-blue-hover: var(--color-action-primary-hover);
+  --site-on-blue: var(--color-text-on-action);
+  --site-blue-border: var(--color-action-primary);
   --site-blue-dark: var(--color-text-link);
   --site-blue-disabled: color-mix(in srgb, var(--color-action-primary) 35%, #fff);
   --site-ink: var(--color-text-link);
+  --site-focus: var(--color-border-focus);
 }
 /* Same as :root, so the JOY tokens tokens.css restores on [data-brand="joy"] reach the site values again */
 .page-main[data-page-theme] [data-brand="joy"] {
   --site-blue: var(--color-action-primary);
   --site-blue-hover: #0023AD;
+  --site-on-blue: var(--color-text-on-action);
+  --site-blue-border: var(--color-action-primary);
   --site-blue-dark: var(--color-surface-inverse);
   --site-blue-disabled: #ADBDFF;
   --site-ink: var(--color-text-link);
+  --site-focus: var(--color-border-focus);
 }
-/* Button on a brand band: the theme's "on dark background" button (Doritos: black pill with a white border).
+.page-main[data-page-theme] .btn--primary { border-color: var(--site-blue-border); }
+.page-main[data-page-theme] :focus-visible { outline-color: var(--site-focus); }
+/* Button on a brand band or art: the theme's "on dark background" button (Doritos: black pill with a white border).
    btn--own keeps a brand's own live-site colours (Walkers yellow). */
 .page-main[data-page-theme] .btn--promo:not(.btn--own):not([data-brand="joy"] *) {
   background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse);
 }
 /* Design system hover signal: an underline (Doritos and Rockstar buttons don't change colour on hover) */
 .page-main[data-page-theme] .btn:hover:not(:disabled):not([aria-disabled="true"]):not([data-brand="joy"] *) { text-decoration: underline; text-underline-offset: 3px; }
-.page-main[data-page-theme] .link:hover:not([data-brand="joy"] *) { color: var(--color-text-hover); }
 
 /* Reduced motion: keep every state change, drop the movement (covers all files) */
 @media (prefers-reduced-motion: reduce) {

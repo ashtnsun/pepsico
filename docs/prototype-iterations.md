@@ -611,3 +611,23 @@ Add one entry per prompt, newest at the bottom. Template:
   - Walkers at 390 px. No sideways scroll on any page.
   - Not screenshotted: the participate and result pages while logged in, and options B and C. They use the same tokens.
 - **Decision record:** none yet. Together with change 21, keeping this would replace D36.
+
+### Change 26 — Promotion and brand pages sit on the brand colour, no white sections — 2026-10-27
+
+- **Prompt (verbatim):** The alternating white backgrounds on some of the pages doesn't look right, again for all the individual brand and promo pages, feels inconsistent, not fully in the actual brands theme
+- **What changed:** on promotion pages (including participate, result and promotion T&Cs) and brand pages, the whole page now sits on the brand colour, from the navbar to the newsletter. Before, the brand-coloured bands took turns with white sections (section menu, steps, FAQs, active promotions, news, "Want to know more") and grey ones (participate and result backgrounds). This applies with options A, B and C in the config menu (C); "JOY blue" is unchanged.
+  - **On the brand colour:** text is white, or black on light brands (7UP, Lipton). Buttons, links and outlines use the theme's "on dark background" set: for Doritos and Rockstar, black buttons with a white border and white links; for other brands, white buttons with brand-colour text and white (or black) links. Buttons don't change colour on hover; they get an underline, as the Doritos sheet specifies. Focus rings use the theme's colour for dark backgrounds (Doritos orange, Rockstar violet, white or black for the others).
+  - **White cards on the brand colour:** FAQ boxes, the legal panel, the participate form, the result card and the promotion T&C text. Inside them, buttons and links use the theme's light-background set from change 25.
+  - **Brand-colour blocks that would disappear on the brand colour** (step circles, this brand's teaser cards on its brand page, the "You're entering" strip on participate) now use the second shade (DERIVED, the same one as the breadcrumb and newsletter).
+  - Other brands' promotions on the page (carousel, "Check out other promotions") still keep their own JOY look.
+- **Why:** user's report. One background colour per page reads as one brand; white sections in between broke it up. Claude's choice: white cards rather than a light tint, so forms, FAQs and legal text stay as readable as before.
+- **How AI was used:** Claude reorganised change 25's CSS into two sets of site values:
+  - The page itself (`<main>`) uses the theme's dark-background tokens.
+  - Card classes (`.pterms`, `.accordion__item`, `.panel`, `.result__card`, `.text-page`) switch back to the light-background tokens.
+  - A new `--site-on-blue` holds the text colour on filled buttons, so it can differ between the two sets.
+  - White buttons now always use the link token for their text.
+  - Derived brands also get `--color-text-on-inverse` and `--color-border-focus-inverse` (white or black, whichever is readable).
+  - `<main>` is now `display: flow-root`. A first screenshot showed a white strip under the T&C card: its bottom margin leaked outside `<main>`.
+- **Files:** `prototype/src/styles/site.css`, `components/promo/promo.css`, `pages/pages.css`, `state/chrome.ts`.
+- **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px, full-page screenshots: Doritos & F1, 7UP, Lipton, Rockstar, Pepsi EA (ended, with the other promotions), and the Doritos T&C page (the strip under the card measured 0 px after the fix). Also the Doritos participate page with a test account, which was then removed. No sideways scroll on any page. Not screenshotted: the result page and phone width. The result page uses the same card rules as the participate form.
+- **Decision record:** none yet. With changes 21 and 25, keeping this would replace D36.

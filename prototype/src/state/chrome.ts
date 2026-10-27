@@ -71,6 +71,9 @@ const derivedPage = (bg: string): PageTheme => {
       '--color-border-focus': ink,
       '--color-action-inverse': '#FFFFFF',
       '--color-text-on-action-inverse': ink,
+      // Change 26: text, outlines and focus rings directly on the brand colour
+      '--color-text-on-inverse': onBg,
+      '--color-border-focus-inverse': onBg,
     } as CSSProperties,
   }
 }

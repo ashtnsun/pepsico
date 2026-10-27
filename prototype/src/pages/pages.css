@@ -204,3 +204,11 @@
 .text-page p { margin-bottom: 14px; color: var(--color-text-secondary); }
 .faq-group { margin-bottom: 56px; }
 .faq-group h2 { font-size: var(--font-size-24); margin-bottom: 0; }
+
+/* ---------- Brand theme (change 26): no white or grey page sections, the brand colour throughout ---------- */
+.page-main[data-page-theme] :is(.participate, .result) { background: transparent; }
+.page-main[data-page-theme] .participate__promo { background: var(--chrome-shade); color: var(--chrome-shade-text); }
+.page-main[data-page-theme] :is(.empty-state, .page-head p) { color: var(--site-muted); }
+.page-main[data-page-theme] .empty-state h3 { color: inherit; }
+.page-main[data-page-theme] .text-page { border-radius: var(--radius-card); padding: 8px 40px 40px; margin-bottom: 80px; }
+@media (max-width: 767px) { .page-main[data-page-theme] .text-page { margin: 0 16px 48px; padding: 4px 20px 24px; } }
