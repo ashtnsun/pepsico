@@ -40,9 +40,16 @@
 .listing-section-title { padding-top: 56px; }
 
 /* ---------- Brand pages ---------- */
-.brand-hero img { width: 100%; aspect-ratio: 2880 / 730; object-fit: cover; }
+/* Curved bottom edge: the hero image is clipped by a wide ellipse over the band colour, with the live site's
+   breakpoints (style.css, body.brand-* .grid-container.branding .top-row .hero-image img), same as the promo hero. */
+.brand-hero { display: block; }
+.brand-hero img { display: block; width: 100%; aspect-ratio: 2880 / 730; object-fit: cover; clip-path: ellipse(200% 100% at 50% 0); }
 .brand-hero--tall img { aspect-ratio: 2880 / 858; }
-.brand-band { position: relative; overflow: hidden; text-align: center; padding: 72px var(--spacing-20) 120px; margin-top: -40px; border-top-left-radius: 50% 40px; border-top-right-radius: 50% 40px; }
+/* The phone image (780 x 550, or taller) keeps its own shape, as on the live site */
+@media (max-width: 767px) { .brand-hero img, .brand-hero--tall img { aspect-ratio: auto; height: auto; } }
+@media (min-width: 973px) { .brand-hero { padding-bottom: 20px; } .brand-hero img { clip-path: ellipse(120% 97% at 50% 0); } }
+@media (min-width: 1441px) { .brand-hero img { clip-path: ellipse(98% 97% at 50% 0); } }
+.brand-band { position: relative; overflow: hidden; text-align: center; padding: 72px var(--spacing-20) 120px; }
 .brand-band h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; position: relative; }
 .brand-band .btn { margin-top: 24px; position: relative; }
 .brand-band__tagline { margin-top: 32px; font-size: var(--font-size-20); font-weight: 600; position: relative; }
@@ -62,7 +69,7 @@
   .news__item, .news__item:nth-child(even of .news__item) { grid-template-columns: 1fr; gap: 16px; }
   .news__item:nth-child(even of .news__item) .news__media { order: 0; }
   .news__item h3 { font-size: var(--font-size-24); line-height: var(--line-height-28); margin-top: 0; }
-  .brand-band { padding: 56px var(--spacing-16) 72px; margin-top: -24px; border-top-left-radius: 50% 24px; border-top-right-radius: 50% 24px; }
+  .brand-band { padding: 56px var(--spacing-16) 72px; }
   .brand-band h1 { font-size: var(--font-size-24); line-height: var(--line-height-28); }
   .brand-band__deco { width: 80px; opacity: .6; }
 }

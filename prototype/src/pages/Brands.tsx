@@ -49,7 +49,7 @@ export function BrandPage() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Brands', to: '/brands' }, { label: brand.name }]} />
-      <div className={`brand-hero ${tall ? 'brand-hero--tall' : ''}`}>
+      <div className={`brand-hero ${tall ? 'brand-hero--tall' : ''}`} style={{ background: brand.band }}>
         <picture>
           <source media="(max-width: 767px)" srcSet={brand.heroMobile} />
           <img src={brand.hero} alt={`${brand.name} hero image`} />

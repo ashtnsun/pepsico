@@ -683,3 +683,16 @@ Add one entry per prompt, newest at the bottom. Template:
   - **Pepsi EA (ended):** shows Prizes, Terms and conditions and Other promotions.
   - **Phone (390 px):** the menu is 73 px and there is no sideways scroll.
 - **Decision record:** none.
+
+### Change 30 — Brand page hero: the live site's curve — 2026-10-27
+
+- **Prompt (verbatim):** the curve on all the individual brand pages hero needs to be fixed/made accurate
+- **What changed:**
+  - **Curve faces the right way:** the hero image itself now has the curved bottom edge, bulging down in the middle, with the band colour showing at the sides. Before, the band under it had a rounded top that bulged up over the image, so the curve was upside down.
+  - **Same shape as the live site:** the image is cut by the live site's ellipses at its breakpoints: `ellipse(200% 100% at 50% 0)` on phones, `120% 97%` from 973 px (with 20 px of band colour under it), `98% 97%` from 1441 px. These are the same values the promotion hero already uses.
+  - **Phone image keeps its shape:** under 768 px the phone hero (780 × 550, Rockstar 780 × 860, Lipton 780 × 680) is shown at its own size. Before, it was cut to the wide desktop shape (about 99 px tall at 390 px), which hid most of the image and the curve.
+- **Why:** user's request. The live CSS (`references/live-site/css/…joypepsico__css__style.css`, `body.brand-doritos .grid-container.branding .top-row.branding .hero-image img`) clips the image and puts the brand colour behind it; the live captures (`references/live-site/brandpage.png`, `capture/brand-doritos--mobile.png`) show the result.
+- **How AI was used:** Claude compared the prototype's brand page with the live capture, found the live clip-path rules for brand pages, and saw they match the promotion hero's. It moved the curve from the band to the image and gave the hero wrapper the band colour.
+- **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Playwright screenshots of the hero bottom on Doritos, Rockstar, Pepsi, Walkers and Lipton at 1440, 1920 and 390 px: the curve bulges down and the band colour fills the sides, as in the live capture. Rockstar and Lipton keep their taller desktop image. No sideways scroll on any of them. Not checked: the in-between 768–972 px range (it uses the phone curve on the desktop image, like the live site).
+- **Decision record:** none.
