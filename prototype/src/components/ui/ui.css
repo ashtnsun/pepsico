@@ -7,21 +7,35 @@
   padding: 30px 0 20px; background: none; border: 0; cursor: pointer; text-align: left;
   font-size: var(--font-size-20); line-height: 26px; font-weight: 600; color: var(--color-text-default);
 }
+.accordion__question { transition: color var(--dur-fast); }
 .accordion__question:hover { color: var(--color-text-hover); }
-.accordion__chevron { color: var(--site-blue); flex: none; transition: transform .2s; margin-right: 10px; }
+.accordion__chevron { color: var(--site-blue); flex: none; transition: transform var(--dur-slow) var(--ease-out); margin-right: 10px; }
 .accordion__chevron.is-open { transform: rotate(180deg); }
-.accordion__answer { padding: 0 0 24px; font-size: var(--font-size-16); line-height: 21px; color: var(--color-text-secondary); white-space: pre-line; }
+.accordion__panel {
+  display: grid; grid-template-rows: 0fr; visibility: hidden;
+  transition: grid-template-rows var(--dur-slow) var(--ease-out), visibility 0s var(--dur-slow);
+}
+.accordion__panel.is-open { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows var(--dur-slow) var(--ease-out), visibility 0s; }
+.accordion__clip { min-height: 0; overflow: hidden; }
+.accordion__answer { padding: 0 0 24px; font-size: var(--font-size-16); line-height: 21px; color: var(--color-text-secondary); white-space: pre-line; opacity: 0; transition: opacity var(--dur-base); }
+.accordion__panel.is-open .accordion__answer { opacity: 1; transition: opacity var(--dur-slow) 80ms; }
 @media (max-width: 767px) { .accordion__question { font-size: 18px; line-height: 24px; padding: 20px 0 16px; } }
 
 /* ---------- Share row ---------- */
 .share { display: inline-flex; align-items: center; gap: 15px; font-size: 13px; font-weight: 600; color: inherit; }
-.share button { background: none; border: 0; padding: 2px; color: inherit; cursor: pointer; display: flex; }
-.share button:hover { opacity: .75; }
+.share button { background: none; border: 0; padding: 2px; color: inherit; cursor: pointer; display: flex; transition: opacity var(--dur-fast), transform var(--dur-base) var(--ease-out); }
+.share button:hover { opacity: .75; transform: translateY(-2px); }
+.share button:active { transform: scale(.9); }
 
 /* ---------- Modal ---------- */
-.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 120; display: flex; align-items: flex-start; justify-content: center; padding: 96px 16px 16px; overflow-y: auto; }
-.modal { background: #fff; border-radius: var(--radius-card); max-width: 560px; width: 100%; padding: 48px 40px 40px; text-align: center; position: relative; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 120; display: flex; align-items: flex-start; justify-content: center; padding: 96px 16px 16px; overflow-y: auto; animation: fade-in var(--dur-base); }
+.modal { background: #fff; border-radius: var(--radius-card); max-width: 560px; width: 100%; padding: 48px 40px 40px; text-align: center; position: relative; animation: modal-in var(--dur-slow) var(--ease-out); }
+@keyframes modal-in { from { opacity: 0; transform: translateY(20px) scale(.97); } }
+/* Closing plays the same thing backwards before the modal is removed (Modal.tsx waits for it) */
+.modal-backdrop.is-closing { opacity: 0; transition: opacity .2s; }
+.modal-backdrop.is-closing .modal { opacity: 0; transform: translateY(12px) scale(.98); transition: opacity .2s, transform .2s; }
 .modal h2 { margin-bottom: var(--spacing-16); }
 .modal p { color: var(--color-text-secondary); line-height: 21px; }
 .modal__actions { display: flex; gap: var(--spacing-12); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-32); }
-.modal__close { position: absolute; right: 16px; top: 16px; background: none; border: 0; cursor: pointer; color: var(--color-text-default); padding: 6px; }
+.modal__close { position: absolute; right: 16px; top: 16px; background: none; border: 0; cursor: pointer; color: var(--color-text-default); padding: 6px; border-radius: 50%; transition: background-color var(--dur-fast), transform var(--dur-base) var(--ease-out); }
+.modal__close:hover { background: var(--color-surface-subtle); transform: rotate(90deg); }

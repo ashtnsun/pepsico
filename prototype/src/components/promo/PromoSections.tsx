@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { Promo } from '../../data/promos'
@@ -41,6 +41,7 @@ export function PromoTerms({ promo }: { promo: Promo }) {
 /** Prize band: brand color, round prize art, arrows to page through (live-site rewards slider). */
 export function Prizes({ promo }: { promo: Promo }) {
   const [page, setPage] = useState(0)
+  const [dir, setDir] = useState(1) // 1 = next, -1 = previous: the new prizes slide in from that side
   const [perPage, setPerPage] = useState(3)
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
@@ -56,16 +57,16 @@ export function Prizes({ promo }: { promo: Promo }) {
       <h2 id="prizes-title" className="prizes__title">{promo.prizesTitle}</h2>
       {promo.prizesSubtitle && <p className="prizes__subtitle">{promo.prizesSubtitle}</p>}
       <div className="prizes__row">
-        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Previous prizes" onClick={() => setPage((p - 1 + pages) % pages)}><ChevronLeft size={24} strokeWidth={3} /></button>}
-        <ul className="prizes__list" aria-live="polite">
-          {shown.map((pr) => (
-            <li key={pr.name} className="prizes__item">
+        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Previous prizes" onClick={() => { setDir(-1); setPage((p - 1 + pages) % pages) }}><ChevronLeft size={24} strokeWidth={3} /></button>}
+        <ul key={p} className="prizes__list" aria-live="polite" style={{ '--dir': dir } as CSSProperties}>
+          {shown.map((pr, n) => (
+            <li key={pr.name} className="prizes__item" style={{ '--i': n } as CSSProperties}>
               <img src={pr.image} alt="" />
               <h3 className="prizes__name">{pr.name}</h3>
             </li>
           ))}
         </ul>
-        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Next prizes" onClick={() => setPage((p + 1) % pages)}><ChevronRight size={24} strokeWidth={3} /></button>}
+        {pages > 1 && <button type="button" className="round-arrow round-arrow--white" aria-label="Next prizes" onClick={() => { setDir(1); setPage((p + 1) % pages) }}><ChevronRight size={24} strokeWidth={3} /></button>}
       </div>
       {pages > 1 && <p className="prizes__count">{p + 1} / {pages}</p>}
     </section>

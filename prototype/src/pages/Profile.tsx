@@ -55,7 +55,8 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="profile__panel" role="tabpanel">
+        {/* Keyed by tab so the new tab's content fades in */}
+        <div className="profile__panel" role="tabpanel" key={tab}>
           {tab === 'details' && (
             <form onSubmit={save} noValidate>
               <div className="auth__section">
@@ -163,11 +164,15 @@ export default function Profile() {
 
       {confirmDelete && (
         <Modal title="Delete your JOY profile?" onClose={() => setConfirmDelete(false)}>
-          <p>This removes your personal data and your entries in running promotions. You can’t undo this.</p>
-          <div className="modal__actions">
-            <button type="button" className="btn btn--outline" onClick={() => setConfirmDelete(false)}>Keep my profile</button>
-            <button type="button" className="btn btn--primary" style={{ background: 'var(--color-feedback-error)', borderColor: 'var(--color-feedback-error)' }} onClick={() => { deleteAccount(); toast('Your profile has been deleted'); navigate('/') }}>Delete profile</button>
-          </div>
+          {(close) => (
+            <>
+              <p>This removes your personal data and your entries in running promotions. You can’t undo this.</p>
+              <div className="modal__actions">
+                <button type="button" className="btn btn--outline" onClick={close}>Keep my profile</button>
+                <button type="button" className="btn btn--primary" style={{ background: 'var(--color-feedback-error)', borderColor: 'var(--color-feedback-error)' }} onClick={() => { deleteAccount(); toast('Your profile has been deleted'); navigate('/') }}>Delete profile</button>
+              </div>
+            </>
+          )}
         </Modal>
       )}
     </>

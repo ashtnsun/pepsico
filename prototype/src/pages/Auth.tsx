@@ -381,8 +381,12 @@ export function ChangeCountry() {
       </div>
       {other && (
         <Modal title={`JOY ${other}`} onClose={() => setOther(null)}>
-          <p>This prototype only includes the UK &amp; Ireland site. On the live site you would now see promotions for {other}.</p>
-          <div className="modal__actions"><button type="button" className="btn btn--primary" onClick={() => setOther(null)}>OK</button></div>
+          {(close) => (
+            <>
+              <p>This prototype only includes the UK &amp; Ireland site. On the live site you would now see promotions for {other}.</p>
+              <div className="modal__actions"><button type="button" className="btn btn--primary" onClick={close}>OK</button></div>
+            </>
+          )}
         </Modal>
       )}
     </>

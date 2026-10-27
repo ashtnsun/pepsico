@@ -67,13 +67,12 @@ export function Navbar() {
               <button type="button" className={`user-menu__toggle ${onProfile || userOpen ? 'active' : ''}`} aria-expanded={userOpen} onClick={() => { setUserOpen(!userOpen); setBrandsOpen(false) }}>
                 <UserIcon size={24} fill="currentColor" aria-hidden /> <span>Hi {user.firstName}</span> <ChevronDown size={16} className={userOpen ? 'rot' : ''} aria-hidden />
               </button>
-              {userOpen && (
-                <ul className="user-menu__list">
-                  <li><Link to="/profile"><UserIcon size={18} aria-hidden /> My profile</Link></li>
-                  <li><Link to="/profile#entries"><Ticket size={18} aria-hidden /> My entries</Link></li>
-                  <li><button type="button" onClick={doLogout}><LogOut size={18} aria-hidden /> Log out</button></li>
-                </ul>
-              )}
+              {/* Menus stay mounted so they can animate out; closed ones are visibility: hidden (out of tab order and screen readers) */}
+              <ul className={`user-menu__list ${userOpen ? 'is-open' : ''}`}>
+                <li><Link to="/profile"><UserIcon size={18} aria-hidden /> My profile</Link></li>
+                <li><Link to="/profile#entries"><Ticket size={18} aria-hidden /> My entries</Link></li>
+                <li><button type="button" onClick={doLogout}><LogOut size={18} aria-hidden /> Log out</button></li>
+              </ul>
             </div>
           ) : (
             <>
@@ -84,45 +83,41 @@ export function Navbar() {
         </div>
 
         <button type="button" className="navbar__burger" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+          <span key={mobileOpen ? 'close' : 'open'} className="navbar__burger-icon">{mobileOpen ? <X size={28} /> : <Menu size={28} />}</span>
         </button>
       </nav>
 
-      {brandsOpen && (
-        <div id="brands-menu" className="brands-menu">
-          {brands.map((b) => (
-            <Link key={b.slug} to={`/brands/${b.slug}`} className="brands-menu__item">
-              <img src={b.logo} alt={b.name} />
-            </Link>
-          ))}
-          <Link to="/brands" className="brands-menu__item brands-menu__all">All brands</Link>
-          <span className="brands-menu__item brands-menu__placeholder" aria-hidden><img src="./images/global/menu-logo-placeholder.svg" alt="" /></span>
-        </div>
-      )}
+      <div id="brands-menu" className={`brands-menu ${brandsOpen ? 'is-open' : ''}`}>
+        {brands.map((b) => (
+          <Link key={b.slug} to={`/brands/${b.slug}`} className="brands-menu__item">
+            <img src={b.logo} alt={b.name} />
+          </Link>
+        ))}
+        <Link to="/brands" className="brands-menu__item brands-menu__all">All brands</Link>
+        <span className="brands-menu__item brands-menu__placeholder" aria-hidden><img src="./images/global/menu-logo-placeholder.svg" alt="" /></span>
+      </div>
 
-      {mobileOpen && (
-        <div className="mobile-menu">
-          <NavLink to="/" end className="mobile-menu__link">Home</NavLink>
-          <NavLink to="/promotions" className="mobile-menu__link">Promotions</NavLink>
-          <NavLink to="/brands" className="mobile-menu__link">Brands</NavLink>
-          <div className="mobile-menu__brands">
-            {brands.map((b) => (
-              <Link key={b.slug} to={`/brands/${b.slug}`}><img src={b.logo} alt={b.name} /></Link>
-            ))}
-          </div>
-          {user ? (
-            <>
-              <NavLink to="/profile" className="mobile-menu__link">My profile</NavLink>
-              <button type="button" className="btn btn--outline-white btn--block" onClick={doLogout}>Log out</button>
-            </>
-          ) : (
-            <div className="mobile-menu__cta">
-              <Link to="/login" className="btn btn--outline-white btn--block">Login</Link>
-              <Link to="/register" className="btn btn--white btn--block">Register</Link>
-            </div>
-          )}
+      <div className={`mobile-menu ${mobileOpen ? 'is-open' : ''}`}>
+        <NavLink to="/" end className="mobile-menu__link">Home</NavLink>
+        <NavLink to="/promotions" className="mobile-menu__link">Promotions</NavLink>
+        <NavLink to="/brands" className="mobile-menu__link">Brands</NavLink>
+        <div className="mobile-menu__brands">
+          {brands.map((b) => (
+            <Link key={b.slug} to={`/brands/${b.slug}`}><img src={b.logo} alt={b.name} /></Link>
+          ))}
         </div>
-      )}
+        {user ? (
+          <>
+            <NavLink to="/profile" className="mobile-menu__link">My profile</NavLink>
+            <button type="button" className="btn btn--outline-white btn--block" onClick={doLogout}>Log out</button>
+          </>
+        ) : (
+          <div className="mobile-menu__cta">
+            <Link to="/login" className="btn btn--outline-white btn--block">Login</Link>
+            <Link to="/register" className="btn btn--white btn--block">Register</Link>
+          </div>
+        )}
+      </div>
     </header>
   )
 }

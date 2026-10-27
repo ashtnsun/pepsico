@@ -19,7 +19,8 @@ import { useChromeTheme } from './state/chrome'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
-  useEffect(() => { if (!hash) window.scrollTo(0, 0) }, [pathname, hash])
+  // Jump, don't glide: with smooth scrolling on, the new page would otherwise scroll up from where the old one was
+  useEffect(() => { if (!hash) window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname, hash])
   return null
 }
 
@@ -27,6 +28,7 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
   // Visual exploration: on promotion and brand pages, the navbar, breadcrumb, newsletter and footer can take the brand colour
   const { chrome } = useDesign()
   const theme = useChromeTheme()
+  const { pathname } = useLocation()
   const themed = chrome !== 'joy' && theme
   return (
     <div
@@ -37,7 +39,8 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
     >
       <a href="#main" className="visually-hidden">Skip to content</a>
       <Navbar />
-      <main id="main" className="page-main"><Outlet /></main>
+      {/* Keyed by the address so each new page fades up (.page-enter in site.css) */}
+      <main id="main" className="page-main"><div key={pathname} className="page-enter"><Outlet /></div></main>
       {newsletter && <Newsletter />}
       <Footer />
     </div>

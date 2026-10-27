@@ -535,3 +535,39 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** new `prototype/src/components/promo/BrandLoader.tsx` and `brand-loader.css`; `prototype/src/pages/Participate.tsx` (uses `BrandLoader`); `prototype/src/pages/pages.css` (old `.loading-shapes` rules removed).
 - **Checked by:** `tsc -b` and `npm run build`. Playwright: all four animations paused at 200, 700, 1100, 1500, 1900 and 2400 ms and screenshotted side by side. One fix came from this: the Walkers packet top came apart from the body during the puff, so the top now sits inside the packet group. The Doritos animation was also checked inside the real loading panel (Doritos & F1 promotion, 1500 ms). Every Pepsi and Walkers promotion has ended, so testers can only reach the Doritos and JOY animations right now.
 - **Decision record:** none.
+
+### Change 23 — Motion pass: page transitions, menus, accordion, carousel and hover states — 2026-10-27
+
+- **Prompt (verbatim):** do a full page transition/animation/interaction pass over the site, make sure everything feels smooth, not jagged/instant.
+- **What changed:**
+  - **Shared motion values** in `site.css`: one easing (fast start, soft landing) and three speeds (0.15 s for hover colours, 0.25 s for menus and underlines, 0.4 s for pages and panels), so everything moves the same way. There are no motion tokens yet, so these live with the other site values.
+  - **Page changes:** each new page fades up slightly instead of appearing all at once. Changing page now jumps to the top. Before, smooth scrolling made the new page glide up from wherever you had scrolled to on the old page, which looked jerky.
+  - **Navbar:** the Brands dropdown, the user menu ("Hi Sam") and the phone menu fade and slide in and out instead of popping. The brand logos and phone menu items follow one after another. The menu and close icons turn into each other, and the chevrons rotate smoothly. Link underlines (navbar, footer, breadcrumb, profile tabs, "All brands") fade in on hover. On brand-themed pages, the navbar, newsletter and footer colours blend over when you move between pages.
+  - **Hero carousel (home, promotions):** the chosen slide fades in on top of the last one, with no white flash between brand colours. Its text rises in line by line and the photo settles from a slight zoom. On phones, all slides now take the height of the tallest one, so the dots no longer jump.
+  - **FAQ accordion (promotion pages and the FAQ page):** answers slide open and closed smoothly instead of appearing. The text fades in, and the boxes on promotion pages get a light blue border on hover.
+  - **Prizes:** the next or previous prizes slide in from the side you clicked, one after another.
+  - **Section menu:** shrinks smoothly when it sticks, and the "Participate here" button slides in. The underline on the current section fades between links.
+  - **Cards and lists:** promotion cards rise in one after another, including after a filter or sort change on the promotions page. The original card and the wide teaser have a gentle hover lift or image zoom, like the other card designs. Rows in the entries table highlight on hover.
+  - **Modal and toast:** the modal (delete profile, change country) fades and scales in, and now also fades out, including when you press its own buttons. The "link copied" toast slides up, then slides away instead of vanishing.
+  - **Task flow:** on the participate page, the code form, the "Calculating…" card and "already entered" each rise in. On the result page, the icon pops in with a small bounce and the prize image follows. The "Signing in" screen fades in. Profile tabs fade between sections.
+  - **Small feedback:** buttons and round arrows shrink slightly when pressed. Input borders, error messages, alerts and the newsletter confirmation fade in instead of switching on.
+  - **Reduced motion:** with the system "reduce motion" setting on, every animation and transition is cut to an instant change (one rule at the end of `site.css`), and smooth scrolling is turned off.
+- **Why:** the user's request. Most state changes (menus, accordion, carousel, prize pages, toasts, route changes) used to switch instantly. Claude's choices: one shared timing so everything feels consistent; movement kept small (8–14 px, at most 0.6 s) so testing sessions aren't slowed down; no scroll-triggered reveals, because they can hide content in full-page save-state screenshots.
+- **How AI was used:** Claude read every component and stylesheet for existing transitions and instant state changes, then made the changes. Menus and accordion answers now stay in the page and are hidden with `visibility` when closed, so they can animate out but still can't be reached by Tab or a screen reader. The hero stacks its slides for the crossfade. The modal waits 0.2 s for its fade-out before closing. Claude checked everything with a headless Chromium script that measures each element in the middle of its animation and again at rest.
+- **Files:** `prototype/src/styles/site.css`, `prototype/src/App.tsx`, `prototype/src/components/layout/Navbar.tsx`, `layout.css`, `prototype/src/components/ui/Accordion.tsx`, `Modal.tsx`, `Toast.tsx`, `ui.css`, `prototype/src/components/promo/HeroCarousel.tsx`, `PromoSections.tsx`, `promo.css`, `prototype/src/pages/Promotions.tsx`, `Profile.tsx`, `Auth.tsx`, `pages.css`.
+- **Checked by:** `tsc -b` and `vite build`. Headless Chromium at 1440 × 900 and 390 × 844, measuring each item while it moves and again at rest:
+  - **Hero:** halfway through the crossfade, the new slide is at 75 % with the old one still fully visible underneath; afterwards only 1 slide is visible.
+  - **Brands menu:** opacity 0.35 while opening, then 1; 0.35 while closing, then hidden, and its links can't be tabbed to.
+  - **Accordion:** panel height goes 0 → 53 → 66 px opening and 66 → 16 → 0 px closing.
+  - **Prizes:** the items are part-way through their slide (15, 32 and 48 px).
+  - **Toast:** slides in, gets `is-leaving`, then is removed.
+  - **Modal:** the "OK" button plays the fade-out (opacity 0.26) before the modal is removed.
+  - **Phone menu:** opens and closes the same way as the Brands menu.
+  - **Other checks:**
+    - Navigating from the bottom of the page lands at scroll 0 with the fade-up running.
+    - Filtering re-runs the card animation.
+    - With reduce motion on, the accordion still opens (66 px).
+    - No sideways scroll at 390 px.
+    - No console errors.
+  - Screenshots of the hero, Brands menu, phone menu and phone hero were checked.
+- **Decision record:** none.

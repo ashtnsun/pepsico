@@ -78,7 +78,8 @@ export default function Promotions() {
           </div>
         </div>
         <div aria-live="polite">
-          {list.length ? <div className="card-grid">{list.map((p) => <PromoCard key={p.slug} promo={p} entry={latestEntry(p.slug)} />)}</div>
+          {/* Keyed by the filters so the cards rise in again after each change */}
+          {list.length ? <div className="card-grid" key={`${brand}|${type}|${sort}`}>{list.map((p) => <PromoCard key={p.slug} promo={p} entry={latestEntry(p.slug)} />)}</div>
             : <div className="empty-state"><h3 className="h3">No promotions match</h3><p>Try another brand or promotion type.</p></div>}
         </div>
       </section>

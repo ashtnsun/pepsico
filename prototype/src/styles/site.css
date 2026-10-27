@@ -21,11 +21,17 @@
   --site-content: 1130px;                              /* max width of teaser cards and content */
   --site-shadow-card: 0 0 8px rgba(0, 0, 0, 0.12);
   --site-success: #08A045;                             /* result screens; no token yet */
+
+  /* Motion (change 23). No motion tokens yet, so one easing and three speeds live here and everything uses them. */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);            /* fast start, soft landing */
+  --dur-fast: .15s;                                    /* hover colours */
+  --dur-base: .25s;                                    /* menus, underlines, small things appearing */
+  --dur-slow: .4s;                                     /* pages, panels, accordion */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 body {
   margin: 0;
@@ -58,6 +64,17 @@ h1, h2, h3, h4, p { margin: 0; }
 
 .page-main { min-height: 50vh; }
 
+/* ---------- Motion (change 23) ---------- */
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
+@keyframes drop-in { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes pop-in { from { opacity: 0; transform: scale(.5); } }
+/* Every route change: the new page fades up instead of snapping in (App.tsx keys this wrapper by the address). */
+.page-enter { animation: rise-in var(--dur-slow) var(--ease-out) backwards; }
+/* Things that appear after an action: errors, alerts, confirmation messages */
+.field__error, .newsletter__error { animation: drop-in var(--dur-base) var(--ease-out); }
+.alert, .newsletter__done, .empty-state { animation: fade-in var(--dur-slow) var(--ease-out); }
+
 /* ---------- Type (live-site sizes) ---------- */
 .display { font-size: var(--font-size-60); line-height: 62px; font-weight: 700; }
 .h1, .section-title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
@@ -80,8 +97,10 @@ h1, h2, h3, h4, p { margin: 0; }
   border-radius: var(--site-btn-radius); border: var(--border-width-thick) solid transparent;
   font-size: var(--font-size-16); font-weight: 600; line-height: 16px; text-transform: uppercase;
   text-decoration: none; cursor: pointer; white-space: nowrap;
-  transition: background-color .15s, color .15s, border-color .15s;
+  transition: background-color var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast), filter var(--dur-fast), transform var(--dur-fast) var(--ease-out);
 }
+/* A small press so clicks feel like they land */
+.btn:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(.97); }
 .btn--wide { padding: 0 45px; }
 .btn--block { width: 100%; }
 .btn--primary { background: var(--site-blue); border-color: var(--site-blue); color: var(--color-text-on-action); }
@@ -98,9 +117,10 @@ h1, h2, h3, h4, p { margin: 0; }
 .btn--promo:hover { filter: brightness(0.94); }
 .btn:disabled, .btn[aria-disabled="true"] { background: var(--site-blue-disabled); border-color: var(--site-blue-disabled); color: var(--color-text-on-action); cursor: not-allowed; filter: none; }
 
-.link { color: var(--site-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; cursor: pointer; }
-.link--caps { text-transform: uppercase; text-decoration: none; }
-.link--caps:hover { text-decoration: underline; }
+.link { color: var(--site-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; cursor: pointer; transition: color var(--dur-fast), text-decoration-color var(--dur-base); }
+/* Underlines that appear on hover fade in rather than switching on */
+.link--caps { text-transform: uppercase; text-decoration-color: transparent; }
+.link--caps:hover { text-decoration-color: currentColor; }
 
 /* ---------- Form fields (live site: pill inputs, grey border) ---------- */
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--spacing-16); }
@@ -110,6 +130,7 @@ h1, h2, h3, h4, p { margin: 0; }
   height: 42px; padding: 0 var(--spacing-20); border-radius: var(--radius-control);
   border: var(--border-width-thin) solid #8C8C8C; background: var(--color-surface-default);
   font: inherit; color: var(--color-text-default); width: 100%;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .field__input::placeholder { color: #8C8C8C; }
 .field__input:focus { outline: none; border-color: var(--site-blue); box-shadow: 0 0 0 1px var(--site-blue); }
@@ -148,13 +169,15 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 
 /* ---------- Carousel dots (live site: grey 8px dots, active 60px blue pill) ---------- */
 .dots { display: flex; justify-content: center; align-items: center; gap: 10px; padding: var(--spacing-24) 0; }
-.dots button { width: 8px; height: 8px; border-radius: 55px; border: 0; padding: 0; background: var(--site-dot); cursor: pointer; transition: width .2s, background .2s; }
+.dots button { width: 8px; height: 8px; border-radius: 55px; border: 0; padding: 0; background: var(--site-dot); cursor: pointer; transition: width var(--dur-slow) var(--ease-out), background-color var(--dur-base); }
 .dots button[aria-current="true"] { width: 60px; background: var(--site-blue); }
 
 .round-arrow {
   display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
   border: 0; background: var(--site-blue); color: #fff; cursor: pointer; flex: none;
+  transition: background-color var(--dur-fast), opacity var(--dur-base), transform var(--dur-fast) var(--ease-out);
 }
+.round-arrow:active:not(:disabled) { transform: scale(.92); }
 .round-arrow:hover { background: var(--site-blue-hover); }
 .round-arrow--white { background: #fff; color: var(--site-blue); width: 50px; height: 50px; }
 .round-arrow--white:hover { background: var(--site-white-hover); }
@@ -172,4 +195,16 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
   position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 200;
   background: #222; color: #fff; padding: 14px 20px; border-radius: var(--radius-container);
   display: flex; gap: 10px; align-items: center; box-shadow: 0 6px 24px rgba(0,0,0,.25); max-width: calc(100% - 32px);
+  animation: toast-in var(--dur-slow) var(--ease-out);
+  transition: opacity var(--dur-base), transform var(--dur-base) var(--ease-out);
+}
+.toast.is-leaving { opacity: 0; transform: translate(-50%, 12px); }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 16px); } }
+
+/* Reduced motion: keep every state change, drop the movement (covers all files) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important;
+    transition-duration: .01ms !important; transition-delay: 0s !important;
+  }
 }

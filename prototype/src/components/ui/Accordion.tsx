@@ -22,7 +22,10 @@ export function Accordion({ items, firstOpen = true }: { items: Faq[]; firstOpen
                 <ChevronDown size={20} strokeWidth={3} className={`accordion__chevron ${isOpen ? 'is-open' : ''}`} aria-hidden />
               </button>
             </h3>
-            <div id={`${id}-${i}`} className="accordion__answer" hidden={!isOpen}>{f.a}</div>
+            {/* Height animates from 0 to auto via grid rows; closed answers are visibility: hidden, so they stay out of reach */}
+            <div id={`${id}-${i}`} className={`accordion__panel ${isOpen ? 'is-open' : ''}`}>
+              <div className="accordion__clip"><div className="accordion__answer">{f.a}</div></div>
+            </div>
           </div>
         )
       })}

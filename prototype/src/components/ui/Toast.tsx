@@ -5,17 +5,24 @@ import { CircleCheck } from 'lucide-react'
 const Ctx = createContext<(msg: string) => void>(() => {})
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [msg, setMsg] = useState<string | null>(null)
+  // id restarts the slide-in when a new message replaces one that is still showing
+  const [toast, setToast] = useState<{ msg: string; id: number; leaving: boolean } | null>(null)
   const timer = useRef<number | undefined>(undefined)
-  const show = useCallback((m: string) => {
-    setMsg(m)
+  const show = useCallback((msg: string) => {
+    setToast((t) => ({ msg, id: (t?.id ?? 0) + 1, leaving: false }))
     window.clearTimeout(timer.current)
-    timer.current = window.setTimeout(() => setMsg(null), 3200)
+    // After 3.2s it slides out (.toast.is-leaving, 0.25s), then it's removed
+    timer.current = window.setTimeout(() => {
+      setToast((t) => t && { ...t, leaving: true })
+      timer.current = window.setTimeout(() => setToast(null), 250)
+    }, 3200)
   }, [])
   return (
     <Ctx.Provider value={show}>
       {children}
-      <div aria-live="polite">{msg && <div className="toast"><CircleCheck size={20} aria-hidden /> {msg}</div>}</div>
+      <div aria-live="polite">
+        {toast && <div key={toast.id} className={`toast ${toast.leaving ? 'is-leaving' : ''}`}><CircleCheck size={20} aria-hidden /> {toast.msg}</div>}
+      </div>
     </Ctx.Provider>
   )
 }
