@@ -444,3 +444,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`, `prototype/src/data/brands.ts`.
 - **Checked by:** `tsc -b`. Playwright at 1440 × 900 (4 × 2 grid, Doritos shows the Active badge) and 390 × 844 (2 columns, badge on one line, page 390 px wide with no sideways scroll).
 - **Decision record:** none.
+
+### Change 20 — Undo change 19 (brand cards) — 2026-10-26
+
+- **Prompt (verbatim):** undo, I dont want cards
+- **What changed:** the Brands page is back to how it was before change 19: the plain grid of brand logos with the name and active promotion count under each, and no intro line. The optional `coverPosition` field is removed from `brands.ts`.
+- **Why:** user's request; they don't want cards on this page.
+- **How AI was used:** Claude restored the three files from the commit before change 19 (`git checkout 3a3d11f~1 -- …`). The change 19 log entry stays, so the history shows what was tried.
+- **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`, `prototype/src/data/brands.ts`.
+- **Checked by:** `tsc -b`; `git diff 3a3d11f~1 -- prototype/src` is empty.
+- **Decision record:** none.

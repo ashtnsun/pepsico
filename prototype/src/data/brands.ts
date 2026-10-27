@@ -9,8 +9,6 @@ export type Brand = {
   logo: string
   hero: string
   heroMobile: string
-  /** Which part of heroMobile to keep when it's cropped to a card on /brands (CSS object-position). */
-  coverPosition?: string
   /** Color of the "Welcome" band under the hero (live site `.branding`). */
   band: string
   /** Text color on the band. */
@@ -41,7 +39,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'rockstar', name: 'Rockstar', logo: img('brands/logo-rockstar.webp'),
-    hero: img('brands/hero-rockstar-desktop.webp'), heroMobile: img('brands/hero-rockstar-mobile.webp'), coverPosition: '50% 78%',
+    hero: img('brands/hero-rockstar-desktop.webp'), heroMobile: img('brands/hero-rockstar-mobile.webp'),
     band: '#000000', bandText: '#FFFFFF', bandCta: { bg: '#FFFFFF', text: '#0E38DF' }, deco: img('global/deco-rockstar.svg'),
     welcome: 'Welcome to Rockstar - Energy for the Good Times',
     website: 'https://www.rockstarenergy.co.uk/',

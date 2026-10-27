@@ -67,31 +67,17 @@
   .brand-band__deco { width: 80px; opacity: .6; }
 }
 
-/* Brands index: one card per brand, cover = the brand's own hero art (mobile crop), accent = its band colour */
-.brands-index-head { padding-left: var(--spacing-16); padding-right: var(--spacing-16); }
-.brands-grid { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-24); max-width: var(--site-content); margin: 0 auto 96px; padding: 0 var(--spacing-20); }
-.brand-card { display: flex; flex-direction: column; height: 100%; border-radius: var(--radius-card); overflow: hidden; background: var(--color-surface-default); box-shadow: 0 6px 20px rgba(10, 15, 54, .10); color: var(--color-text-default); text-decoration: none; transition: transform .2s, box-shadow .2s; }
-.brand-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px color-mix(in srgb, var(--brand-band) 35%, transparent); }
-.brand-card:focus-visible { outline: var(--border-width-thick) solid var(--color-border-focus); outline-offset: 4px; }
-.brand-card__media { display: block; aspect-ratio: 780 / 550; overflow: hidden; background: var(--brand-band); } /* Quaker and Popworks art ends in a transparent curve */
-.brand-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
-.brand-card:hover .brand-card__media img { transform: scale(1.06); }
-.brand-card__body { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-8); flex: 1; padding: var(--spacing-16) 48px var(--spacing-20) var(--spacing-20); border-top: 4px solid var(--brand-band); }
-.brand-card__name { font-size: var(--font-size-20); line-height: 26px; font-weight: 700; }
-.brand-card:hover .brand-card__name { color: var(--color-text-hover); }
-.brand-card__none { font-size: var(--font-size-14); line-height: var(--line-height-20); color: var(--color-text-secondary); }
-.brand-card__arrow { position: absolute; right: var(--spacing-20); top: 50%; translate: 0 -50%; color: var(--color-text-link); transition: transform .2s; }
-.brand-card:hover .brand-card__arrow { transform: translateX(4px); }
-@media (max-width: 991px) { .brands-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 575px) {
-  .brands-grid { gap: var(--spacing-16) var(--spacing-12); margin-bottom: 56px; padding: 0 var(--spacing-16); }
-  .brand-card__body { padding: var(--spacing-12); }
-  .brand-card__name { font-size: var(--font-size-16); line-height: var(--line-height-20); }
-  .brand-card .badge, .brand-card__none { font-size: 12px; line-height: 16px; }
-  .brand-card__arrow { display: none; }
-  .brand-card__long { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* badge reads "1 active" on phones; screen readers still hear the full text */
+.brands-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: var(--site-content); margin: 0 auto 80px; }
+.brands-grid a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; aspect-ratio: 1; padding: 24px; text-align: center; text-decoration: none; color: var(--color-text-default); }
+.brands-grid a:hover .h3 { color: var(--color-text-hover); }
+.brands-grid img { max-height: 70%; max-width: 80%; object-fit: contain; transition: transform .2s; }
+.brands-grid a:hover img { transform: scale(1.06); }
+.brands-grid__count { font-size: var(--font-size-14); color: var(--color-text-secondary); font-weight: 400; }
+@media (max-width: 767px) {
+  .brands-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 16px 48px; }
+  .brands-grid a { aspect-ratio: auto; padding: 24px 12px; }
+  .brands-grid img { height: 96px; max-height: none; }
 }
-@media (prefers-reduced-motion: reduce) { .brand-card, .brand-card *, .brand-card__arrow { transition: none; } .brand-card:hover { transform: none; } }
 
 /* ---------- Auth pages (live login/register: blue background, white card) ---------- */
 .auth { position: relative; background: var(--site-blue) url('/images/global/login-bg.webp') center / cover no-repeat; padding: 60px var(--spacing-16) 100px; min-height: 800px; }
