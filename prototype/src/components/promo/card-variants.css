@@ -4,6 +4,9 @@
 /* The single link covers the whole card */
 .cv-link::after { content: ''; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
 .cv .cv-link { position: static; }
+/* A transform or filter on the link would shrink the overlay to the button mid-click (press scale, promo hover), so the click got lost */
+.cv-link { transform: none !important; filter: none !important; }
+.cv-link.btn--promo:hover { background: color-mix(in srgb, var(--promo-cta-bg, #fff) 94%, #000); border-color: color-mix(in srgb, var(--promo-cta-bg, #fff) 94%, #000); }
 .cv:has(.cv-link:focus-visible) { outline: 3px solid var(--color-border-focus); outline-offset: 3px; }
 .cv-link:focus-visible { outline: none; }
 .cv-eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-text-secondary); }

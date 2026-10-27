@@ -696,3 +696,16 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc -b`. Playwright screenshots of the hero bottom on Doritos, Rockstar, Pepsi, Walkers and Lipton at 1440, 1920 and 390 px: the curve bulges down and the band colour fills the sides, as in the live capture. Rockstar and Lipton keep their taller desktop image. No sideways scroll on any of them. Not checked: the in-between 768–972 px range (it uses the phone curve on the desktop image, like the live site).
 - **Decision record:** none.
+
+### Change 31 — Promotion cards are clickable everywhere — 2026-10-27
+
+- **Prompt (verbatim):** On the home and promos page promo cards in the grids, the card needs to be clickable everywhere on the card, right now only the button on the card is clickable
+- **What changed:**
+  - **Clicks anywhere on the card open the promotion:** every card design (Original and A–E in the config menu) now opens the promotion when you click its picture, text or empty space, not only the button.
+  - **Why it failed before:** the five new card designs already stretched the button's link over the whole card with an invisible layer. But pressing a button runs the "small press" effect (`transform: scale(.97)`), and hovering the Poster's white button applied `filter: brightness(.94)`. Either one makes the button the box that the invisible layer is measured against. Mid-click the layer shrank back to the button, the mouse was let go outside the link, and the browser dropped the click. The Original card had no stretched link at all.
+  - **Fix:** the Original card gets the same stretched link as the others, with a focus ring around the whole card. Buttons that cover a card no longer shrink when pressed or use a filter on hover. The Poster's white button still darkens on hover, now by mixing its background colour.
+- **Why:** user's request. A whole-card target is easier to hit and is what people expect from a card.
+- **How AI was used:** Claude tested clicks with Playwright and found that the link was on top everywhere but clicks still did not navigate. Clicking the button itself worked, which led to the press and hover styles on `.btn`.
+- **Files:** `prototype/src/components/promo/promo.css`, `prototype/src/components/promo/card-variants.css`.
+- **Checked by:** Playwright at 1440 px, all 6 card designs on Home and Promotions. Hit tests at 15 points per card (every card) all land on the link. Real mouse clicks at the top centre, left middle and bottom right of the first card all open the promotion page.
+- **Decision record:** none.

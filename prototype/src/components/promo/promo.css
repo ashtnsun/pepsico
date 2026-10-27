@@ -239,7 +239,7 @@
 .promo-carousel__controls .dots { padding: 0; }
 @media (max-width: 767px) { .promo-carousel { padding-top: 48px; } .promo-carousel .section-title { padding: 0 var(--spacing-16); } }
 @media (prefers-reduced-motion: no-preference) { .promo-carousel__track { scroll-behavior: smooth; } }
-.pcard { display: flex; flex-direction: column; border-radius: var(--radius-card); overflow: hidden; background: #fff; box-shadow: var(--site-shadow-card); transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base); }
+.pcard { position: relative; display: flex; flex-direction: column; border-radius: var(--radius-card); overflow: hidden; background: #fff; box-shadow: var(--site-shadow-card); transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base); }
 .pcard:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(10, 15, 54, .14); }
 .pcard__media img { transition: transform .5s var(--ease-out); }
 .pcard:hover .pcard__media img { transform: scale(1.04); }
@@ -253,6 +253,11 @@
 .pcard__text, .pcard__entry { font-size: var(--font-size-16); line-height: 21px; color: var(--color-text-secondary); flex: 1; }
 .pcard__entry strong { color: var(--color-text-default); }
 .pcard__cta { margin-top: 8px; align-self: flex-start; }
+/* The button's link covers the whole card, so the card is clickable (same as .cv-link in card-variants.css) */
+.pcard__cta::after { content: ''; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
+.pcard__cta { transform: none !important; } /* the press scale would shrink the overlay to the button mid-click */
+.pcard:has(.pcard__cta:focus-visible) { outline: 3px solid var(--color-border-focus); outline-offset: 3px; }
+.pcard__cta:focus-visible { outline: none; }
 .pcard--ended .pcard__media { background: color-mix(in srgb, var(--promo-bg) 35%, #6B6B6B); }
 .pcard--ended .pcard__media img { filter: grayscale(1); opacity: .8; }
 
