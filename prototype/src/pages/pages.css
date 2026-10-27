@@ -145,15 +145,6 @@
   .panel { padding: 28px 20px; }
 }
 
-.loading-shapes { display: flex; gap: 12px; justify-content: center; margin-top: 28px; }
-.loading-shapes span { width: 26px; height: 26px; background: var(--site-blue); animation: bounce 1s infinite ease-in-out; }
-.loading-shapes span:nth-child(1) { border-radius: 50%; }
-.loading-shapes span:nth-child(2) { clip-path: polygon(50% 0, 100% 100%, 0 100%); background: var(--site-yellow); animation-delay: .15s; }
-.loading-shapes span:nth-child(3) { background: var(--site-cyan); animation-delay: .3s; border-radius: 4px; }
-.loading-shapes span:nth-child(4) { border-radius: 50%; background: #9E00BF; animation-delay: .45s; }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-@media (prefers-reduced-motion: reduce) { .loading-shapes span { animation: none; } }
-
 /* ---------- Result ---------- */
 .result { background: var(--color-surface-subtle); padding: 48px 16px 80px; }
 .result__card { max-width: 640px; margin: 0 auto; background: #fff; border-radius: var(--radius-card); box-shadow: 0 0 20px rgba(0,0,0,.08); padding: 40px 48px; text-align: center; }

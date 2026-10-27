@@ -1,0 +1,76 @@
+/* Brand loading animations (BrandLoader.tsx). Everything plays once and holds its last frame. */
+.brand-loader { display: flex; justify-content: center; margin-top: 20px; }
+.brand-loader__art { width: 160px; height: 160px; overflow: visible; }
+.brand-loader__art * { transform-box: view-box; }
+
+/* Flying pieces: sideways (linear) + up then down (ease-out, ease-in) = an arc */
+.bl-fly-x { animation: bl-fly-x var(--t) linear var(--d) both; }
+.bl-fly-y { animation: bl-fly-y var(--t) var(--d) both; }
+.bl-fly-spin { transform-box: fill-box; transform-origin: center; animation: bl-spin var(--t) ease-out var(--d) both; }
+@keyframes bl-fly-x { 0% { transform: translateX(0); opacity: 0; } 10%, 100% { opacity: 1; } 100% { transform: translateX(var(--dx)); } }
+@keyframes bl-fly-y {
+  0% { transform: translateY(0); animation-timing-function: ease-out; }
+  40% { transform: translateY(var(--up)); animation-timing-function: ease-in; }
+  100% { transform: translateY(var(--down)); }
+}
+@keyframes bl-spin { to { transform: rotate(var(--spin)); } }
+
+/* Pepsi: fountain pours, glass fills, bubbles rise */
+.bl-pepsi__stream { stroke-dasharray: 100 100; animation: bl-pour 2.3s ease-in-out both; }
+@keyframes bl-pour { 0% { stroke-dashoffset: 100; } 12% { stroke-dashoffset: 0; } 82% { stroke-dashoffset: 0; } 96%, 100% { stroke-dashoffset: -100; } }
+.bl-pepsi__fill { animation: bl-fill 2s cubic-bezier(.4, 0, .6, 1) .25s both; }
+@keyframes bl-fill { from { transform: translateY(100px); } to { transform: translateY(6px); } }
+.bl-pepsi__bubble { animation: bl-bubble 1s ease-in 3 both; }
+@keyframes bl-bubble { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: .7; } 100% { transform: translateY(-40px); opacity: 0; } }
+
+/* Doritos: bag wiggles, tips over, shakes out the last chips */
+.bl-doritos__bag { transform-origin: 60px 50px; animation: bl-tip 2.4s ease-in-out both; }
+@keyframes bl-tip {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(-10deg); }
+  28% { transform: rotate(125deg); }
+  33% { transform: rotate(114deg); }
+  38%, 64% { transform: rotate(125deg); }
+  68% { transform: rotate(116deg); }
+  72%, 100% { transform: rotate(125deg); }
+}
+
+/* Walkers: packet puffs up (the top is inside the packet, so it puffs too), then the top pops off */
+.bl-walkers__pack { transform-origin: 80px 143px; animation: bl-puff 2.4s ease-in-out both; }
+@keyframes bl-puff {
+  0% { transform: scale(1, 1); }
+  12% { transform: scale(1.06, .95); }
+  22% { transform: scale(.95, 1.06); }
+  32% { transform: scale(1.1, .92); }
+  40% { transform: scale(.9, 1.12); }
+  46% { transform: scale(1.04, .97); }
+  52%, 100% { transform: scale(1, 1); }
+}
+.bl-walkers__top { transform-origin: 80px 75px; animation: bl-pop-top 2.4s ease-out both; }
+@keyframes bl-pop-top {
+  0%, 40% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  60%, 100% { transform: translate(-30px, -60px) rotate(-40deg); opacity: 0; }
+}
+
+/* JOY: box shakes, the lid pops up */
+.bl-joy__box { transform-origin: 80px 144px; animation: bl-shake 2.4s ease-in-out both; }
+@keyframes bl-shake {
+  0%, 4% { transform: rotate(0); }
+  10% { transform: rotate(-6deg); }
+  16% { transform: rotate(6deg); }
+  22% { transform: rotate(-7deg); }
+  28% { transform: rotate(7deg); }
+  34% { transform: rotate(-8deg); }
+  40% { transform: rotate(8deg); }
+  46%, 100% { transform: rotate(0); }
+}
+.bl-joy__lid { transform-origin: 80px 94px; animation: bl-lid 2.4s both; }
+@keyframes bl-lid {
+  0%, 46% { transform: translate(0, 0) rotate(0); animation-timing-function: cubic-bezier(.2, 1.4, .4, 1); }
+  62%, 100% { transform: translate(-18px, -40px) rotate(-20deg); }
+}
+
+/* Reduced motion: jump straight to the finished picture */
+@media (prefers-reduced-motion: reduce) {
+  .brand-loader__art * { animation-duration: 1ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+}

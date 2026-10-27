@@ -6,6 +6,7 @@ import { isEnded } from '../data/config'
 import { useStore } from '../state/store'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { DateLine, promoStyle } from '../components/promo/PromoTeaser'
+import { BrandLoader } from '../components/promo/BrandLoader'
 import NotFound from './NotFound'
 import { promoCrumbs } from './PromoDetail'
 import './pages.css'
@@ -59,7 +60,7 @@ export default function Participate() {
           {phase === 'loading' ? (
             <div className="panel" role="status" aria-live="assertive" style={{ textAlign: 'center' }}>
               <h1>{promo.mechanic === 'instant' ? 'Calculating your instant results…' : 'Submitting your entry…'}</h1>
-              <div className="loading-shapes" aria-hidden><span /><span /><span /><span /></div>
+              <BrandLoader brand={promo.brand} />
             </div>
           ) : blocked ? (
             <div className="panel">

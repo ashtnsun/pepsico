@@ -520,3 +520,18 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Checked by:** `tsc -b`. Playwright full-page screenshots at 1440 px: Doritos & F1 and Pepsi Music with A, B and C, plus 7UP and Lipton brand pages. No sideways scroll on any of them.
 - **Open:** the second shades are DERIVED and need approval. On light brands with A, the footer's JOY ribbon logo has white letters that are hard to read on yellow or green. Not yet checked at 390 px or with the light-brand fix.
 - **Decision record:** none yet. Keeping a brand-themed navbar would replace D36.
+
+### Change 24 — Brand-specific loading animation while results are calculated — 2026-10-27
+
+- **Prompt (verbatim):** In the loading screen waiting from promo results, change the loading animation to a brand specific loading animation. (e.g. filling up soda for pepsi, or dumping a bag of chips for doritos) just examples, go with what makes the most sense.
+- **What changed:** the four bouncing shapes on the "Calculating your instant results…" / "Submitting your entry…" panel are replaced by a short drawn animation for the promotion's brand. Each plays once in about 2.4 s and ends on its last frame just as the result page opens (at 2.6 s).
+  - **Pepsi:** a soda fountain pours cola into a glass with a JOY blue outline; bubbles rise and a foam head settles at the top.
+  - **Doritos:** a red Doritos-style bag wiggles, tips over and shakes out orange triangle chips, which land in a pile.
+  - **Walkers:** a red crisp packet with a yellow badge puffs up, the top pops off and round crisps fly out in arcs on both sides.
+  - **JOY and any other brand:** a JOY blue prize box with a yellow-green ribbon shakes, the lid pops up and confetti in the JOY palette bursts out. Avengers Doomsday (a multi-brand JOY promotion) uses this one.
+  - With "reduce motion" switched on, the finished picture shows straight away, with no animation.
+- **Why:** user's request. Pepsi and Doritos follow the user's examples. Walkers is also crisps, so it gets a different idea (a packet popping open) to stay distinct from Doritos. JOY gets a prize box because JOY is about rewards, and it's the fallback, so a new brand never shows a blank panel.
+- **How AI was used:** Claude wrote a `BrandLoader` component with one inline SVG per brand and CSS keyframes. Flying chips, crisps and confetti share one helper that moves sideways at a steady speed while rising then falling, which draws an arc. Brand colours come from `data/promos.ts`, `data/brands.ts` and the JOY and Doritos brand sheets (Doritos red `#E31722`, orange `#FA7115`, dark `#030303`; Walkers red `#C4000A` and yellow `#FFE600`; JOY blue, purple, sky, green and orange). The cola, foam and crisp colours are only for the drawings and are not brand values.
+- **Files:** new `prototype/src/components/promo/BrandLoader.tsx` and `brand-loader.css`; `prototype/src/pages/Participate.tsx` (uses `BrandLoader`); `prototype/src/pages/pages.css` (old `.loading-shapes` rules removed).
+- **Checked by:** `tsc -b` and `npm run build`. Playwright: all four animations paused at 200, 700, 1100, 1500, 1900 and 2400 ms and screenshotted side by side. One fix came from this: the Walkers packet top came apart from the body during the puff, so the top now sits inside the packet group. The Doritos animation was also checked inside the real loading panel (Doritos & F1 promotion, 1500 ms). Every Pepsi and Walkers promotion has ended, so testers can only reach the Doritos and JOY animations right now.
+- **Decision record:** none.
