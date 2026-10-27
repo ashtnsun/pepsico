@@ -123,7 +123,7 @@ export default function PromoDetail() {
       )}
 
       {ended && others.length > 0 && (
-        <section aria-labelledby="others-title" style={{ padding: '40px 0 48px' }}>
+        <section aria-labelledby="others-title" style={{ padding: '40px 0 48px' }} data-brand="joy">
           <h2 id="others-title" className="section-title">Check out other promotions:</h2>
           {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
         </section>

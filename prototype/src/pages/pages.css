@@ -157,12 +157,12 @@
 .result__prize img { animation: rise-in .6s var(--ease-out) .35s backwards; }
 .result__icon--won { background: #E6F6EC; color: var(--site-success); }
 .result__icon--lost { background: var(--color-surface-subtle); color: var(--color-text-secondary); }
-.result__icon--entered { background: #E8EDFF; color: var(--site-blue); }
+.result__icon--entered { background: color-mix(in srgb, var(--site-ink) 10%, #fff); color: var(--site-ink); }
 .result__card h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
 .result__lead { margin-top: 14px; color: var(--color-text-secondary); line-height: 22px; }
 .result__prize { border-top: 1px solid var(--color-border-default); margin-top: 28px; padding-top: 24px; }
 .result__prize h2 { font-size: var(--font-size-20); font-weight: 700; }
-.result__prize h2 strong { color: var(--site-blue); }
+.result__prize h2 strong { color: var(--site-ink); }
 .result__prize img { width: 240px; margin: 12px auto 0; }
 .result__code { margin-top: 18px; font-size: var(--font-size-14); color: var(--color-text-secondary); }
 .result__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 28px; }

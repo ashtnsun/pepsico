@@ -9,7 +9,7 @@
 }
 .accordion__question { transition: color var(--dur-fast); }
 .accordion__question:hover { color: var(--color-text-hover); }
-.accordion__chevron { color: var(--site-blue); flex: none; transition: transform var(--dur-slow) var(--ease-out); margin-right: 10px; }
+.accordion__chevron { color: var(--site-ink); flex: none; transition: transform var(--dur-slow) var(--ease-out); margin-right: 10px; }
 .accordion__chevron.is-open { transform: rotate(180deg); }
 .accordion__panel {
   display: grid; grid-template-rows: 0fr; visibility: hidden;

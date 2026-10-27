@@ -49,7 +49,7 @@
 .cv-ticket__tear { position: relative; height: calc(var(--notch) * 2); background: radial-gradient(circle at 0 50%, transparent var(--notch), #fff calc(var(--notch) + .5px)) left / 51% 100% no-repeat, radial-gradient(circle at 100% 50%, transparent var(--notch), #fff calc(var(--notch) + .5px)) right / 51% 100% no-repeat; }
 .cv-ticket__tear::after { content: ''; position: absolute; left: calc(var(--notch) * 2); right: calc(var(--notch) * 2); top: 50%; border-top: 2px dashed #D0D0D8; }
 .cv-ticket__stub { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 20px 20px; background: #fff; border-radius: 0 0 var(--radius-card) var(--radius-card); }
-.cv-ticket__days { display: flex; align-items: center; gap: 8px; color: var(--site-blue); }
+.cv-ticket__days { display: flex; align-items: center; gap: 8px; color: var(--site-ink); }
 .cv-ticket__days b { font-size: 40px; line-height: 1; font-weight: 800; letter-spacing: -1px; }
 .cv-ticket__days span { font-size: 12px; line-height: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 .cv-ticket__days.is-urgent { color: #A34A00; }
@@ -67,7 +67,7 @@
 .cv-timebar__title { font-size: 26px; line-height: 1.05; font-weight: 800; text-shadow: 0 2px 12px rgba(0, 0, 0, .25); }
 .cv-timebar__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .cv-timebar__line { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 20px; }
-.cv-timebar__line svg { flex: none; color: var(--site-blue); margin-top: 1px; }
+.cv-timebar__line svg { flex: none; color: var(--site-ink); margin-top: 1px; }
 .cv-timebar__line:first-child { font-weight: 700; flex: 1; }
 .cv-timebar__line:first-child strong { font-weight: 800; }
 .cv-timebar__time { margin: 4px 0 6px; }

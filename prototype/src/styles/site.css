@@ -7,6 +7,7 @@
 :root {
   --site-blue: var(--color-action-primary);            /* #1443FF, nav, buttons, footer */
   --site-blue-dark: var(--color-surface-inverse);      /* #0E38DF, breadcrumb bar, newsletter band */
+  --site-ink: var(--color-text-link);                  /* #1443FF, blue text, outlines and chevrons on white (change 25) */
   --site-blue-hover: #0023AD;                          /* .btn-primary:hover on the live site */
   --site-blue-disabled: #ADBDFF;                       /* .btn-primary:disabled */
   --site-white-hover: #F2F2F2;                         /* white button hover */
@@ -107,19 +108,19 @@ h1, h2, h3, h4, p { margin: 0; }
 .btn--block { width: 100%; }
 .btn--primary { background: var(--site-blue); border-color: var(--site-blue); color: var(--color-text-on-action); }
 .btn--primary:hover { background: var(--site-blue-hover); border-color: var(--site-blue-hover); }
-.btn--white { background: var(--color-surface-default); border-color: var(--color-surface-default); color: var(--site-blue); }
+.btn--white { background: var(--color-surface-default); border-color: var(--color-surface-default); color: var(--site-ink); }
 .btn--white:hover { background: var(--site-white-hover); border-color: var(--site-white-hover); }
 .btn--yellow { background: var(--site-yellow); border-color: var(--site-yellow); color: var(--site-blue-dark); }
 .btn--yellow:hover { background: var(--site-yellow-hover); border-color: var(--site-yellow-hover); }
-.btn--outline { background: transparent; border-color: var(--site-blue); color: var(--site-blue); }
+.btn--outline { background: transparent; border-color: var(--site-ink); color: var(--site-ink); }
 .btn--outline:hover { background: var(--site-blue); color: var(--color-text-on-action); }
 .btn--outline-white { background: transparent; border-color: var(--color-surface-default); color: var(--color-text-on-inverse); }
-.btn--outline-white:hover { background: var(--color-surface-default); color: var(--site-blue); }
+.btn--outline-white:hover { background: var(--color-surface-default); color: var(--site-ink); }
 .btn--promo { background: var(--promo-cta-bg, var(--color-surface-default)); border-color: var(--promo-cta-bg, var(--color-surface-default)); color: var(--promo-cta-text, var(--site-blue)); }
 .btn--promo:hover { filter: brightness(0.94); }
 .btn:disabled, .btn[aria-disabled="true"] { background: var(--site-blue-disabled); border-color: var(--site-blue-disabled); color: var(--color-text-on-action); cursor: not-allowed; filter: none; }
 
-.link { color: var(--site-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; cursor: pointer; transition: color var(--dur-fast), text-decoration-color var(--dur-base); }
+.link { color: var(--site-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; cursor: pointer; transition: color var(--dur-fast), text-decoration-color var(--dur-base); }
 /* Underlines that appear on hover fade in rather than switching on */
 .link--caps { text-transform: uppercase; text-decoration-color: transparent; }
 .link--caps:hover { text-decoration-color: currentColor; }
@@ -135,7 +136,7 @@ h1, h2, h3, h4, p { margin: 0; }
   transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
 .field__input::placeholder { color: #8C8C8C; }
-.field__input:focus { outline: none; border-color: var(--site-blue); box-shadow: 0 0 0 1px var(--site-blue); }
+.field__input:focus { outline: none; border-color: var(--site-ink); box-shadow: 0 0 0 1px var(--site-ink); }
 .field__input[aria-invalid="true"] { border-color: var(--color-feedback-error); box-shadow: 0 0 0 1px var(--color-feedback-error); }
 .field__input:disabled { background: #E9ECEF; color: var(--color-text-secondary); }
 select.field__input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%231443FF' stroke-width='2.5' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 20px center; padding-right: 48px; }
@@ -145,11 +146,11 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
 
 .check { display: flex; gap: var(--spacing-12); align-items: flex-start; margin-bottom: var(--spacing-16); cursor: pointer; line-height: 21px; }
-.check input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--site-blue); cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--site-ink); cursor: pointer; }
 .check--nested { margin-left: 30px; }
 .radio-row { display: flex; gap: var(--spacing-32); flex-wrap: wrap; margin-bottom: var(--spacing-16); }
 .radio-row label { display: flex; gap: var(--spacing-8); align-items: center; cursor: pointer; }
-.radio-row input { accent-color: var(--site-blue); width: 16px; height: 16px; margin: 0; }
+.radio-row input { accent-color: var(--site-ink); width: 16px; height: 16px; margin: 0; }
 
 /* ---------- Alerts ---------- */
 .alert { display: flex; gap: var(--spacing-12); align-items: flex-start; padding: var(--spacing-16); border-radius: var(--radius-container); background: var(--color-surface-subtle); line-height: 21px; }
@@ -172,7 +173,7 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 /* ---------- Carousel dots (live site: grey 8px dots, active 60px blue pill) ---------- */
 .dots { display: flex; justify-content: center; align-items: center; gap: 10px; padding: var(--spacing-24) 0; }
 .dots button { width: 8px; height: 8px; border-radius: 55px; border: 0; padding: 0; background: var(--site-dot); cursor: pointer; transition: width var(--dur-slow) var(--ease-out), background-color var(--dur-base); }
-.dots button[aria-current="true"] { width: 60px; background: var(--site-blue); }
+.dots button[aria-current="true"] { width: 60px; background: var(--site-ink); }
 
 .round-arrow {
   display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%;
@@ -181,7 +182,7 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 }
 .round-arrow:active:not(:disabled) { transform: scale(.92); }
 .round-arrow:hover { background: var(--site-blue-hover); }
-.round-arrow--white { background: #fff; color: var(--site-blue); width: 50px; height: 50px; }
+.round-arrow--white { background: #fff; color: var(--site-ink); width: 50px; height: 50px; }
 .round-arrow--white:hover { background: var(--site-white-hover); }
 .round-arrow:disabled { opacity: .35; cursor: default; }
 
@@ -202,6 +203,35 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
 }
 .toast.is-leaving { opacity: 0; transform: translate(-50%, 12px); }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 16px); } }
+
+/* ---------- Brand theme for page content (change 25) ----------
+  On promotion and brand pages with a brand theme picked in the config menu, <main> carries data-page-theme and
+  either data-brand (Doritos, Rockstar: their Theme mode in tokens.css) or DERIVED --color-* values inline
+  (state/chrome.ts). The site values above are re-pointed at those tokens so every button, link, menu, FAQ box and
+  focus ring on the page follows the brand. Other brands' promotions on the page keep JOY (data-brand="joy"). */
+.page-main[data-page-theme] {
+  --site-blue: var(--color-action-primary);
+  --site-blue-hover: var(--color-action-primary-hover);
+  --site-blue-dark: var(--color-text-link);
+  --site-blue-disabled: color-mix(in srgb, var(--color-action-primary) 35%, #fff);
+  --site-ink: var(--color-text-link);
+}
+/* Same as :root, so the JOY tokens tokens.css restores on [data-brand="joy"] reach the site values again */
+.page-main[data-page-theme] [data-brand="joy"] {
+  --site-blue: var(--color-action-primary);
+  --site-blue-hover: #0023AD;
+  --site-blue-dark: var(--color-surface-inverse);
+  --site-blue-disabled: #ADBDFF;
+  --site-ink: var(--color-text-link);
+}
+/* Button on a brand band: the theme's "on dark background" button (Doritos: black pill with a white border).
+   btn--own keeps a brand's own live-site colours (Walkers yellow). */
+.page-main[data-page-theme] .btn--promo:not(.btn--own):not([data-brand="joy"] *) {
+  background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse);
+}
+/* Design system hover signal: an underline (Doritos and Rockstar buttons don't change colour on hover) */
+.page-main[data-page-theme] .btn:hover:not(:disabled):not([aria-disabled="true"]):not([data-brand="joy"] *) { text-decoration: underline; text-underline-offset: 3px; }
+.page-main[data-page-theme] .link:hover:not([data-brand="joy"] *) { color: var(--color-text-hover); }
 
 /* Reduced motion: keep every state change, drop the movement (covers all files) */
 @media (prefers-reduced-motion: reduce) {

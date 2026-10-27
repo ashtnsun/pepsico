@@ -67,9 +67,9 @@ export function ConfigPanel() {
         <button type="button" onClick={() => navigate('/promotions')}>Promotions</button>
       </div>
 
-      <h3>Navbar and footer theme</h3>
-      <p className="mod__small">On promotion and brand pages.</p>
-      <div className="mod__list" role="radiogroup" aria-label="Navbar and footer theme">
+      <h3>Brand theme</h3>
+      <p className="mod__small">On promotion and brand pages. A, B and C also put buttons, links and menus on the page in the brand theme.</p>
+      <div className="mod__list" role="radiogroup" aria-label="Brand theme">
         {CHROME_VARIANTS.map((v) => (
           <label key={v.id} className={design.chrome === v.id ? 'is-on' : ''}>
             <input type="radio" name="cfg-chrome" checked={design.chrome === v.id} onChange={() => design.set({ chrome: v.id })} />

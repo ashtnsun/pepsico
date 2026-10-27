@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { brands, getBrand } from '../data/brands'
 import { promos } from '../data/promos'
@@ -57,7 +58,8 @@ export function BrandPage() {
       <section className="brand-band" style={{ background: brand.band, color: brand.bandText }}>
         {brand.deco && <><img className="brand-band__deco brand-band__deco--l" src={brand.deco} alt="" /><img className="brand-band__deco brand-band__deco--r" src={brand.deco} alt="" /></>}
         <h1>{brand.welcome}</h1>
-        <a href={brand.website} target="_blank" rel="noreferrer" className="btn btn--wide" style={{ background: brand.bandCta.bg, borderColor: brand.bandCta.bg, color: brand.bandCta.text }}>
+        {/* With a brand theme on, a JOY-blue button here follows the theme; a brand's own colours (Walkers yellow) stay */}
+        <a href={brand.website} target="_blank" rel="noreferrer" className={`btn btn--wide btn--promo ${brand.bandCta.text === '#0E38DF' ? '' : 'btn--own'}`} style={{ '--promo-cta-bg': brand.bandCta.bg, '--promo-cta-text': brand.bandCta.text } as CSSProperties}>
           Visit brand website<span className="visually-hidden"> (opens in a new tab)</span>
         </a>
         {brand.tagline && <p className="brand-band__tagline">{brand.tagline}</p>}
@@ -93,7 +95,8 @@ export function BrandPage() {
         <a href={brand.website} target="_blank" rel="noreferrer" className="btn btn--primary btn--wide">Visit brand website<span className="visually-hidden"> (opens in a new tab)</span></a>
       </section>
 
-      {others.length > 0 && <PromoCarousel id="brand-others-title" title="Promos from other brands" promos={others} />}
+      {/* Other brands' promotions keep the JOY look, even when the page has a brand theme */}
+      {others.length > 0 && <div data-brand="joy"><PromoCarousel id="brand-others-title" title="Promos from other brands" promos={others} /></div>}
     </>
   )
 }

@@ -586,3 +586,28 @@ Add one entry per prompt, newest at the bottom. Template:
   - At 390 px with reduce motion on, the page switches instantly, lands at the top, and the breadcrumb is at 75 px.
   - No console errors or warnings.
 - **Decision record:** none.
+
+### Change 25 — Brand theme for the page content on promotion and brand pages — 2026-10-27
+
+- **Prompt (verbatim):** On the promos and brands pages, the individual company brands needs to apply fully the theme of the brand for the elements on the page.
+- **What changed:** change 21 only coloured the navbar, breadcrumb, newsletter and footer. Now the content of promotion pages (including participate, result and promotion T&Cs) and brand pages takes the brand theme too. Before, buttons, links and menus there stayed JOY blue. It applies with config menu (C) options A, B and C. "JOY blue" still shows the live site.
+  - **What follows the brand:** filled buttons (section menu "Participate here", campaign banner, "See all active promotions", "Visit brand website", form submit), outline buttons ("Go to all FAQs"), text links (contact and T&C links), the section menu links, underline and border, FAQ chevrons and open-box border, carousel dots and arrows, form focus borders, checkboxes, keyboard focus rings and the result-screen icon. The white Register and Subscribe buttons on the brand-coloured navbar and newsletter now use the brand's text colour.
+  - **Doritos and Rockstar** use their Theme modes from the design system (`tokens.css`, from the brand sheets): black (`#030303`) buttons and links. On the red hero band and on the campaign banner, the button is a black pill with a white border. Hover and focus are Doritos red, or violet on Rockstar. As the sheets specify, these buttons don't change colour on hover; an underline shows the hover.
+  - **Other brands (Pepsi, Walkers, 7UP, Lipton, Quaker, Popworks): DERIVED, needs approval.** Buttons are filled in the brand colour, with white or black text (whichever passes 4.5:1). Hover is 22% darker, or 12% darker on light brands. Text, links, outlines and focus rings use the brand colour, darkened in 5% steps until it passes 4.5:1 on white. 7UP green becomes `#00893B`. If that takes more than 40% black, they're black instead (Lipton yellow would turn olive). On a brand band, the button is white with that text colour.
+  - **Kept as they were:** Walkers' own yellow "Visit brand website" button (from the live site). The other brands' promotions on a page ("Promos from other brands" carousel, "Check out other promotions") keep the JOY look, because they aren't this brand's. Multi-brand JOY promotions (Avengers) stay JOY.
+  - The config menu section "Navbar and footer theme" is renamed "Brand theme" and says that A–C also theme the page.
+- **Why:** user's request. It goes further than change 21 and away from D36 (buttons and links JOY blue on every page). Claude's choices: Doritos and Rockstar use the sourced Theme modes rather than a colour worked out from the brand colour. Text colours are darkened so links stay readable on white. Other brands' promotions keep JOY so the page doesn't suggest they belong to this brand.
+- **How AI was used:** Claude traced every JOY-blue value used inside page content. Most come from `--site-blue` in `site.css`. It split that into `--site-blue` (button fill) and a new `--site-ink` (text, outlines and chevrons on white), so light brands can fill buttons in yellow or green but never colour text with them. `state/chrome.ts` now also returns a page theme for single-brand pages: `data-brand` for Doritos and Rockstar, or derived `--color-*` values. `App.tsx` puts that theme on `<main>`. One block in `site.css` points the site values at those tokens, and `data-brand="joy"` sends the other-brand sections back to JOY.
+- **Files:** `prototype/src/state/chrome.ts`, `App.tsx`, `styles/site.css`, `components/layout/layout.css`, `components/promo/promo.css`, `card-variants.css`, `components/ui/ui.css`, `pages/pages.css`, `pages/Brands.tsx`, `pages/PromoDetail.tsx`, `state/design.tsx`, `moderator/ConfigPanel.tsx`.
+- **Checked by:** `tsc -b` and `vite build`. Playwright at 1440 px with the default option A, reading computed colours and taking full-page screenshots:
+  - **Doritos & F1:** buttons, links, section menu and FAQ in `#030303`. Hero and banner buttons are black with a white border. A first screenshot showed the banner button black on the black banner art; it was fixed and checked again.
+  - **7UP:** green buttons with black text; links and outlines `#00893B`.
+  - **Lipton:** yellow buttons with black text; black links.
+  - **Walkers:** red; band button stays yellow.
+  - **Rockstar:** black.
+  - **Pepsi EA:** black; white hero button.
+  - **Avengers:** no page theme; still JOY blue and yellow.
+  - The other-brands carousel stays JOY on all of them.
+  - Walkers at 390 px. No sideways scroll on any page.
+  - Not screenshotted: the participate and result pages while logged in, and options B and C. They use the same tokens.
+- **Decision record:** none yet. Together with change 21, keeping this would replace D36.

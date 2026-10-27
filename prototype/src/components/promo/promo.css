@@ -118,13 +118,13 @@
 .section-nav {
   position: sticky; top: var(--site-nav-height); z-index: 30; background: #fff;
   display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
-  padding: 31px 20px; border-bottom: 1px solid var(--site-blue);
+  padding: 31px 20px; border-bottom: 1px solid var(--site-ink);
   transition: padding var(--dur-base) var(--ease-out), box-shadow var(--dur-base);
 }
 .section-nav.is-stuck { padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
 .section-nav__links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-.section-nav__links a { color: var(--site-blue); font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
-.section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: var(--site-blue); }
+.section-nav__links a { color: var(--site-ink); font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
+.section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: var(--site-ink); }
 .section-nav__cta { margin-left: 24px; animation: cta-in var(--dur-slow) var(--ease-out); }
 @keyframes cta-in { from { opacity: 0; transform: translateX(12px); } }
 @media (max-width: 767px) {
@@ -157,6 +157,10 @@
 .cta-banner { position: relative; margin: 40px 25px; border-radius: var(--radius-card); overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .cta-banner img { width: 100%; height: auto; }
 .cta-banner .btn { position: absolute; min-width: min(308px, 60%); }
+/* Change 25: with a brand theme the banner art is a dark background, so the button is the theme's "on dark" one */
+.page-main[data-page-theme] .cta-banner .btn--primary {
+  background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse);
+}
 @media (max-width: 767px) { .cta-banner { margin: 24px 16px; } .cta-banner .btn { bottom: 16px; } }
 
 /* ---------- Prize band ---------- */
@@ -192,8 +196,8 @@
 .promo-faq__text { margin: 14px 0 24px; color: var(--color-text-secondary); line-height: 22px; }
 .promo-faq .accordion { max-width: none; margin: 0; display: flex; flex-direction: column; gap: 12px; }
 .promo-faq .accordion__item { border: 1px solid var(--color-border-default); border-radius: 16px; padding: 0 24px; background: #fff; transition: border-color var(--dur-base), box-shadow var(--dur-slow); }
-.promo-faq .accordion__item:hover { border-color: color-mix(in srgb, var(--site-blue) 35%, var(--color-border-default)); }
-.promo-faq .accordion__item:has([aria-expanded="true"]) { border-color: var(--site-blue); box-shadow: 0 6px 20px rgba(20, 67, 255, .1); }
+.promo-faq .accordion__item:hover { border-color: color-mix(in srgb, var(--site-ink) 35%, var(--color-border-default)); }
+.promo-faq .accordion__item:has([aria-expanded="true"]) { border-color: var(--site-ink); box-shadow: 0 6px 20px color-mix(in srgb, var(--site-ink) 10%, transparent); }
 .promo-faq .accordion__question { padding: 20px 0; font-size: 18px; line-height: 24px; }
 .promo-faq .accordion__chevron { margin-right: 0; }
 .promo-faq .accordion__answer { padding: 0 0 22px; line-height: 23px; }

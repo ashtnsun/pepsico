@@ -182,7 +182,10 @@
 .chrome[data-chrome] .newsletter__error { color: inherit; }
 .chrome[data-chrome] .navbar .btn--outline-white,
 .chrome[data-chrome] .mobile-menu .btn--outline-white { border-color: currentColor; color: inherit; }
-.chrome[data-chrome] .navbar .btn--outline-white:hover { background: #fff; color: var(--site-blue); border-color: #fff; }
+.chrome[data-chrome] .navbar .btn--outline-white:hover { background: #fff; color: var(--chrome-ink, var(--site-blue)); border-color: #fff; }
+/* Change 25: white buttons on brand-coloured bars (Register, Subscribe) use the brand's text colour, not JOY blue */
+.chrome[data-chrome="full"] :is(.navbar, .mobile-menu, .newsletter) .btn--white,
+.chrome[data-chrome="top"] :is(.navbar, .mobile-menu) .btn--white { color: var(--chrome-ink, var(--site-blue)); }
 .chrome[data-chrome] .mobile-menu__link { border-bottom-color: color-mix(in srgb, currentColor 25%, transparent); }
 
 /* Light brands with black text: the white JOY logo turns black so it stays visible */

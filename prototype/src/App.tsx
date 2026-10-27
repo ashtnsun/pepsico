@@ -48,11 +48,20 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
       className="chrome"
       data-chrome={themed ? chrome : undefined}
       data-chrome-light={themed && theme.text === '#000000' ? '' : undefined}
-      style={themed ? { '--chrome-bg': theme.bg, '--chrome-text': theme.text, '--chrome-shade': theme.shade, '--chrome-shade-text': theme.shadeText } as CSSProperties : undefined}
+      style={themed ? { '--chrome-bg': theme.bg, '--chrome-text': theme.text, '--chrome-shade': theme.shade, '--chrome-shade-text': theme.shadeText, '--chrome-ink': theme.page?.ink } as CSSProperties : undefined}
     >
       <a href="#main" className="visually-hidden">Skip to content</a>
       <Navbar />
-      <main id="main" className="page-main"><Outlet /></main>
+      {/* Change 25: the page content takes the brand theme too (buttons, links, menus, focus rings; styles in site.css) */}
+      <main
+        id="main"
+        className="page-main"
+        data-page-theme={themed && theme.page ? '' : undefined}
+        data-brand={themed ? theme.page?.mode : undefined}
+        style={themed ? theme.page?.vars : undefined}
+      >
+        <Outlet />
+      </main>
       {newsletter && <Newsletter />}
       <Footer />
     </div>

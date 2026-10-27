@@ -22,10 +22,11 @@ export const CARD_VARIANTS = [
 ] as const
 
 export const CHROME_VARIANTS = [
-  { id: 'joy', name: 'JOY blue', note: 'Live site: navbar, breadcrumb, newsletter and footer always JOY blue.' },
+  { id: 'joy', name: 'JOY blue', note: 'Live site: navbar, breadcrumb, newsletter, footer, buttons and links always JOY blue.' },
   { id: 'full', name: 'A · Brand colour', note: 'Default. Navbar, breadcrumb, newsletter and footer in the brand colour, brand logo next to JOY.' },
   { id: 'top', name: 'B · Brand top', note: 'Navbar and breadcrumb in the brand colour; newsletter and footer stay JOY.' },
   { id: 'accent', name: 'C · Brand accent', note: 'JOY blue bars with a brand stripe, brand-colour breadcrumb and logo.' },
+  // A, B and C also give the page content (buttons, links, menus, FAQ boxes) the brand theme (change 25)
 ] as const
 
 export type HeroVariant = (typeof HERO_VARIANTS)[number]['id']
