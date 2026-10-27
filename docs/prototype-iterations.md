@@ -709,3 +709,17 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/promo/promo.css`, `prototype/src/components/promo/card-variants.css`.
 - **Checked by:** Playwright at 1440 px, all 6 card designs on Home and Promotions. Hit tests at 15 points per card (every card) all land on the link. Real mouse clicks at the top centre, left middle and bottom right of the first card all open the promotion page.
 - **Decision record:** none.
+
+### Change 32 — Brand logo in the navbar: no white bubble, always visible — 2026-10-27
+
+- **Prompt (verbatim):** on the individal promo/brands pages, the logo of the brand in the main nav bar should not be in a white bubble, it should be slightly larger and no bubble at all
+  - Follow-up during the same change: Make sure the brand logos are visible over their bakcgrounds, some of them you cant see like rockstar's text/logo
+- **What changed:**
+  - **No bubble:** the brand logo next to "JOY ×" sits straight on the brand-colour navbar. The white pill, its padding and its shadow are gone. It still grows slightly on hover.
+  - **Larger:** logo height 36 → 48 px on desktop (max width 120 px), 30 → 38 px under 992 px.
+  - **Visible on dark bars:** Rockstar (black wordmark on a black bar) and Quaker (navy wordmark on a navy bar) disappeared without the white bubble. Each now has a second logo file for the navbar, `logo-rockstar-on-dark.webp` and `logo-quaker-on-dark.webp`, where only the dark wordmark is recoloured white. Rockstar keeps its gold star; Quaker keeps its portrait (only the "QUAKER / EST 1877" part was changed). A new optional `logoOnBand` field on a brand picks this file; other brands keep their normal logo.
+- **Why:** user's request. The Rockstar brand sheet allows only white text on Rockstar black, so a white wordmark follows it. The recoloured files are **DERIVED** from the live-site logos (not official brand assets) and need approval. The real white-logo artwork should replace them if the brands supply it.
+- **How AI was used:** Claude took navbar screenshots of every brand page to find which logos disappeared without the bubble. It then made the white-wordmark versions with a canvas script (dark, grey pixels turn white; coloured pixels and transparency are kept).
+- **Files:** `prototype/src/components/layout/layout.css`, `prototype/src/data/brands.ts`, `prototype/src/state/chrome.ts`, `prototype/public/images/brands/logo-rockstar-on-dark.webp`, `prototype/public/images/brands/logo-quaker-on-dark.webp`.
+- **Checked by:** `tsc -b`. Playwright navbar screenshots at 1440 px of all 8 brand pages (Doritos, Rockstar, Pepsi, Walkers, 7UP, Lipton, Quaker, Popworks) and the Las Vegas (Doritos), Walkers GDK and Pepsi EA promotion pages (Walkers and Pepsi on black). Phone width (390 px): Doritos, 7UP, Rockstar, Quaker. Every logo is readable with no bubble. Rockstar and Popworks still look small, because their image files have a lot of empty space around the logo.
+- **Decision record:** none.

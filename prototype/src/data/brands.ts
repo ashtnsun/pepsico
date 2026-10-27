@@ -7,6 +7,8 @@ export type Brand = {
   slug: string
   name: string
   logo: string
+  /** Change 32: logo for the navbar on the brand colour, when the normal one has dark text that disappears on it. DERIVED: the dark wordmark recoloured white. */
+  logoOnBand?: string
   hero: string
   heroMobile: string
   /** Color of the "Welcome" band under the hero (live site `.branding`). */
@@ -38,7 +40,7 @@ export const brands: Brand[] = [
     ],
   },
   {
-    slug: 'rockstar', name: 'Rockstar', logo: img('brands/logo-rockstar.webp'),
+    slug: 'rockstar', name: 'Rockstar', logo: img('brands/logo-rockstar.webp'), logoOnBand: img('brands/logo-rockstar-on-dark.webp'),
     hero: img('brands/hero-rockstar-desktop.webp'), heroMobile: img('brands/hero-rockstar-mobile.webp'),
     band: '#000000', bandText: '#FFFFFF', bandCta: { bg: '#FFFFFF', text: '#0E38DF' }, deco: img('global/deco-rockstar.svg'),
     welcome: 'Welcome to Rockstar - Energy for the Good Times',
@@ -82,7 +84,7 @@ export const brands: Brand[] = [
     news: [{ title: 'Meet your match', text: 'Take our quiz and find your bestea for life.', image: img('home/lipton-quiz.jpg') }],
   },
   {
-    slug: 'quaker', name: 'Quaker', logo: img('brands/logo-quaker.webp'),
+    slug: 'quaker', name: 'Quaker', logo: img('brands/logo-quaker.webp'), logoOnBand: img('brands/logo-quaker-on-dark.webp'),
     hero: img('brands/hero-quaker-desktop.webp'), heroMobile: img('brands/hero-quaker-mobile.webp'),
     band: '#00273B', bandText: '#FFFFFF', bandCta: { bg: '#FFFFFF', text: '#0E38DF' }, deco: img('global/deco-quaker.svg'),
     welcome: 'Welcome to Quaker on Joy by PepsiCo!',

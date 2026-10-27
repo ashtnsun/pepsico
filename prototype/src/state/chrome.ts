@@ -95,12 +95,12 @@ export function useChromeTheme(): ChromeTheme | null {
   if (promo) {
     const brand = getBrand(promo.brand)
     return {
-      ...colours(promo.theme.bg), logo: brand?.logo, name: brand?.name ?? promo.brandLabel, brandSlug: brand?.slug, deco: promo.theme.deco ?? brand?.deco,
+      ...colours(promo.theme.bg), logo: brand?.logoOnBand ?? brand?.logo, name: brand?.name ?? promo.brandLabel, brandSlug: brand?.slug, deco: promo.theme.deco ?? brand?.deco,
       page: brand ? pageTheme(brand.slug, promo.theme.bg) : undefined,
     }
   }
   const brandSlug = pathname.match(/^\/brands\/([^/]+)/)?.[1]
   const brand = brands.find((b) => b.slug === brandSlug)
-  if (brand) return { ...colours(brand.band), logo: brand.logo, name: brand.name, brandSlug: brand.slug, deco: brand.deco, page: pageTheme(brand.slug, brand.band) }
+  if (brand) return { ...colours(brand.band), logo: brand.logoOnBand ?? brand.logo, name: brand.name, brandSlug: brand.slug, deco: brand.deco, page: pageTheme(brand.slug, brand.band) }
   return null
 }

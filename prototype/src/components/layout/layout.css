@@ -164,16 +164,13 @@
 .navbar__cobrand { display: none; }
 .chrome[data-chrome] .navbar__cobrand { display: flex; align-items: center; gap: 12px; margin-left: 14px; color: inherit; text-decoration: none; }
 .navbar__cobrand-x { font-size: 22px; font-weight: 300; opacity: .8; }
-.navbar__cobrand-chip {
-  display: flex; align-items: center; justify-content: center; height: 46px; min-width: 64px; padding: 5px 14px;
-  border-radius: var(--radius-full); background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, .15); transition: transform var(--dur-base) var(--ease-out);
-}
-.navbar__cobrand-chip img { height: 36px; width: auto; max-width: 96px; object-fit: contain; }
+/* Change 32: logo sits straight on the bar (no white bubble), a little larger */
+.navbar__cobrand-chip { display: flex; align-items: center; transition: transform var(--dur-base) var(--ease-out); }
+.navbar__cobrand-chip img { height: 48px; width: auto; max-width: 120px; object-fit: contain; }
 .navbar__cobrand:hover .navbar__cobrand-chip { transform: scale(1.05); }
 @media (max-width: 991px) {
   .chrome[data-chrome] .navbar__cobrand { gap: 8px; margin-left: 10px; }
-  .navbar__cobrand-chip { height: 40px; padding: 4px 12px; }
-  .navbar__cobrand-chip img { height: 30px; }
+  .navbar__cobrand-chip img { height: 38px; max-width: 96px; }
 }
 
 /* Text that was hard-coded white follows the theme's text colour */
