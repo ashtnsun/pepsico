@@ -402,3 +402,16 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** new `prototype/src/state/design.tsx`, `prototype/src/moderator/ConfigPanel.tsx`, `prototype/src/components/promo/HeroVariants.tsx`, `hero-variants.css`, `CardVariants.tsx`, `card-variants.css`; changed `prototype/src/main.tsx`, `App.tsx`, `components/promo/ProgressTracker.tsx`, `components/promo/PromoCard.tsx`, `moderator/moderator.css`.
 - **Checked by:** `tsc -b`. Playwright at 1440 × 900: each hero is 600–713 px tall; each card variant on the home page with 3 entries (2 suggested, 3 ended entries including a win). At 390 × 844: every hero and every card on Promotions fits with no sideways scroll. Menu: C opens it, C closes it, Ctrl + C doesn't; picking "C · Big track" and "B · Ticket" then "4 entries" showed the track hero in its unlocked state and 5 ticket cards.
 - **Decision record:** none yet. The team picks a hero and a card after comparing them; the colours used are the JOY brand sheet colours, but the new combinations (sky, green and purple tiles, the sunburst) are design choices to review, not brand rules.
+
+### Change 18 — Big track hero and Poster cards are the default; no button on Big track — 2026-10-26
+
+- **Prompt (verbatim):** set the big track and poster to be default, on the big track hero, remove the find promo button
+- **What changed:**
+  - The logged-in home now shows the **C · Big track** hero, and the promotion cards on the home and Promotions pages are **A · Poster**, unless someone picks something else in the design config menu (C). "Original" is still in the menu for both, now described as "Previous …", and the two defaults are marked "Default." in their notes.
+  - The yellow "Find a promotion" button is gone from the Big track hero. It now ends with the line "Every 4 entries earns a bonus entry into the JOY monthly prize draw." The hero stays 600 px tall on desktop. The other four hero variants keep their button.
+  - The saved menu choice moved to a new browser storage key (`joy-prototype-design-v2`). Every browser that opened the prototype after change 17 had already saved "Original" for both, so without the new key those browsers would have kept showing the old design. Choices made in the menu before this change are reset once.
+- **Why:** user's request. Claude's addition: the new storage key, so the new defaults actually show up on machines that already ran the prototype.
+- **How AI was used:** Claude changed the defaults and storage key in `design.tsx`, removed the button and its now-unused footer styles from the Big track hero, and checked the home page with Playwright.
+- **Files:** `prototype/src/state/design.tsx`, `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** `tsc -b`. Playwright with the saved choice cleared and the test user at 3 entries: at 1440 × 900 the home shows the Big track hero (600 px tall, no buttons in it) and 5 Poster cards; at 390 × 844 the hero fits with no sideways scroll.
+- **Decision record:** none.

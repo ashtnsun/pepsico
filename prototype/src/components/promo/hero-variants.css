@@ -121,8 +121,6 @@
 .hv-track__marks li.is-gift.is-done .hv-track__dot { background: var(--site-yellow); color: var(--hv-navy); animation: hv-pulse 1.6s ease-in-out infinite; }
 .hv-track__name { position: absolute; top: calc(100% + 10px); white-space: nowrap; font-size: var(--font-size-14); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: .85; }
 .hv-track__marks li:not(.is-gift) .hv-track__name { top: calc(100% + 26px); }
-.hv-track__foot { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.hv-track__foot .btn { margin-top: 0; }
 @media (max-width: 767px) {
   .hv-track__headline { font-size: 40px; letter-spacing: -1px; }
   .hv-track__bar { margin: 72px 12px 64px 0; }

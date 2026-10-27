@@ -145,10 +145,7 @@ export function HeroTrack({ name, entries }: HeroProps) {
             })}
           </ol>
         </Bar>
-        <div className="hv-track__foot">
-          <p className="hv__small">Every {REWARD_EVERY} entries earns {REWARD_NAME}.</p>
-          <Cta />
-        </div>
+        <p className="hv__small">Every {REWARD_EVERY} entries earns {REWARD_NAME}.</p>
       </div>
     </section>
   )
