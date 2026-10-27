@@ -1,0 +1,394 @@
+[
+  {
+    "dir": "desktop-1440",
+    "file": "01-home-logged-out",
+    "url": "#/",
+    "h": 4044,
+    "title": "JOY by PepsiCo"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "02-home-logged-in",
+    "url": "#/",
+    "h": 2118,
+    "title": "Hi Sam,"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "03-promotions",
+    "url": "#/promotions",
+    "h": 2616,
+    "title": "Promotions"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "04-promo-avengers-active",
+    "url": "#/promotions/avengers-doomsday",
+    "h": 3911,
+    "title": "ASSEMBLE YOUR SNACKS"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "05-promo-doritos-wrap-active",
+    "url": "#/promotions/las-vegas-wrap",
+    "h": 3997,
+    "title": "Doritos & F1®"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "06-promo-las-vegas-ended",
+    "url": "#/promotions/las-vegas",
+    "h": 3990,
+    "title": "The Promotion Has Ended"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "07-promo-terms",
+    "url": "#/promotions/avengers-doomsday/terms",
+    "h": 1056,
+    "title": "ASSEMBLE YOUR SNACKS: terms and conditions"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "08-participate-logged-out",
+    "url": "#/login",
+    "h": 1119,
+    "title": "Log In"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "09-participate-logged-in",
+    "url": "#/promotions/avengers-doomsday/participate",
+    "h": 1103,
+    "title": "Enter your code"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "10-participate-loading",
+    "url": "#/promotions/avengers-doomsday/participate",
+    "h": 1103,
+    "title": "Calculating your instant results…"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "11-result-win",
+    "url": "#/promotions/avengers-doomsday/result/win",
+    "h": 1268,
+    "title": "Congratulations!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "12-result-lose",
+    "url": "#/promotions/avengers-doomsday/result/lose",
+    "h": 1042,
+    "title": "Not this time"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "13-result-draw-entry",
+    "url": "#/promotions/las-vegas-wrap/result/draw",
+    "h": 1038,
+    "title": "You’re in the draw!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "14-brands",
+    "url": "#/brands",
+    "h": 1307,
+    "title": "Our brands"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "15-brand-doritos",
+    "url": "#/brands/doritos",
+    "h": 3803,
+    "title": "Welcome to Doritos on Joy by PepsiCo!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "16-brand-rockstar",
+    "url": "#/brands/rockstar",
+    "h": 3049,
+    "title": "Welcome to Rockstar - Energy for the Good Times"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "17-brand-pepsi",
+    "url": "#/brands/pepsi",
+    "h": 4331,
+    "title": "Welcome to Pepsi on Joy by PepsiCo!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "18-faq",
+    "url": "#/faq",
+    "h": 2709,
+    "title": "Frequently asked questions"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "19-contact",
+    "url": "#/contact",
+    "h": 1199,
+    "title": "Contact us"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "20-terms",
+    "url": "#/terms",
+    "h": 1061,
+    "title": "Terms and Conditions"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "21-privacy",
+    "url": "#/privacy",
+    "h": 1038,
+    "title": "Privacy policy"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "22-login",
+    "url": "#/login",
+    "h": 1037,
+    "title": "Log In"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "23-login-check-email",
+    "url": "#/login/check-email",
+    "h": 1037,
+    "title": "Check your inbox"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "24-register",
+    "url": "#/register",
+    "h": 1860,
+    "title": "Register here"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "25-onboarding",
+    "url": "#/onboarding",
+    "h": 1107,
+    "title": "Almost there, Sam!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "26-profile",
+    "url": "#/profile",
+    "h": 1352,
+    "title": "Hello, Sam!"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "27-change-country",
+    "url": "#/change-country",
+    "h": 900,
+    "title": "We want to give you content designed for you"
+  },
+  {
+    "dir": "desktop-1440",
+    "file": "28-not-found",
+    "url": "#/this-page-does-not-exist",
+    "h": 911,
+    "title": "Page not found"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "01-home-logged-out",
+    "url": "#/",
+    "h": 5603,
+    "title": "JOY by PepsiCo"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "02-home-logged-in",
+    "url": "#/",
+    "h": 3960,
+    "title": "Hi Sam,"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "03-promotions",
+    "url": "#/promotions",
+    "h": 4979,
+    "title": "Promotions"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "04-promo-avengers-active",
+    "url": "#/promotions/avengers-doomsday",
+    "h": 4910,
+    "title": "ASSEMBLE YOUR SNACKS"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "05-promo-doritos-wrap-active",
+    "url": "#/promotions/las-vegas-wrap",
+    "h": 5052,
+    "title": "Doritos & F1®"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "06-promo-las-vegas-ended",
+    "url": "#/promotions/las-vegas",
+    "h": 5280,
+    "title": "The Promotion Has Ended"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "07-promo-terms",
+    "url": "#/promotions/avengers-doomsday/terms",
+    "h": 1757,
+    "title": "ASSEMBLE YOUR SNACKS: terms and conditions"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "08-participate-logged-out",
+    "url": "#/login",
+    "h": 1220,
+    "title": "Log In"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "09-participate-logged-in",
+    "url": "#/promotions/avengers-doomsday/participate",
+    "h": 1287,
+    "title": "Enter your code"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "10-participate-loading",
+    "url": "#/promotions/avengers-doomsday/participate",
+    "h": 1283,
+    "title": "Calculating your instant results…"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "11-result-win",
+    "url": "#/promotions/avengers-doomsday/result/win",
+    "h": 1589,
+    "title": "Congratulations!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "12-result-lose",
+    "url": "#/promotions/avengers-doomsday/result/lose",
+    "h": 1341,
+    "title": "Not this time"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "13-result-draw-entry",
+    "url": "#/promotions/las-vegas-wrap/result/draw",
+    "h": 1289,
+    "title": "You’re in the draw!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "14-brands",
+    "url": "#/brands",
+    "h": 1862,
+    "title": "Our brands"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "15-brand-doritos",
+    "url": "#/brands/doritos",
+    "h": 4204,
+    "title": "Welcome to Doritos on Joy by PepsiCo!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "16-brand-rockstar",
+    "url": "#/brands/rockstar",
+    "h": 3499,
+    "title": "Welcome to Rockstar - Energy for the Good Times"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "17-brand-pepsi",
+    "url": "#/brands/pepsi",
+    "h": 5198,
+    "title": "Welcome to Pepsi on Joy by PepsiCo!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "18-faq",
+    "url": "#/faq",
+    "h": 3210,
+    "title": "Frequently asked questions"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "19-contact",
+    "url": "#/contact",
+    "h": 1610,
+    "title": "Contact us"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "20-terms",
+    "url": "#/terms",
+    "h": 1454,
+    "title": "Terms and Conditions"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "21-privacy",
+    "url": "#/privacy",
+    "h": 1477,
+    "title": "Privacy policy"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "22-login",
+    "url": "#/login",
+    "h": 1101,
+    "title": "Log In"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "23-login-check-email",
+    "url": "#/login/check-email",
+    "h": 1058,
+    "title": "Check your inbox"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "24-register",
+    "url": "#/register",
+    "h": 2365,
+    "title": "Register here"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "25-onboarding",
+    "url": "#/onboarding",
+    "h": 1414,
+    "title": "Almost there, Sam!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "26-profile",
+    "url": "#/profile",
+    "h": 1990,
+    "title": "Hello, Sam!"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "27-change-country",
+    "url": "#/change-country",
+    "h": 1667,
+    "title": "We want to give you content designed for you"
+  },
+  {
+    "dir": "mobile-390",
+    "file": "28-not-found",
+    "url": "#/this-page-does-not-exist",
+    "h": 1202,
+    "title": "Page not found"
+  }
+]

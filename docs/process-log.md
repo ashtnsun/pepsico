@@ -897,3 +897,29 @@ you moved it slightly too far down, move it back up slightly
 
 ### Open questions / next steps
 - None.
+
+---
+## Session 21 — Pre-visual exploration: screenshots and page inventory — 2026-10-26
+
+### Prompt (verbatim)
+document/screenshot all pages of the current dev site. This is pre-visual exploration.
+
+### What I did
+- Used the dev server already running on `localhost:5173` (code at commit `08834c2`, no code changes).
+- Took full-page screenshots of 28 pages and states at 1440 px and 390 px with a Playwright script (56 files). Each page opened in a fresh browser with its own seeded test data (logged out; test user Sam Taylor with 3 past entries; win / lose / draw entries for the result pages; a new Google user for onboarding). Same 27 pages as save state 1 plus the "Calculating your instant results…" loading screen.
+- Retook the loading screen once: the first shot caught the navbar mid-animation after the lazy-image scroll pass.
+- Read the page structure (sections and headings) from the DOM and checked sample screenshots, then wrote `docs/pre-visual-exploration/README.md`: how the shots were taken, the shared navbar / breadcrumb / newsletter / footer, a table of every page and what's on it, and visual inconsistencies noticed while capturing.
+
+### Changes
+- Repo: `docs/pre-visual-exploration/README.md` (new), `docs/pre-visual-exploration/screenshots/desktop-1440/` and `mobile-390/` (28 PNGs each), `docs/pre-visual-exploration/screenshots/capture-log.json`, `docs/prototype-iterations.md`, `docs/process-log.md`.
+- Figma: none.
+
+### Decisions
+- Stored as its own folder (`docs/pre-visual-exploration/`), not as save state 2, because the user didn't call it a save state.
+
+### Verification
+- Capture log: every shot ended on the expected URL and main heading (the logged-out participate shot shows Log in, as designed).
+- Opened desktop shots of logged-out home, logged-in home, Avengers promotion, participate form, loading, win result and profile, and the mobile Promotions page.
+
+### Open questions / next steps
+- If this should count as save state 2, the folder can be moved to `docs/save-states/save-state-2/` with a summary.

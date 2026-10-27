@@ -354,3 +354,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Result.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc -b`. Playwright at 1440 × 900 on a "Not this time" result for Avengers Doomsday: the result card shows as before, no "Try another promotion" text or card grid, and the footer follows the card's grey section.
 - **Decision record:** none.
+
+### Capture — Pre-visual exploration screenshots (no code change) — 2026-10-26
+
+- **Prompt (verbatim):** document/screenshot all pages of the current dev site. This is pre-visual exploration.
+- **What changed:** no prototype code changed. Full-page screenshots of every page (28 pages and states) at 1440 and 390 px, and a page inventory, are in `docs/pre-visual-exploration/`. It is the "before" record for the visual exploration, at commit `08834c2` (after change 15).
+- **Why:** user's request, so the visual exploration has a documented starting point.
+- **How AI was used:** Claude wrote a Playwright script that opens each page with its own test data and takes full-page shots, read each page's sections from the DOM, checked the screenshots, and wrote the inventory, including visual inconsistencies it noticed (two promotion styles, mixed heading styles, several button styles).
+- **Files:** `docs/pre-visual-exploration/README.md`, `docs/pre-visual-exploration/screenshots/`.
+- **Checked by:** capture log of final URL and heading for every shot; sample screenshots opened and checked.
+- **Decision record:** none.
