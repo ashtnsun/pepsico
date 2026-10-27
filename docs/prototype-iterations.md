@@ -853,3 +853,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/promo/card-variants.css`.
 - **Checked by:** Playwright on the Promotions page (1440 and 390 px) and the logged-in home page (1440 px): box width equals the card body's content width (303 of 347 px; 22 px padding each side), heights 40 px for one line and 60 px for two, background `rgba(255, 255, 255, 0.14)`, no border.
 - **Decision record:** none.
+
+### Change 42 — Profile page: banner no longer cuts logos in half — 2026-10-27
+
+- **Prompt (verbatim):** On the profile page, the banner seems to be cutoff
+- **What changed:** the banner image on the profile page is a square collage of brand logos, shown as a thin strip. The strip used to be cut from the middle of the image, which sliced the Walkers, 7up and Popworks logos in half on desktop. On screens wider than 575 px the strip now comes from the lower part of the image, where the Quaker and Doritos logos fit whole. The banner height also grows with the screen width (172 px at 1440, the live-site height), so the strip shows the same part of the image at any desktop width. On phones (575 px and narrower) it stays 172 px tall and centred, which already shows Walkers, Popworks and 7up whole.
+- **Why:** user's request. A logo cut in half looks like a bug. The live site has the same problem (its 7up logo is cut), so the live site can't be matched here without copying the problem.
+- **How AI was used:** Claude looked at the full image, measured where the logo rows sit, and picked a crop position and height rule that keep every visible logo whole from phone to wide desktop. It then checked the crop with Playwright screenshots.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** Playwright banner screenshots at 390, 600, 1024, 1440 and 1920 px, logged in as the test user: no logo is cut at any width.
+- **Decision record:** none.

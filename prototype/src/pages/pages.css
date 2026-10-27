@@ -191,7 +191,10 @@
 }
 
 /* ---------- Profile ---------- */
-.profile-banner img { width: 100%; height: 172px; object-fit: cover; }
+/* The banner is a square logo collage cut to a strip. Height grows with width (172px at 1440) so the crop stays the same,
+   and the strip sits on the Quaker/Doritos row so no logo is cut in half. Phones keep the centre (Walkers/7up/Popworks). */
+.profile-banner img { width: 100%; height: max(172px, 12vw); object-fit: cover; object-position: 50% 85.5%; }
+@media (max-width: 575px) { .profile-banner img { height: 172px; object-position: 50% 50%; } }
 .profile { max-width: 1840px; margin: 0 auto; padding: 48px 40px 80px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
 .profile__intro h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
 .profile__intro p { margin-top: 24px; color: var(--color-text-secondary); max-width: 490px; line-height: 21px; }
