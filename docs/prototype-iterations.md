@@ -823,3 +823,13 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/pages/Result.tsx`, `prototype/src/pages/Participate.tsx`, `prototype/src/pages/pages.css`.
 - **Checked by:** `tsc --noEmit`. Playwright at 1440 and 390 px, logged in as the test user with 3 entries: won result on Avengers Doomsday (JOY blue page, prize picture, 3 of 4 bar), lost result on Las Vegas Wrap (red page, black bar and button, draw line), lost result on Pepsi Music (black page), and the Las Vegas Wrap entry form (red page, white card). No sideways scroll at either width. Not checked in the browser: the "entered" (draw only) result and the "reward unlocked" state (4th entry).
 - **Decision record:** none.
+
+### Change 40 — Promotion cards: prize label outlined, not filled — 2026-10-27
+
+- **Prompt (verbatim):** dont make the container around the prize label fill
+- **What changed:** on the promotion card (A · Poster, the default), the box around the prize line ("Win: …", "You won: …", "No instant win this time…") no longer has a see-through white fill. It has a thin white outline at 50% instead, with the same shape and spacing.
+- **Why:** user's request. A filled, semi-transparent box is another generic AI-UI pattern (see changes 36 and 39). An outline still groups the prize line without adding a second shade to the card.
+- **How AI was used:** Claude found the prize label rule for the default card, swapped the fill for an outline, and checked it with Playwright.
+- **Files:** `prototype/src/components/promo/card-variants.css`.
+- **Checked by:** Playwright at 1440 px on the Promotions page, logged in as the test user: computed background is transparent with a 1 px white 50% border; screenshot shows the outline reading clearly on the blue, red and grey (ended) cards. Not changed: the prize boxes on the other card designs in the config menu.
+- **Decision record:** none.
