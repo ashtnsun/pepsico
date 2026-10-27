@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react'
+import { useState, type CSSProperties, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import type { Promo } from '../../data/promos'
 import { promoStyle, DateLine } from './PromoTeaser'
@@ -16,9 +16,23 @@ export function HeroCarousel({ slides, start = 0 }: { slides: HeroSlide[]; start
   const [i, setI] = useState(Math.min(start, slides.length - 1))
   // A single slide is a plain hero, so it isn't announced as a carousel.
   const multi = slides.length > 1
+  // Mouse shortcut: a click on the left half of the hero goes back a slide, the right half goes forward (wrapping).
+  // Links inside the slide keep working; keyboard and screen-reader users have the dots.
+  const side = (e: MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    return e.clientX < r.left + r.width / 2 ? 'prev' : 'next'
+  }
+  const onClick = (e: MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('a, button')) return
+    const step = side(e) === 'prev' ? -1 : 1
+    setI((n) => (n + step + slides.length) % slides.length)
+  }
   return (
     <section className="hero-carousel" aria-roledescription={multi ? 'carousel' : undefined} aria-label={multi ? 'Featured promotions' : undefined}>
-      <div className="hero-carousel__slides">
+      <div
+        className="hero-carousel__slides"
+        {...(multi ? { onClick, onMouseMove: (e: MouseEvent<HTMLDivElement>) => { e.currentTarget.dataset.side = side(e) } } : {})}
+      >
         {slides.map((s, n) => (
           <HeroSlideView key={n} s={s} active={n === i} {...(multi ? { 'aria-roledescription': 'slide', 'aria-label': `${n + 1} of ${slides.length}` } : {})} />
         ))}

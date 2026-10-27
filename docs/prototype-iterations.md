@@ -873,3 +873,220 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/styles/site.css`.
 - **Checked by:** Playwright at 1440 px on `#/promotions/las-vegas-wrap`, logged in with an entry already made: both buttons now have the same background, border and text colour (grey `#A7A7A7`, white text) and the same height (45 px). Screenshot matches. Still different on purpose: the band button is wider (wide padding, 240 px minimum) than the compact section-menu button, the same as the "Participate here" pair.
 - **Decision record:** none.
+
+### Change 44 — Promotion page: navbar hides while scrolling down, section menu takes its place — 2026-10-27
+
+- **Prompt (verbatim):** On the individual promos pages, make the main nav bar collapse after scrolling past the secondary nav bar, the secondary nav should talk it's place. Only when user scrolls up, the main appears again.
+- **What changed:**
+  - On promotion pages, once the section menu (Prizes, Steps, FAQs…) reaches the navbar and sticks, scrolling down slides the navbar up out of view. The section menu then sticks to the very top of the window.
+  - Scrolling up, even a little, slides the navbar back in, and the section menu moves back down under it. Above the section menu's place on the page, the navbar always shows.
+  - The navbar stays put while one of its menus (Brands, user menu, mobile menu) is open, and comes back if a keyboard user tabs into it.
+  - Section menu links leave room for the navbar only when jumping up the page (the navbar shows), not down (it hides), so the section heading lands just under the menu either way. The highlighted section follows the same rule.
+  - Both moves animate over `--dur-base` (0.25 s). With reduced motion turned on, they happen instantly.
+  - Other pages are unchanged: the flag is set only by the section menu and cleared when you leave the page.
+- **Why:** user's request. On a long promotion page, the section menu and the Participate button are what people need while reading. Hiding the navbar frees 75 px (more on phones, where that's a big share of the screen), and scrolling up is the usual signal that someone wants to go elsewhere.
+- **How AI was used:** Claude added scroll-direction tracking to the existing section menu component. It sets a `data-nav-hidden` flag on the page, and CSS moves the navbar and the menu. A Playwright script scrolled down, up and down again and clicked the menu links at 1440 and 390 px, and checked the navbar position, menu position and highlighted link at each step.
+- **Files:** `prototype/src/components/promo/PromoSections.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/components/layout/layout.css`.
+- **Checked by:** `tsc --noEmit`. Playwright on Avengers Doomsday at 1440 and 390 px: navbar visible at the top and before the menu sticks; hidden (header bottom 0, menu at 0) when scrolling down past it; visible again (menu at 75) after scrolling up 150 px; menu links land on the right section going down and up; no section highlighted at the top of the page (a bug in the first try, fixed). Screenshots of the hidden and shown states at 1440 px. Not checked: real touch scrolling on a phone, and the logged-in user menu.
+- **Decision record:** none.
+
+### Change 43 — Ended promotion pages: other promotions and terms on white — 2026-10-27
+
+- **Prompt (verbatim):** On the ended promo pages, make the other promos and terms/conditions sections background color white, not the dark
+- **What changed:** on an ended promotion page for a dark brand (Pepsi, and any other page that sits on the brand colour), the "Check out other promotions" section and the terms box now sit on a full-width white band instead of the dark brand colour. The terms box gets its light grey fill back (as on white pages), and its links use the dark-on-white colours. The hero, prizes and the rest of the page above stay on the brand colour. Pages that were already white (Doritos Las Vegas) look the same as before.
+- **Why:** user's request. The teaser cards are bright brand colours of their own (JOY blue, Doritos red) and looked heavy on black; on white they read like the same cards elsewhere on the site.
+- **How AI was used:** Claude wrapped the last two sections of the ended page in one container, added it to the existing list of white areas on dark-brand pages (so buttons and links switch to the light-background set), and checked the result with a Playwright script.
+- **Files:** `prototype/src/pages/PromoDetail.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/styles/site.css`.
+- **Checked by:** `tsc --noEmit`. Playwright at 1440 and 390 px on Pepsi Music, Walkers GDK and Doritos Las Vegas (ended): the band is white `rgb(255, 255, 255)` on the dark pages, the terms box is `rgb(244, 244, 244)`, the section title is `#333`, links are black, and there's no sideways scroll. Screenshots of the band look right at both widths.
+- **Decision record:** none.
+
+### Change 45 — Promotion page: no gap when the navbar hides (fixes change 44, navbar hides while scrolling down) — 2026-10-27
+
+- **Prompt (verbatim):** the main nav bar when disappearing leaves a gap between the two, fix this, it should look seamless
+- **What changed:** when the navbar slides up, the section menu now slides up by exactly the navbar's height (`--site-nav-height`) at the same speed and easing, so the two move as one. On scroll up, they slide back down together. Before, the menu's sticky position changed from under the navbar to the top of the window. The menu then came unstuck and scrolled up with the page, and the hero showed through between the leaving navbar and the menu.
+- **Why:** user's request. A strip of page content flashing between the two bars looked broken. Moving them with one shared timing keeps them joined the whole way.
+- **How AI was used:** Claude worked out that changing a sticky element's `top` makes it scroll with the page until it reaches the new position. It replaced that with a transform that matches the navbar's, then recorded the space between the navbar's bottom edge and the menu's top edge on every frame of the animation with Playwright.
+- **Files:** `prototype/src/components/promo/promo.css`, `prototype/src/components/layout/layout.css`.
+- **Checked by:** `tsc --noEmit`. Playwright on Avengers Doomsday at 1440 and 390 px, sampling every frame while the navbar slides out and back in: the space between navbar and menu is 0 px on every frame. End states: hidden, navbar and menu both at 0; shown, navbar bottom and menu top both at 75. Not checked: real touch scrolling on a phone.
+- **Decision record:** none.
+
+### Change 46 — Three placeholder active promotions for testing (7UP, Lipton, Quaker) — 2026-10-27
+
+- **Prompt (verbatim):** For testing purposes only, add in 3 more placeholder active promos, try to use different brands that haven't been used before. Make sure they keep with Pepsi's theme, look realistic, and aligns with the current of all the existing promos.
+- **What changed:**
+  - Three new promotions, all active on the prototype's fixed date (23.10.2026), all UK & Ireland, codes start with GB. Each has hero, prizes, 3 steps, 4 FAQs and terms, like Avengers and the Doritos wrap-up.
+    - **7UP "Lift your weekend"** (`#/promotions/7up-weekend`): instant win, once a day, plus a draw for a £1,000 weekend getaway. Ends 01.11.2026, so it shows the "Ends in 9 days" urgent state.
+    - **Lipton "Find your bestea"** (`#/promotions/lipton-bestea`): prize draw only, once a week, for a spa day for two or a £50 gift card. Ties in with the Lipton "bestea" quiz on the brand page. Just started, 100 days left.
+    - **Quaker "Power your mornings"** (`#/promotions/quaker-mornings`): instant win, once a week, plus a draw for £1,000. 58 days left.
+  - Artwork comes from each brand's live-site hero and logo. 7UP and Lipton use their brand hero as the promotion header. A script made the rest: square card art with the headline, round prize images (blurred brand art plus a headline, in the style of the live-site "£100" and festival prizes), step 1 pack logos, a generic "BEST BEFORE / GBXXXXXXX" step 3 badge, and a Quaker header (navy, with the logo on a cream circle taken from the Quaker hero). Step 2 reuses the JOY logo image.
+  - Hero band colours: 7UP `#185430` (dark green from the 7UP logo, DERIVED), Lipton `#B40C30` (red from the Lipton logo, DERIVED), Quaker `#00273B` (live-site brand band). The live-site 7UP green `#00B74F` and Lipton yellow `#FFE300` fail with white text (2.7:1 and 1.3:1), and the hero, steps and teaser all use white text. The new colours pass (8.9:1, 6.9:1, 15.5:1).
+  - All three are marked PLACEHOLDER in `promos.ts`. Their terms start with "PLACEHOLDER FOR TESTING" and name the promoter as "PLACEHOLDER", so no real company is named on made-up terms.
+- **Why:** user's request, to test the listing, filters, carousels and participation flow with more live promotions and brands. Rockstar was left out on purpose: the moderator panel uses the Rockstar brand page as the "brand with no promotions" test case.
+- **How AI was used:** Claude chose the brands from those with brand pages but no promotions, wrote the copy in the style of the real promotions, sampled colours from the brand logos and checked their contrast with white, and wrote a Pillow script to make the artwork. Copy, prize lists and dates are made up.
+- **Files:** `prototype/src/data/promos.ts`; new images in `prototype/public/images/promos/7up-weekend/`, `lipton-bestea/`, `quaker-mornings/` and `prototype/public/images/global/step-code.webp`.
+- **Checked by:** `tsc -b` (passes). Headless Chrome screenshots at 1440 px of `#/promotions` (all three show as active with the right badges, mechanics and days left; 7UP shows the urgent "Ends in 9 days") and the three promotion pages (header, hero band, prizes, steps, FAQs, terms). First pass found the dark Quaker logo hidden on the navy step circle and the header circle clipped; both fixed and checked again. Not checked: the participation flow end to end for the new promotions, and phone width (the headless browser couldn't go below about 500 px).
+- **Decision record:** none (test data only).
+
+### Change 46 — Participation and result pages: own background, no breadcrumb, home hero progress bar — 2026-10-27
+
+- **Prompt (verbatim):** On the promo participation pages, the background behind the main content card should be distinguishable from the footer and the nav bars. Remove the breadcrumbs bar from these pages. On the participation results page, I want toe progress bar to be the same progress bar visually that's from the home page hero.
+- **What changed:**
+  - The participation page (code form) and the result page no longer sit on the exact brand colour, which the navbar and footer also use. They sit on a shade of it: the same 22% darker shade the breadcrumb bar uses (Doritos red `#E31722` → `#B1121A`, JOY promo blue `#0E38DF` → `#0B2CAE`). Black brands (Pepsi, Walkers MAX) can't go darker, so they get a dark grey instead (`#000000` → `#242424`, 14% white). The promo strip's text colour is picked to stay readable on that shade. **DERIVED, needs approval:** both shades are computed from sourced brand colours.
+  - The breadcrumb bar is gone from both pages. The promo strip above the card ("You're entering" / "Your result", promo name, dates) already says where you are.
+  - The result page's progress towards the next JOY reward now uses the home hero's track bar: the same rail, yellow fill, "3 / 4" bubble, white check dots, purple gift and "Entry 1…Reward" labels. It sits in a JOY blue box (the hero's background) inside the white card, with the headline in the hero's style ("**1 more entry** to your next JOY reward", number in yellow). It stays in JOY colours on every brand page, since the reward belongs to JOY. The fill grows in after the card appears.
+- **Why:** user's request. With the page, navbar and footer all the same colour, the page had no edges. The breadcrumb repeated what the promo strip says on a task page. One progress bar design on home and result pages means testers learn it once.
+- **How AI was used:** Claude pulled the hero's track bar out into its own component (`TrackBar`) so both pages render the same markup and CSS, added a helper that works out the page shade from the brand colour, and checked the pages with Playwright.
+- **Files:** `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/hero-variants.css`, `prototype/src/state/chrome.ts`, `prototype/src/pages/Participate.tsx`, `prototype/src/pages/Result.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc --noEmit`. Playwright at 1440 and 390 px on the Doritos participation and result pages, the JOY Avengers result page and the Pepsi EA result page (logged in, 3 entries): no breadcrumb; page background differs from navbar and footer on each (red `rgb(177, 18, 27)` vs `rgb(227, 23, 34)`, blue `rgb(11, 44, 174)` vs `rgb(14, 56, 223)`, grey `rgb(36, 36, 36)` vs black); reward box `rgb(14, 56, 223)` with a yellow fill and white done dots on every brand; gift dot inside the box; no sideways scroll. Screenshots look right at both widths. Home hero still renders the track bar (4 dots, "3 / 4"). Not checked: the other config-menu chrome treatments (brand top, accent, JOY), and the "reward unlocked" state on the result page.
+- **Decision record:** none.
+
+### Change 46 — Favourite brands: heart a brand to see its promotions first — 2026-10-27
+
+- **Prompt (verbatim):** On the brands dropdown and page, add the ability for users to heart a certain brands, hearting brands will impact will put those brands forward in the reccomended sort in the promotions page and will be prioritized in the suggested promos on the home page
+- **What changed:**
+  - **Brands dropdown (desktop):** each brand logo has a heart in a white circle in its top-right corner. Clicking it fills the heart (JOY blue) and keeps the menu open; clicking the logo still opens the brand page.
+  - **Mobile menu:** the brand tiles have the same heart, smaller (28 px tap target, 16 px icon), on the corner of each tile.
+  - **Brands page (`/brands`):** each brand has the heart in its top-right corner, and a line under "Our brands" explains what hearting does.
+  - **Each brand page:** an "Add to favourites" outline button next to "Visit brand website" in the welcome band. It reads "In your favourites" with a filled heart once on. It takes the band's text colour, so it works on light (Lipton yellow) and dark bands. On phones it sits under the other button.
+  - A toast confirms each change ("Quaker added to your favourites. Its promotions now show first.").
+  - **Promotions page, Recommended sort:** promotions you haven't entered still come first; within them, favourite brands come first, then the curated order. Same inside the entered group. Ended promotions stay last. Newest and Ending soonest are unchanged.
+  - **Home (logged in), Suggested for you:** favourite brands' promotions come first, then the curated order.
+  - Favourites are saved in the browser (`favouriteBrands` in the prototype's `localStorage`), not per account, so they work logged out and carry over when someone registers. The moderator panel's reset clears them.
+- **Why:** user's request. Letting people say which brands they like gives the "Recommended" and "Suggested for you" lists a visible reason for their order.
+- **How AI was used:** Claude added the favourites list to the fake store and one shared heart button used in all four places, changed the two sort rules, then checked the result with a Playwright script and screenshots.
+- **Files:** `prototype/src/state/store.tsx`, `prototype/src/components/ui/FavouriteButton.tsx` (new), `prototype/src/components/ui/ui.css`, `prototype/src/components/layout/Navbar.tsx`, `prototype/src/components/layout/layout.css`, `prototype/src/pages/Brands.tsx`, `prototype/src/pages/pages.css`, `prototype/src/pages/Promotions.tsx`, `prototype/src/pages/Home.tsx`.
+- **Checked by:** `tsc --noEmit`. Playwright at 1440 px from empty data: hearting Quaker in the dropdown keeps the menu open, sets `aria-pressed="true"` and moves Quaker Mornings from 5th to 1st in Recommended. After also hearting 7UP (brands page) and Lipton (brand page), Recommended starts 7UP Weekend, Lipton Bestea, Quaker Mornings, then Avengers and Las Vegas Wrap, with ended promotions last; logged-in Suggested for you shows the same order. Screenshots of the dropdown, brands page, Lipton and Quaker bands at 1440 px, and the mobile menu, brands page and Doritos band at 390 px (no sideways scroll). No page errors.
+- **Open question:** a real site would probably save favourites to the account (and ask people to log in first). The prototype keeps them per browser so testing stays simple.
+- **Decision record:** none.
+
+### Change 47 — Profile page: banner removed — 2026-10-27
+
+- **Prompt (verbatim):** On profile page, remove the banner
+- **What changed:** the logo-collage strip under the breadcrumb on `/profile` is gone. The page now goes straight from the breadcrumb to "Hello, {name}!" and the tabs. Its CSS (the crop rules from change 42) is removed too. The image file `images/global/login-bg.webp` stays, because the login pages still use it.
+- **Why:** user's request.
+- **How AI was used:** Claude removed the banner element from `Profile.tsx` and its styles from `pages.css`, then ran the type check.
+- **Files:** `prototype/src/pages/Profile.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc --noEmit` passes. Not checked: screenshots. The Playwright browser was in use by another session.
+- **Decision record:** none.
+
+### Change 47 — 7UP brand page: breadcrumb and newsletter on 7UP Green, not mint — 2026-10-27
+
+- **Prompt (verbatim):** I dont like the secondary green for 7up's theme (currently used for breadcrumbs bar and up to date footer) Is there alternative? Is the current color real? — then: I liked the primary color, just not the secondary
+- **What changed:**
+  - On the 7UP brand page (`#/brands/7up`), the breadcrumb bar and the "Stay up to date" newsletter band now use the official 7UP Green `#00B74F` with black text, the same green as the navbar and footer. Before, they used a pale mint `#66D495`.
+  - A brand can now set its own `shade` in `data/brands.ts`; brands without one keep the calculated shade. Only 7UP sets it.
+  - The 7UP promotion page (`7up-weekend`, dark green `#185430` band with `#134225` bars) is unchanged.
+- **Why:** user's request. The mint was not a 7UP colour: it was DERIVED (the band colour with 40% white, from change 21). The 7UP colour sheet in the Sponsor Files (node `18:17502`, "JOY HUB GLOBAL / DESIGN SYSTEM, MVP 2026") lists Primary 7UP Green `#00B74F`, Secondary 7UP Lime Green `#93C802` and Tertiary 7UP Green `#00A349`, all with black text. Claude offered Lime (official secondary) or Tertiary; the user preferred to keep the primary green.
+- **How AI was used:** Claude traced the bar colour to the shade calculation in `state/chrome.ts`, read the 7UP colour sheet through the Figma MCP and the live-site CSS (`#00B74F` band, `#00A349` hero shapes) to check which greens are real, then added the per-brand override.
+- **Files:** `prototype/src/data/brands.ts`, `prototype/src/state/chrome.ts`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 px (the shared Playwright browser was in use): full-page screenshots of the 7UP brand page (`--chrome-shade` reads `#00B74F`, text `#000000`) and the 7UP Weekend promotion (still `#185430` / `#134225`). No page errors.
+- **Open question:** the 7UP promotion uses a made-up dark green (`#185430`) so white text passes, while the 7UP sheet says to use black text on 7UP Green. Switching the promotion to `#00B74F` with black text would match the sheet, but changes the hero, steps and teaser too.
+- **Decision record:** none.
+
+### Change 47 — Home: claim your reward after 4 entries — 2026-10-27
+
+- **Prompt (verbatim):** ON the home page, once the user hits 4 promos, add a claim reward workflow
+- **What changed:**
+  - **Home hero:** once someone has made 4 entries, the hero reads "Reward unlocked!", the track bar is full and a yellow **Claim your reward** button sits under it. With more than one reward waiting it reads "Claim your rewards (2)". The bar stays full until the reward is claimed, then starts again at "4 entries to your next reward" (before, it emptied by itself at the 5th entry). All six hero options in the config menu (press C) get the button; on the ones with a "Find a promotion" button, the claim button takes its place while a reward waits.
+  - **Claim modal, step 1 "Claim your reward":** a JOY blue ticket (yellow gift, "Bonus entry", "JOY monthly prize draw · 31.10.2026"), a line explaining why they earned it, and **Not now** / **Claim reward**.
+  - **Step 2 "Reward claimed!":** blue check, "You're in the JOY monthly prize draw on 31.10.2026. We'll email <their email> if you win.", a reference (e.g. "JOY-SWF77X") and a toast. Buttons: **Find a promotion** (closes and scrolls to Suggested for you) and **Done**. If another reward is still waiting, the first button is **Claim next reward** instead.
+  - **Result page:** the "reward unlocked" box now follows the same rule (full while a reward is waiting) and links "Claim it on your homepage".
+  - **Fake store:** claimed rewards are saved per account (`claims` in `localStorage`, with reference and date). Rewards waiting = entries ÷ 4, rounded down, minus rewards claimed. Reset all data clears them.
+  - **Moderator panel:** new "Test user, 4 entries (reward to claim)" button to jump straight to this state.
+- **Why:** user's request. The bar promised a reward but nothing happened when it filled; claiming gives the 4th entry a payoff and a clear next step, which testers can now complete as a task.
+- **How AI was used:** Claude added the claims list to the fake store, built one claim modal shared by all hero options, and tested the flow with Playwright.
+- **Made up, needs a real rule (PROTOTYPE):** the draw date (31.10.2026, `REWARD_DRAW` in `config.ts`), the reference format and the "we'll email you" promise. The reward itself was already a placeholder (`REWARD_NAME`).
+- **Files:** `prototype/src/components/promo/ClaimReward.tsx` (new), `prototype/src/components/promo/ProgressTracker.tsx`, `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/state/store.tsx`, `prototype/src/data/config.ts`, `prototype/src/pages/Result.tsx`, `prototype/src/pages/pages.css`, `prototype/src/moderator/ModeratorPanel.tsx`.
+- **Checked by:** `tsc -b` (passes). Playwright from empty data at 1440 px: test user with 4 entries shows "Reward unlocked!", "4 / 4" and the claim button; step 1 and step 2 modals open with the right titles; after claiming, the hero reads "4 entries to your next reward" with no claim button, and still does after a reload; the claim is saved in `localStorage`. At 390 px with 8 entries: button reads "Claim your rewards (2)", "Claim next reward" appears after the first claim and "Find a promotion" after the second; no sideways scroll. Screenshots of hero, both modal steps (1440) and hero and step 1 (390) look right. No page errors. Not checked: the five other hero options visually, and the result page's link in the unlocked state.
+- **Decision record:** none.
+
+### Change 48 — 7UP brand page bars back to the mint (undoes change 47) — 2026-10-27
+
+- **Prompt (verbatim):** revert to original 7-up that you had
+- **What changed:** removed the per-brand `shade` override from change 47. The 7UP brand page's breadcrumb bar and "Stay up to date" band are back to the calculated mint `#66D495` (DERIVED: 7UP Green with 40% white) with black text. The code is the same as before change 47.
+- **Why:** user's request after seeing the all-green version.
+- **How AI was used:** Claude removed the change 47 edits and checked the computed colours again.
+- **Files:** `prototype/src/data/brands.ts`, `prototype/src/state/chrome.ts`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 px: 7UP brand page `--chrome-shade` reads `#66d495`; 7UP Weekend promotion still `#185430` / `#134225`.
+- **Decision record:** none.
+
+### Change 49 — Promotion pages: FAQs and terms on white on dark-brand pages — 2026-10-27
+
+- **Prompt (verbatim):** On the quaker oats individal promo page, the faq and terms sections need white bg
+- **What changed:**
+  - On the Quaker Mornings page (`#/promotions/quaker-mornings`), the FAQs and the terms box now sit in a full-width white band at the bottom of the page instead of on the navy brand colour. The FAQ heading, text and "Go to all FAQs" button switch to their light-background colours; the terms box keeps its light grey.
+  - There is a navy gap between the steps and the white band, so the step pictures don't touch its edge.
+  - This is the same white band change 43 added to ended promotion pages; it now starts at the FAQs and applies to every dark-brand promotion page (navy or black: Quaker, Pepsi, Walkers MAX). Quaker is the only active dark-brand promotion with FAQs, so for Pepsi and Walkers MAX it only affects the terms box. Light-brand pages (Doritos, JOY, 7UP, Lipton) look the same as before.
+- **Why:** user's request. On the navy page the FAQ boxes and terms were white cards floating on dark, which made the bottom of the page feel heavy; the white band also matches how ended promotion pages already end.
+- **How AI was used:** Claude moved the FAQs into the existing white "tail" wrapper (renamed `promo-ended-tail` to `promo-tail`, now always present), adjusted the gaps around it, and checked the result in headless Chromium.
+- **Files:** `prototype/src/pages/PromoDetail.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/styles/site.css`.
+- **Checked by:** `tsc --noEmit` passes. Headless Chromium (the shared Playwright browser was in use) at 1440 and 390 px on Quaker Mornings, Pepsi Music (ended) and Las Vegas Wrap (light brand): Quaker band `rgb(255, 255, 255)` on a `rgb(0, 39, 59)` page, FAQ title `#333`, text `#666`, button navy, terms `#F4F4F4`; Las Vegas Wrap unchanged (no band colour); no sideways scroll; no page errors. Screenshots looked right.
+- **Decision record:** none.
+
+### Change 50 — 7UP on its official colours: 7UP Green with black text, tertiary green as the second colour — 2026-10-27
+
+- **Prompt (verbatim):** Use the primary green, but then the secondary mind should be changed to this: [Image #1] make sure changes apply to everything 7-up related
+- **What changed:**
+  - **Second colour:** the swatch the user sent is `#00A349`, the 7UP brand sheet's tertiary green (Sponsor Files `18:17502`). It replaces the DERIVED mint `#66D495` on the 7UP brand page and becomes the second colour on the 7UP promotion too: breadcrumb bar, section menu, "Stay up to date" band, and the participation and result page background. Black text on it (6.3:1).
+  - **Main colour:** 7UP Green `#00B74F` everywhere: navbar, footer, brand-page welcome band, and now the 7UP Weekend promotion (hero band, step circles, teaser card, promotion cards), which used a DERIVED dark green `#185430` before.
+  - **Text on 7UP Green is black** (7.9:1), as the 7UP sheet says ("Black text must be used on this green"). White fails (2.7:1). This includes the brand-page welcome band (the live site uses white there), the promotion hero, step circles, teaser, poster card (the "ends soon" time turns black instead of yellow) and the calendar icons.
+  - **How:** `brands.ts` gets an optional `shade` (only 7UP sets it) used by `state/chrome.ts` for the bars and the participation background. `promos.ts` themes get an optional `text`, passed to CSS as `--promo-text` (white by default, so every other promotion looks the same as before). `promo.css` and `card-variants.css` use `--promo-text` where they had white; ended cards and teasers stay white on grey.
+- **Why:** user's request. They liked the primary green but not the mint, and picked the tertiary green from the 7UP sheet as the second colour. Both colours are official (7UP brand sheet), not DERIVED.
+- **How AI was used:** Claude read the swatch's pixel colour (`rgb(0, 163, 73)` = `#00A349`), matched it to the 7UP sheet, found every place the 7UP colours and the hard-coded white text are used, and checked the result with headless Chromium. Vite's file watcher missed one saved file (OneDrive), which showed up as the old colour in the first check; touching the file fixed it.
+- **Files:** `prototype/src/data/brands.ts`, `prototype/src/data/promos.ts`, `prototype/src/state/chrome.ts`, `prototype/src/components/promo/PromoTeaser.tsx`, `prototype/src/components/promo/promo.css`, `prototype/src/components/promo/card-variants.css`, `prototype/src/pages/Participate.tsx`, `prototype/src/pages/Result.tsx`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 px: 7UP brand page and 7UP Weekend promotion read `--chrome-bg #00B74F`, text `#000000`, shade `#00A349`, shade text `#000000`; welcome band text `rgb(0, 0, 0)`; participation page (test login, removed after) background `rgb(0, 163, 73)`. Full-page screenshots of the brand page, promotion page and participation page; the 7UP poster card on Promotions and the 7UP teaser on Home. Promotion page at 390 px: no sideways scroll. No page errors. Not checked: the result page (same background rule as the participation page) and the other card designs in the config menu (same text-colour change).
+- **Open question:** none. Both colours come from the 7UP brand sheet.
+- **Decision record:** none.
+
+### Change 51 — 7UP: white text on both greens — 2026-10-27
+
+- **Prompt (verbatim):** make text white
+- **What changed:** all text on the 7UP greens (`#00B74F` and `#00A349`) is white instead of black: navbar, breadcrumb, section menu, newsletter, footer, brand-page welcome band, promotion hero, step circles, teaser and poster card, the participation and result pages, and the text on filled green buttons ("Submit code"). The JOY logo in the navbar is white again. The colours themselves are unchanged from change 50. Links and outlines on white keep their dark green (`#00893B`).
+  - `brands.ts` gets an optional `text` (only 7UP sets it, `#FFFFFF`); `state/chrome.ts` uses it instead of the 4.5:1 rule for the bars, the participation background and the page theme. The 7UP promotion theme's `text` is `#FFFFFF`, so its "ends soon" card time stays white instead of yellow.
+- **Why:** user's request. It matches the live site, which uses white text on 7UP Green. **Contrast:** white fails WCAG AA for normal text on both greens: 2.7:1 on `#00B74F`, 3.3:1 on `#00A349` (passes only for large text, 18.66 px bold and up). The 7UP brand sheet asks for black text.
+- **How AI was used:** Claude added the per-brand text override and checked the result in headless Chromium.
+- **Files:** `prototype/src/data/brands.ts`, `prototype/src/data/promos.ts`, `prototype/src/state/chrome.ts`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 px: 7UP brand page, promotion and participation page (test login, removed after) read text `#FFFFFF` on `#00B74F` and shade text `#FFFFFF` on `#00A349`; welcome band text `rgb(255, 255, 255)`. Screenshots of the promotion page, poster card, Home teaser and participation page. Promotion page at 390 px: no sideways scroll. No page errors.
+- **Open question:** white text fails contrast on both 7UP greens (see Why). Fine for the usability test, but worth a note for accessibility.
+- **Decision record:** none.
+
+### Change 51 — Home hero: "Every 4 entries…" line moved down — 2026-10-27
+
+- **Prompt (verbatim):** ON home page hero, move the every 4 entries.. label down slightly
+- **What changed:** on the logged-in home hero (track design, the default), the small line "Every 4 entries earns a bonus entry into the JOY monthly prize draw." now has 28px of space above it instead of 12px, so it no longer sits right under the "ENTRY 1–3 / REWARD" labels. The other hero designs in the config menu are unchanged.
+- **Why:** user's request. The line was crowding the track labels.
+- **How AI was used:** Claude added one CSS rule scoped to the track hero and checked it in the browser.
+- **Files:** `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** Playwright at 1440 px (test user, 3 entries): margin reads 28px, the line starts about 18px below the lowest track label (was about 2px). Screenshots at 1440 and 390 px look right.
+- **Decision record:** none.
+
+### Change 52 — Promotions page: more space between the promotion grid and the footer — 2026-10-27
+
+- **Prompt (verbatim):** on promotions page, add more gap between the grid of promos and the footer
+- **What changed:** on `#/promotions`, the space below the "All promotions" grid (before the "Stay up to date" band and footer) goes from 64 px to 120 px. Nothing else on the page moves.
+- **Why:** user's request. The last row of cards sat close to the blue newsletter band.
+- **How AI was used:** Claude found the section's bottom padding in `Promotions.tsx`, raised it, and checked the result with a headless Chromium screenshot.
+- **Files:** `prototype/src/pages/Promotions.tsx`.
+- **Checked by:** full-page headless Chromium screenshot at 1440 px (the shared Playwright browser was in use): 120 px gap between the bottom of the last card row and the newsletter band. Not checked at 390 px (same padding applies at every width).
+- **Decision record:** none.
+
+### Change 53 — Home hero: "Every 4 entries…" line moved down a bit more — 2026-10-27
+
+- **Prompt (verbatim):** on home page hero, move the every 4 entries label down slightly
+- **What changed:** on the logged-in home hero (track design, the default), the line "Every 4 entries earns a bonus entry into the JOY monthly prize draw." sits 16 px lower. The space under the progress track goes from 72 to 88 px on desktop and from 64 to 80 px on mobile. That leaves about 34 px between the "ENTRY 1–3 / REWARD" labels and the line at 1440 px (was 18) and about 39 px at 390 px.
+  - Change 51's 28 px top margin on the line never showed, because it collapses into the track's larger bottom margin. The space has to come from the track's bottom margin. The 28 px rule stays, since it still applies when the "Claim reward" button sits between the track and the line.
+- **Why:** user's request.
+- **How AI was used:** Claude measured the gap in the browser, found the margin collapse, and moved the space onto the track.
+- **Files:** `prototype/src/components/promo/hero-variants.css`.
+- **Checked by:** Playwright (logged-in test user, 3 entries). At 1440 px the track's bottom margin reads 88 px, the gap is 34 px, and an element screenshot looks right. At 390 px the margin is 80 px, the gap is 39 px, and there's no sideways scroll.
+- **Decision record:** none.
+
+### Change 54 — Promotions hero: click the left or right side to change slide — 2026-10-27
+
+- **Prompt (verbatim):** On the promotions page hero, clicking on the left/right of the hero should control the carosel as well.
+- **What changed:** clicking anywhere on the left half of the hero carousel shows the previous slide; the right half shows the next one. It wraps around (back from the first slide goes to the last). The mouse cursor turns into a left or right arrow to show which way a click will go. Clicking "See more" still opens the promotion, and the dots still work. This is the shared `HeroCarousel`, so the logged-in Home hero gets the same behaviour when it has more than one slide; a single-slide hero is unchanged.
+- **Why:** user's request. A large click area is easier to find than the small dots.
+- **How AI was used:** Claude added a click handler that checks which half of the hero was clicked and skips clicks on links and buttons. The first browser test found a crash (the click position was read after React had released the event), which Claude fixed before logging.
+- **Files:** `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 and 390 px on `#/promotions` (5 slides, starts on slide 2): right click → 3, right → 4, left → 3; left from slide 1 wraps to slide 5; cursor reads `e-resize` / `w-resize`; a dot still selects its slide; "See more" opens the promotion page. No page errors. Keyboard users still use the dots (the click areas are a mouse and touch shortcut only).
+- **Decision record:** none.

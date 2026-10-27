@@ -8,6 +8,10 @@
 /* Slides share one grid cell. The chosen slide fades in on top; the one it replaces stays fully visible underneath
    until the fade is done, so there's never a white gap between two brand colours. */
 .hero-carousel__slides { display: grid; }
+/* Clicking the left/right half changes slide (HeroCarousel); the arrow cursor shows which way */
+.hero-carousel__slides[data-side="prev"] { cursor: w-resize; }
+.hero-carousel__slides[data-side="next"] { cursor: e-resize; }
+.hero-carousel__slides a, .hero-carousel__slides button { cursor: pointer; }
 .hero-carousel__slides > .hero-slide { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity 0s .6s, visibility 0s .6s; }
 .hero-carousel__slides > .hero-slide.is-active { z-index: 1; opacity: 1; visibility: visible; transition: opacity .6s var(--ease-out); }
 /* The new slide's text rises in one line after another and its photo settles from a slight zoom */
@@ -18,7 +22,7 @@
 .hero-slide.is-active .hero-slide__image img { animation: hero-settle 1s var(--ease-out) backwards; }
 @keyframes hero-settle { from { opacity: .4; transform: scale(1.06); } }
 .hero-slide {
-  position: relative; overflow: hidden; background: var(--promo-bg); color: #fff; min-height: 715px;
+  position: relative; overflow: hidden; background: var(--promo-bg); color: var(--promo-text, #fff); min-height: 715px;
   display: flex; align-items: center; padding: 60px 80px 120px;
   /* Live-site hero curve: a wide ellipse clip, not rounded corners (style.css, .hero-image clip-path). */
   clip-path: ellipse(120% 97% at 50% 0);
@@ -50,7 +54,7 @@
 .teaser { margin: 40px auto; padding: 0 var(--spacing-20); max-width: calc(var(--site-content) + 40px); }
 .teaser__card {
   position: relative; display: flex; align-items: center; min-height: 540px; padding: 25px 60px;
-  background: var(--promo-bg); color: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); overflow: hidden;
+  background: var(--promo-bg); color: var(--promo-text, #fff); border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); overflow: hidden;
 }
 .teaser--left .teaser__card { flex-direction: row-reverse; }
 .teaser__deco { position: absolute; right: 36%; top: -10px; height: 300px; width: auto; opacity: .9; pointer-events: none; }
@@ -73,7 +77,7 @@
 .teaser__entered { display: inline-flex; align-items: center; gap: 4px; color: var(--site-success); margin-right: 6px; letter-spacing: 1px; }
 
 /* Prototype: ended teasers lose their color so they don't read as active (research finding) */
-.teaser--ended .teaser__card { background: color-mix(in srgb, var(--promo-bg) 35%, #6B6B6B); }
+.teaser--ended .teaser__card { background: color-mix(in srgb, var(--promo-bg) 35%, #6B6B6B); --promo-text: #fff; }
 .teaser--ended .teaser__image img, .teaser--ended .teaser__logo, .teaser--ended .teaser__deco { filter: grayscale(1); opacity: .75; }
 
 @media (max-width: 991px) {
@@ -93,7 +97,7 @@
 .promo-hero__image img { width: 100%; aspect-ratio: 2880 / 858; object-fit: cover; clip-path: ellipse(200% 100% at 50% 0); }
 @media (min-width: 973px) { .promo-hero__image { padding-bottom: 20px; } .promo-hero__image img { clip-path: ellipse(120% 97% at 50% 0); } }
 @media (min-width: 1441px) { .promo-hero__image { padding-bottom: 0; } .promo-hero__image img { clip-path: ellipse(98% 97% at 50% 0); } }
-.promo-hero__band { position: relative; overflow: hidden; background: var(--promo-bg); color: #fff; text-align: center; padding: 60px var(--spacing-20) 80px; }
+.promo-hero__band { position: relative; overflow: hidden; background: var(--promo-bg); color: var(--promo-text, #fff); text-align: center; padding: 60px var(--spacing-20) 80px; }
 .promo-hero__band-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
 .promo-hero__band .date-line { justify-content: center; }
 .promo-hero__title { font-size: var(--font-size-60); line-height: 62px; font-weight: 700; }
@@ -121,7 +125,12 @@
   position: sticky; top: var(--site-nav-height); z-index: 30; background: var(--crumb-bg); color: var(--crumb-text);
   display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;
   padding: 14px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform var(--dur-base) var(--ease-out);
 }
+/* Change 44: navbar hidden while scrolling down (SectionNav), so the menu takes its place at the top. It slides up by the
+   navbar's height with the same timing as the navbar (layout.css), so the two move as one with no gap. (Changing its
+   sticky top instead let it come unstuck and scroll with the page, showing the hero between them.) */
+:root[data-nav-hidden]:not(:has(.site-header:focus-within)) .section-nav { transform: translateY(calc(-1 * var(--site-nav-height))); }
 .section-nav__links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
 .section-nav__links a { color: inherit; font-weight: 600; text-transform: uppercase; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; transition: border-bottom-color var(--dur-base); }
 .section-nav__links a:hover, .section-nav__links a[aria-current] { border-bottom-color: currentColor; }
@@ -136,12 +145,19 @@
   .section-nav__cta { margin-left: 0; height: 38px; padding: 0 16px; font-size: var(--font-size-14); }
 }
 
+/* ---------- Space between the promotion page sections ---------- */
+/* Change 34: one gap between every section (was 40 to 120 px, each section had its own). Each section puts the gap
+   above itself only; the last one (terms) also puts it below. A section with its own background (the prize band on
+   dark-brand pages) also keeps it inside, above and below its content. */
+:root { --promo-gap: var(--spacing-80); --promo-gap-wide: calc(var(--promo-gap) * 1.5); }   /* wide: around the Participate banner (change 35) */
+@media (max-width: 767px) { :root { --promo-gap: var(--spacing-48); } }
+
 /* ---------- Steps ---------- */
-.steps { max-width: 1260px; margin: 0 auto; padding: 50px var(--spacing-20) 0; }
+.steps { max-width: 1260px; margin: 0 auto; padding: var(--promo-gap) var(--spacing-20) 0; }
 .steps__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center; }
 .steps__item { width: 100%; max-width: 407px; display: flex; justify-content: center; }
 .steps__circle {
-  position: relative; width: 328px; height: 328px; margin-bottom: 90px; border-radius: 50%; background: var(--promo-bg); color: #fff;
+  position: relative; width: 328px; height: 328px; margin-bottom: 90px; border-radius: 50%; background: var(--promo-bg); color: var(--promo-text, #fff);
   display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 .steps__index { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin: 30px 0 30px; border-radius: 50%; background: #fff; color: var(--color-text-default); font-size: 26px; font-weight: 600; }
@@ -155,18 +171,28 @@
 }
 
 /* ---------- CTA banner ---------- */
-.cta-banner { position: relative; margin: 40px 25px; border-radius: var(--radius-card); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+/* Change 33: same width as the other content blocks (was edge to edge minus 25px) */
+.cta-banner { position: relative; width: min(var(--site-content), 100% - 40px); margin: var(--promo-gap-wide) auto 0; border-radius: var(--radius-card); overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .cta-banner img { width: 100%; height: auto; }
+/* Change 35: the banner stands on its own, so the section after it also gets the wide gap */
+.cta-banner + .promo-tail > .promo-faq:first-child { padding-top: var(--promo-gap-wide); }
+.cta-banner + .promo-tail > .pterms:first-child { margin-top: var(--promo-gap-wide); }
+/* Dark-brand pages: the wide gap stays brand colour, then the white band starts with the normal gap (change 49) */
+.page-main[data-page-canvas] .cta-banner + .promo-tail { margin-top: var(--promo-gap-wide); }
+.page-main[data-page-canvas] .steps + .promo-tail { margin-top: var(--promo-gap); }   /* no banner (Quaker, ended pages) */
+.page-main[data-page-canvas] .cta-banner + .promo-tail > .promo-faq:first-child { padding-top: var(--promo-gap); }
+.page-main[data-page-canvas] .cta-banner + .promo-tail > .pterms:first-child { margin-top: var(--promo-gap); }
 .cta-banner .btn { position: absolute; min-width: min(308px, 60%); }
 /* Change 25: with a brand theme the banner art is a dark background, so the button is the theme's "on dark" one */
 .page-main[data-page-theme] .cta-banner .btn--primary {
   background: var(--color-action-inverse); border-color: var(--color-border-action-inverse); color: var(--color-text-on-action-inverse);
 }
-@media (max-width: 767px) { .cta-banner { margin: 24px 16px; } .cta-banner .btn { bottom: 16px; } }
+@media (max-width: 767px) { .cta-banner { width: calc(100% - 32px); } .cta-banner .btn { bottom: 16px; } }
 
 /* ---------- Prize band ---------- */
 /* Change 28: white, not the brand colour (was var(--promo-bg) with white text, as on the live site) */
-.prizes { background: var(--color-surface-default); color: var(--color-text-default); padding: 69px 0; text-align: center; }
+.prizes { background: var(--color-surface-default); color: var(--color-text-default); padding: var(--promo-gap) 0 0; text-align: center; }
+.page-main[data-page-canvas] .prizes { padding-bottom: var(--promo-gap); }   /* white band on the brand colour */
 .prizes__title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; letter-spacing: -0.72px; padding: 0 16px; }
 .prizes__subtitle { margin-top: 14px; font-size: var(--font-size-20); font-weight: 600; }
 .prizes__row { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 36px; padding: 0 20px; }
@@ -178,21 +204,21 @@
 .prizes__name { margin-top: 24px; font-size: var(--font-size-20); line-height: 26px; font-weight: 600; max-width: 330px; }
 .prizes__count { margin-top: 20px; font-weight: 600; }
 @media (max-width: 767px) {
-  .prizes { padding: 48px 0; }
   .prizes__title { font-size: var(--font-size-24); line-height: var(--line-height-28); }
   .prizes__row { gap: 8px; padding: 0 8px; }
   .prizes__item img { max-width: 240px; }
 }
 
 /* ---------- Legal text and the promotion's links ---------- */
-.pterms { width: min(1130px, 100% - 40px); margin: 48px auto 0; padding: 24px 32px; border-radius: var(--radius-card); background: var(--color-surface-subtle); }
+/* Change 33: last block on the page, so it carries the bottom space */
+.pterms { width: min(1130px, 100% - 40px); margin: var(--promo-gap) auto; padding: 24px 32px; border-radius: var(--radius-card); background: var(--color-surface-subtle); }
 .pterms__legal { font-size: 13px; line-height: 19px; color: var(--site-text-legal); }
 .pterms__links { display: flex; flex-wrap: wrap; gap: 8px 28px; }
 .pterms__legal + .pterms__links { margin-top: 16px; padding-top: 16px; border-top: 1px solid #E2E2E2; }
-@media (max-width: 767px) { .pterms { width: min(1130px, 100% - 32px); padding: 20px; margin-top: 32px; } }
+@media (max-width: 767px) { .pterms { width: min(1130px, 100% - 32px); padding: 20px; } }
 
 /* ---------- FAQs: heading on the left, questions on the right ---------- */
-.promo-faq { width: min(1130px, 100% - 40px); margin: 0 auto; padding: 80px 0 88px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 64px; align-items: start; }
+.promo-faq { width: min(1130px, 100% - 40px); margin: 0 auto; padding: var(--promo-gap) 0 0; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 64px; align-items: start; }
 .promo-faq__side { position: sticky; top: 170px; }
 .promo-faq__title { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 800; letter-spacing: -.5px; }
 .promo-faq__text { margin: 14px 0 24px; color: var(--color-text-secondary); line-height: 22px; }
@@ -204,13 +230,21 @@
 .promo-faq .accordion__chevron { margin-right: 0; }
 .promo-faq .accordion__answer { padding: 0 0 22px; line-height: 23px; }
 @media (max-width: 991px) {
-  .promo-faq { grid-template-columns: 1fr; gap: 24px; width: min(1130px, 100% - 32px); padding: 56px 0 64px; }
+  .promo-faq { grid-template-columns: 1fr; gap: 24px; width: min(1130px, 100% - 32px); }
   .promo-faq__side { position: static; }
   .promo-faq__title { font-size: var(--font-size-24); line-height: var(--line-height-28); }
   .promo-faq__text { margin-bottom: 16px; }
   .promo-faq .accordion__item { padding: 0 18px; }
   .promo-faq .accordion__question { font-size: 16px; line-height: 22px; padding: 16px 0; }
 }
+
+/* ---------- Other promotions (ended promotion page) ---------- */
+.promo-others { padding-top: var(--promo-gap); }
+.promo-others .teaser:last-child { margin-bottom: 0; }
+/* Changes 43 and 49: on dark-brand pages the last part of the page (FAQs, other promotions, terms) is a white band,
+   not the brand colour. site.css gives it the light-background buttons and links; the terms box gets its grey back. */
+.promo-tail { display: flow-root; }   /* keeps the terms' bottom margin inside the white band */
+.page-main[data-page-canvas] .promo-tail .pterms { background: var(--color-surface-subtle); }
 
 /* ---------- Compact card (logged-in home, profile) ---------- */
 /* Shared by every promotion card row (home, promotions, result): 3 per row, 2 on tablets, 1 on phones. */
@@ -291,4 +325,12 @@
 .page-main[data-page-theme] .promo-hero__band { color: var(--chrome-text); }
 .page-main[data-page-canvas] .steps__circle { background: var(--chrome-shade); color: var(--chrome-shade-text); }
 .page-main[data-page-canvas] .teaser:not([data-brand="joy"] *) .teaser__card { background: var(--chrome-shade); color: var(--chrome-shade-text); }
-.page-main[data-page-canvas] .promo-faq__text { color: var(--site-muted); }
+
+
+/* Change 47: claim reward modal. A JOY blue "ticket" for the reward, a green check once claimed. */
+.claim__ticket { display: flex; align-items: center; gap: var(--spacing-16); text-align: left; background: var(--site-blue-dark); color: #fff; border-radius: var(--radius-card); padding: var(--spacing-20) var(--spacing-24); margin-bottom: var(--spacing-20); }
+.claim__gift { flex: none; display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: var(--site-yellow); color: var(--site-blue-dark); }
+.claim__what { display: flex; flex-direction: column; gap: 4px; font-size: var(--font-size-14); opacity: .9; }
+.claim__what strong { font-size: 22px; line-height: 1.1; opacity: 1; }
+.claim__done { color: var(--site-blue); margin: 0 auto var(--spacing-16); display: block; animation: modal-in var(--dur-slow) var(--ease-out); }
+.modal p.claim__ref { margin-top: var(--spacing-12); font-weight: 700; letter-spacing: 1px; color: var(--color-text-default); }
