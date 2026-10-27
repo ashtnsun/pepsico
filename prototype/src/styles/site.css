@@ -69,8 +69,10 @@ h1, h2, h3, h4, p { margin: 0; }
 @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
 @keyframes drop-in { from { opacity: 0; transform: translateY(-6px); } }
 @keyframes pop-in { from { opacity: 0; transform: scale(.5); } }
-/* Every route change: the new page fades up instead of snapping in (App.tsx keys this wrapper by the address). */
-.page-enter { animation: rise-in var(--dur-slow) var(--ease-out) backwards; }
+/* Every route change: the old page crossfades into the new one (View Transitions, App.tsx). The navbar is
+   snapshotted on its own so it doesn't fade with the page; on brand-themed pages its colour still blends. */
+.site-header { view-transition-name: site-header; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; animation-timing-function: ease; }
 /* Things that appear after an action: errors, alerts, confirmation messages */
 .field__error, .newsletter__error { animation: drop-in var(--dur-base) var(--ease-out); }
 .alert, .newsletter__done, .empty-state { animation: fade-in var(--dur-slow) var(--ease-out); }

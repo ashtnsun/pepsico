@@ -1,4 +1,5 @@
-import { useEffect, type CSSProperties } from 'react'
+import { useEffect, useLayoutEffect, useState, type CSSProperties } from 'react'
+import { flushSync } from 'react-dom'
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/layout/Navbar'
 import { Footer, Newsletter } from './components/layout/Footer'
@@ -17,18 +18,30 @@ import NotFound from './pages/NotFound'
 import { useDesign } from './state/design'
 import { useChromeTheme } from './state/chrome'
 
-function ScrollToTop() {
-  const { pathname, hash } = useLocation()
-  // Jump, don't glide: with smooth scrolling on, the new page would otherwise scroll up from where the old one was
-  useEffect(() => { if (!hash) window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname, hash])
-  return null
+/**
+ * Page changes crossfade (View Transitions API): the browser snapshots the old page, the routes switch to the new
+ * address, and the snapshot blends into the new page. Nothing moves and the screen never goes blank; the navbar has
+ * its own snapshot (site.css) so it stays put. Browsers without the API, or with "reduce motion" on, just switch.
+ */
+function useCrossfadeLocation() {
+  const location = useLocation()
+  const [shown, setShown] = useState(location)
+  useEffect(() => {
+    if (location.key === shown.key) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!document.startViewTransition || reduce) { setShown(location); return }
+    document.startViewTransition(() => flushSync(() => setShown(location)))
+  }, [location, shown.key])
+  // Jump to the top before the new page is painted (or snapshotted). Jump, don't glide: smooth scrolling would
+  // otherwise scroll the new page up from where the old one was.
+  useLayoutEffect(() => { if (!shown.hash) window.scrollTo({ top: 0, behavior: 'instant' }) }, [shown.pathname, shown.hash])
+  return shown
 }
 
 function Layout({ newsletter = true }: { newsletter?: boolean }) {
   // Visual exploration: on promotion and brand pages, the navbar, breadcrumb, newsletter and footer can take the brand colour
   const { chrome } = useDesign()
   const theme = useChromeTheme()
-  const { pathname } = useLocation()
   const themed = chrome !== 'joy' && theme
   return (
     <div
@@ -39,8 +52,7 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
     >
       <a href="#main" className="visually-hidden">Skip to content</a>
       <Navbar />
-      {/* Keyed by the address so each new page fades up (.page-enter in site.css) */}
-      <main id="main" className="page-main"><div key={pathname} className="page-enter"><Outlet /></div></main>
+      <main id="main" className="page-main"><Outlet /></main>
       {newsletter && <Newsletter />}
       <Footer />
     </div>
@@ -48,10 +60,11 @@ function Layout({ newsletter = true }: { newsletter?: boolean }) {
 }
 
 export default function App() {
+  const location = useCrossfadeLocation()
   return (
     <>
-      <ScrollToTop />
-      <Routes>
+      {/* Routes render the address being shown, which trails the real one by the length of the crossfade's snapshot */}
+      <Routes location={location}>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="promotions" element={<Promotions />} />

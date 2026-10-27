@@ -571,3 +571,18 @@ Add one entry per prompt, newest at the bottom. Template:
     - No console errors.
   - Screenshots of the hero, Brands menu, phone menu and phone hero were checked.
 - **Decision record:** none.
+
+### Change 24 — Page changes crossfade instead of fading up — 2026-10-27
+
+- **Prompt (verbatim):** transitions between pages is very jagged, flashes the screen, and creates this gap above the breadcrumbs bar
+- **What changed:** change 23's page animation is gone. It faded the whole new page in from transparent while moving it up 14 px. That caused the white flash (for a moment no page was visible) and the gap (the breadcrumb started 14 px below the navbar). Page changes now crossfade instead. The browser takes a picture of the old page, switches to the new one behind it, and blends the picture into the new page over 0.3 s. Nothing moves and the screen never goes blank. The navbar is pictured separately, so it stays in place; on brand-themed pages its colour blends. Browsers without this feature (View Transitions), and computers with "reduce motion" on, switch pages instantly, as before change 23. Every page still opens at the top.
+- **Why:** the user's report. A crossfade is the only page transition that never shows an empty screen, because the old page stays visible until the new one has replaced it.
+- **How AI was used:** Claude found the cause in its own change 23 (`.page-enter`, opacity 0 + translateY on the whole page). It replaced it with `useCrossfadeLocation` in `App.tsx`. The routes now show the address on screen, which follows the real address by one crossfade. The update runs inside `document.startViewTransition`, and the scroll reset happens before the new page is captured, so the old page doesn't flash at the top.
+- **Files:** `prototype/src/App.tsx`, `prototype/src/styles/site.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 × 900:
+  - From the promotions hero to a promotion page, and from the bottom of a promotion page via the footer to the FAQ: a transition is running 120 ms after the click. Screenshots taken partway through show the two pages blending, with no white frame.
+  - After each change, the breadcrumb sits right under the navbar (top 75 px) and the page is at scroll 0.
+  - The back button works.
+  - At 390 px with reduce motion on, the page switches instantly, lands at the top, and the breadcrumb is at 75 px.
+  - No console errors or warnings.
+- **Decision record:** none.
