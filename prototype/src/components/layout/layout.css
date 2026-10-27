@@ -16,8 +16,10 @@
   color: inherit; background: none; border: 0; cursor: pointer;
   font-size: var(--font-size-16); font-weight: 600; text-transform: uppercase; text-decoration: none; position: relative;
 }
-.navbar__link::after { content: ''; position: absolute; left: -24px; right: -24px; bottom: 0; height: 5px; border-radius: 5px 5px 0 0; background: transparent; }
-.navbar__link.active::after, .navbar__link:hover::after { background: var(--color-surface-default); }
+/* Hover and the current page underline the text; the current page is also bold. */
+.navbar__link { text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.navbar__link.active, .navbar__link:hover { text-decoration-line: underline; }
+.navbar__link.active { font-weight: 700; }
 .navbar__link .rot { transform: rotate(180deg); }
 .navbar__session { display: flex; margin-left: auto; gap: var(--spacing-8); align-items: center; }
 .navbar__session .btn { height: 45px; padding: 0 24px; }

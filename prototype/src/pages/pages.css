@@ -177,9 +177,10 @@
 .profile__intro h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
 .profile__intro p { margin-top: 24px; color: var(--color-text-secondary); max-width: 490px; line-height: 21px; }
 .profile__tabs { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; max-width: 320px; }
-.profile__tabs button { text-align: left; padding: 14px 18px; border-radius: var(--radius-container); border: 0; background: none; font-weight: 600; cursor: pointer; color: var(--color-text-default); display: flex; gap: 10px; align-items: center; }
-.profile__tabs button[aria-selected="true"] { background: #E8EDFF; color: var(--site-blue); }
-.profile__tabs button:hover { background: var(--color-surface-subtle); }
+.profile__tabs button { text-align: left; padding: 10px 0; border: 0; background: none; font-weight: 600; cursor: pointer; color: var(--color-text-default); display: flex; gap: 10px; align-items: center; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+/* Same as the navbar: hover and the open tab underline the text; the open tab is also bold. */
+.profile__tabs button:hover, .profile__tabs button[aria-selected="true"] { text-decoration-line: underline; }
+.profile__tabs button[aria-selected="true"] { font-weight: 700; color: var(--site-blue); }
 .profile__panel { background: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); padding: 0 26px 32px; }
 .profile__panel .auth__section { margin: 0 -26px; }
 .profile__panel .auth__section:first-child { border-top: 0; }
@@ -190,7 +191,8 @@
 .danger-zone { margin-top: 24px; }
 @media (max-width: 991px) {
   .profile { grid-template-columns: 1fr; padding: 32px 16px 56px; gap: 24px; }
-  .profile__tabs { flex-direction: row; max-width: none; overflow-x: auto; }
+  .profile__tabs { flex-direction: row; flex-wrap: wrap; gap: 0 24px; max-width: none; }
+  .profile__tabs button { white-space: nowrap; }
   .entries-table thead { display: none; }
   .entries-table tr { display: grid; grid-template-columns: 1fr auto; padding: 12px 0; border-bottom: 1px solid var(--color-border-default); }
   .entries-table td { border: 0; padding: 4px 0; }

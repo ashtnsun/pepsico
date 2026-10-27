@@ -364,3 +364,16 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `docs/pre-visual-exploration/README.md`, `docs/pre-visual-exploration/screenshots/`.
 - **Checked by:** capture log of final URL and heading for every shot; sample screenshots opened and checked.
 - **Decision record:** none.
+
+### Change 16 — Navbar and profile tabs: underlined text instead of an indicator bar — 2026-10-26
+
+- **Prompt (verbatim):** On the nav menu, the hover on the tabs and the active tabs should be an underline on the text, instead of the indicator at the bottom. the active tab should also be bold. This should also apply to the profile page.
+- **What changed:**
+  - Navbar (desktop): the white 5 px bar along the bottom of the navbar is gone. Hovering a link (Home, Promotions, Brands) now underlines its text (2 px, 6 px below the text). The current page's link is underlined and bold (700 instead of 600). Brands also counts as current while its dropdown is open, as before.
+  - Profile page tabs (My details, My entries, Settings): the pale blue background on the open tab and the grey background on hover are gone. Hovering a tab underlines its text. The open tab is underlined, bold and JOY blue. The icons are not underlined. With no background, the tabs no longer have side padding, so they line up with the heading above them.
+  - Profile tabs on phones: they sit in a row with 24 px between them and wrap onto a second line when there isn't room (at 390 px, Settings goes on the second line), instead of being cut off.
+- **Why:** user's request. Claude's addition: the phone wrapping. The three tabs are 337 px wide without gaps, wider than the 343 px row once gaps are added, so with no wrapping Settings was cut off at the edge.
+- **How AI was used:** Claude replaced the `::after` bar in `layout.css` and the background highlights in `pages.css` with `text-decoration` rules, then checked the result in headless Chromium. The shared Playwright browser was in use by another session, and the app now uses hash URLs (`/#/profile`), which the screenshot script had to allow for.
+- **Files:** `prototype/src/components/layout/layout.css`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 × 900: on Promotions, the hovered Home link and the current Promotions link are both underlined and Promotions is bold. On the profile page, the open "My details" tab is underlined, bold and blue, and the hovered "My entries" tab is underlined. At 390 × 844: the tabs wrap onto two lines and the page is 390 px wide (no sideways scroll).
+- **Decision record:** none.
