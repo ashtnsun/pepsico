@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { Check, Gift } from 'lucide-react'
 import { REWARD_EVERY, REWARD_NAME } from '../../data/config'
 import { useDesign } from '../../state/design'
 import { useStore } from '../../state/store'
-import { HeroBento, HeroCan, HeroRing, HeroStamps, HeroTrack } from './HeroVariants'
+import { ClaimCta, HeroBento, HeroCan, HeroRing, HeroStamps, HeroTrack, rewardState } from './HeroVariants'
+import { ClaimReward } from './ClaimReward'
 import './promo.css'
 
 const VARIANTS = { ring: HeroRing, stamps: HeroStamps, track: HeroTrack, bento: HeroBento, can: HeroCan }
@@ -13,16 +15,17 @@ const VARIANTS = { ring: HeroRing, stamps: HeroStamps, track: HeroTrack, bento: 
  */
 export function ProgressTracker({ name, entries }: { name: string; entries: number }) {
   const { hero } = useDesign()
-  const { myEntries } = useStore()
+  const { myEntries, unclaimedRewards } = useStore()
+  const [claiming, setClaiming] = useState(false)
+  const claim = { unclaimed: unclaimedRewards, onClaim: () => setClaiming(true) }
+  const modal = claiming && <ClaimReward onClose={() => setClaiming(false)} />
   if (hero !== 'original') {
     const Variant = VARIANTS[hero]
-    return <Variant name={name} entries={entries} wins={myEntries.filter((e) => e.outcome === 'won').length} />
+    return <><Variant name={name} entries={entries} wins={myEntries.filter((e) => e.outcome === 'won').length} {...claim} />{modal}</>
   }
-  const done = entries % REWARD_EVERY
-  const rewards = Math.floor(entries / REWARD_EVERY)
-  const left = REWARD_EVERY - done
-  const justUnlocked = entries > 0 && done === 0
+  const { filled: done, left, rewards, unlocked: justUnlocked } = rewardState(entries, unclaimedRewards)
   return (
+    <>
     <section className="tracker" aria-labelledby="tracker-title">
       <img className="tracker__deco tracker__deco--l" src="./images/global/mailing-left.png" alt="" />
       <img className="tracker__deco tracker__deco--r" src="./images/global/mailing-right.png" alt="" />
@@ -41,10 +44,13 @@ export function ProgressTracker({ name, entries }: { name: string; entries: numb
       </div>
       <p className="tracker__msg">
         {justUnlocked
-          ? <>You’ve unlocked a reward: <strong>{REWARD_NAME}</strong>! Keep entering to earn the next one.</>
+          ? <>You’ve unlocked a reward: <strong>{REWARD_NAME}</strong>! Claim it below.</>
           : <>You are <strong>{left} {left === 1 ? 'entry' : 'entries'}</strong> away from your next reward!</>}
       </p>
+      {justUnlocked && <ClaimCta {...claim} />}
       <p className="tracker__small">Every {REWARD_EVERY} entries earns {REWARD_NAME}.{rewards > 0 && ` Rewards earned so far: ${rewards}.`}</p>
     </section>
+    {modal}
+    </>
   )
 }

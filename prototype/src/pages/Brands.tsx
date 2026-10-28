@@ -6,6 +6,7 @@ import { isActive } from '../data/config'
 import { Breadcrumb } from '../components/layout/Breadcrumb'
 import { PromoTeaser } from '../components/promo/PromoTeaser'
 import { PromoCarousel } from '../components/promo/PromoCarousel'
+import { FavouriteButton } from '../components/ui/FavouriteButton'
 import NotFound from './NotFound'
 import './pages.css'
 
@@ -15,16 +16,22 @@ export function BrandsIndex() {
   return (
     <>
       <Breadcrumb items={[{ label: 'Brands' }]} />
-      <div className="page-head"><h1 className="h1">Our brands</h1></div>
+      <div className="page-head">
+        <h1 className="h1">Our brands</h1>
+        <p>Tap the heart on the brands you love. Their promotions show first in your suggestions and in the Recommended sort.</p>
+      </div>
       <div className="brands-grid">
         {brands.map((b) => {
           const n = activeCount(b.slug)
           return (
-            <Link key={b.slug} to={`/brands/${b.slug}`}>
-              <img src={b.logo} alt="" />
-              <h2 className="h3">{b.name}</h2>
-              <span className="brands-grid__count">{n ? `${n} active promotion${n > 1 ? 's' : ''}` : 'No active promotions'}</span>
-            </Link>
+            <div key={b.slug} className="brands-grid__card">
+              <Link to={`/brands/${b.slug}`}>
+                <img src={b.logo} alt="" />
+                <h2 className="h3">{b.name}</h2>
+                <span className="brands-grid__count">{n ? `${n} active promotion${n > 1 ? 's' : ''}` : 'No active promotions'}</span>
+              </Link>
+              <FavouriteButton brand={b} className="brands-grid__fav" />
+            </div>
           )
         })}
       </div>
@@ -62,6 +69,7 @@ export function BrandPage() {
         <a href={brand.website} target="_blank" rel="noreferrer" className={`btn btn--wide btn--promo ${brand.bandCta.text === '#0E38DF' ? '' : 'btn--own'}`} style={{ '--promo-cta-bg': brand.bandCta.bg, '--promo-cta-text': brand.bandCta.text } as CSSProperties}>
           Visit brand website<span className="visually-hidden"> (opens in a new tab)</span>
         </a>
+        <FavouriteButton brand={brand} labelled className="brand-band__fav" />
         {brand.tagline && <p className="brand-band__tagline">{brand.tagline}</p>}
       </section>
 

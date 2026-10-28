@@ -1,6 +1,6 @@
 // Promotions. Copy, dates, prizes, FAQs and images come from the live site
 // (joy-pepsico.eu/en-gb/promotions, captured 2026-10-23). Nothing here is invented
-// except the prototype-only fields marked PROTOTYPE.
+// except the prototype-only fields marked PROTOTYPE and the test promotions marked PLACEHOLDER (bottom of the list).
 
 export type Prize = { name: string; image: string; /** PROTOTYPE: can this prize be won instantly? */ instant?: boolean }
 export type Step = { text: string; image?: string }
@@ -12,6 +12,8 @@ export type Mechanic = 'instant' | 'draw'
 export type PromoTheme = {
   /** Brand color of the hero band, step circles and prize band (live site teaser/branding colors). */
   bg: string
+  /** Text on bg (default white). When set, the yellow "ends soon" text on cards takes this colour too (change 50). */
+  text?: string
   /** Hero CTA ("Participate here") colors. */
   ctaBg: string
   ctaText: string
@@ -203,6 +205,110 @@ export const promos: Promo[] = [
     ],
     faqs: [],
     mechanic: 'instant', limit: 'once', codePrefix: 'GB', codeHelp: '',
+  },
+
+  // ---------- PLACEHOLDER: test-only promotions (change 45) ----------
+  // Not on the live site. Copy, prizes, dates and T&Cs are made up in the style of the real ones above.
+  // Artwork is built from each brand's live-site hero and logo (generated prize circles, cards and the Quaker header).
+  // Hero colors: 7UP Green from the 7UP brand sheet (change 50, was a DERIVED dark green); Lipton red is DERIVED,
+  // sampled from its logo; Quaker navy is the live-site brand band.
+  {
+    slug: '7up-weekend', brand: '7up', brandLabel: '7UP',
+    title: 'TASTE THAT LIFTS YOUR WEEKEND', subtitle: 'Win a £1,000 weekend getaway, plus prizes every day',
+    teaserTitle: 'LIFT YOUR WEEKEND', teaserText: 'Win a £1,000 weekend getaway, plus prizes to be won every day.',
+    start: '2026-09-14', end: '2026-11-01', countries: ['gb', 'ie'],
+    theme: { bg: '#00B74F', text: '#FFFFFF', ctaBg: '#FFFFFF', ctaText: '#1443FF', deco: g('deco-7up.svg') },
+    images: {
+      header: './images/brands/hero-7up-desktop.webp', headerMobile: './images/brands/hero-7up-mobile.webp',
+      logo: './images/brands/logo-7up.webp', card: img('7up-weekend', 'card.webp'),
+    },
+    stepsTitle: 'HOW TO TAKE PART',
+    steps: [
+      { text: 'Purchase a 7UP Zero Sugar Promotional Pack', image: img('7up-weekend', 'step-1.webp') },
+      { text: 'Scan QR code to log in or register an account', image: img('avengers-doomsday', 'step-2.webp') },
+      { text: 'Enter the code under the label to find out if you’ve won!', image: g('step-code.webp') },
+    ],
+    disclaimer: 'PLACEHOLDER FOR TESTING. UK & ROI, 18+ only. 08:00 – 22:00 daily 14/09/26 – 01/11/26. Purchase Promotional Pack, scan the QR code, sign in to your JOY account (or create one for free) and enter the code under the label to find out instantly if you have won a Daily Prize. All entries entered into the Grand Prize draw. Prizes: Grand Prize: 1 of 5 x £1,000 (or € equivalent) weekend getaway. Daily Prizes: 490 x wireless Bluetooth earbuds, 2450 x £10 food delivery vouchers. Max 1 entry per person per day. Retain packaging to claim. Promoter: PLACEHOLDER.',
+    prizesTitle: 'PRIZES THAT LIFT YOU UP', prizesSubtitle: 'Win every day!',
+    prizes: [
+      { name: '£1,000 Weekend Getaway', image: img('7up-weekend', 'prize-getaway.webp') },
+      { name: 'Wireless Bluetooth Earbuds', image: img('7up-weekend', 'prize-earbuds.webp'), instant: true },
+      { name: '£10 Food Delivery Voucher', image: img('7up-weekend', 'prize-delivery.webp'), instant: true },
+    ],
+    faqs: [
+      { q: 'How do I enter?', a: 'Purchase a 7UP Zero Sugar Promotional Pack and scan the QR code. Log in or register a JOY account, then enter the code from under the label. You will find out instantly if you have won a Daily Prize, and every entry goes into the draw for a £1,000 weekend getaway.' },
+      { q: 'How many times can I enter?', a: 'You can enter once per person, per day. Come back tomorrow with a new code from another promotional pack.' },
+      { q: 'Where can I find the code?', a: 'The code is printed on the inside of the label. It starts with GB.' },
+      { q: 'What are the dates of the promotion?', a: 'The promotion opens 08:00 BST on 14th September 2026 and closes 22:00 GMT on 1st November 2026.' },
+    ],
+    mechanic: 'instant', limit: 'day', codePrefix: 'GB',
+    codeHelp: 'Find the code on the inside of the label. It starts with GB.',
+    drawPrize: 'a £1,000 weekend getaway',
+  },
+  {
+    slug: 'lipton-bestea', brand: 'lipton-ice-tea', brandLabel: 'Lipton',
+    title: 'FIND YOUR BESTEA', subtitle: 'Enter every week for a chance to win a spa day for you and your bestea',
+    teaserTitle: 'FIND YOUR BESTEA', teaserText: 'Win a spa day for you and your bestea, plus £50 gift cards in our weekly draws.',
+    start: '2026-10-19', end: '2027-01-31', countries: ['gb', 'ie'],
+    theme: { bg: '#B40C30', ctaBg: '#FFFFFF', ctaText: '#1443FF', deco: g('deco-lipton.svg') },
+    images: {
+      header: './images/brands/hero-lipton-desktop.webp', headerMobile: './images/brands/hero-lipton-mobile.webp',
+      logo: './images/brands/logo-lipton.webp', card: img('lipton-bestea', 'card.webp'),
+    },
+    stepsTitle: 'HOW TO TAKE PART',
+    steps: [
+      { text: 'Purchase a Lipton Ice Tea Promotional Bottle', image: img('lipton-bestea', 'step-1.webp') },
+      { text: 'Scan QR code to log in or register an account', image: img('avengers-doomsday', 'step-2.webp') },
+      { text: 'Enter the code from the label to join this week’s draw', image: g('step-code.webp') },
+    ],
+    disclaimer: 'PLACEHOLDER FOR TESTING. UK & ROI, 18+ only. 00:01 19/10/26 – 23:59 31/01/27. Purchase Promotional Bottle, scan the QR code, sign in to your JOY account (or create one for free) and enter the code from the label to be entered into that week’s prize draw. Weekly draws every Monday. Prizes: 1 x spa day for the winner & 1 guest per weekly draw (15 in total), 5 x £50 high street gift cards per weekly draw. Max 1 entry per person per week. Promoter: PLACEHOLDER.',
+    prizesTitle: 'TREAT YOU AND YOUR BESTEA', prizesSubtitle: 'New winners every week!',
+    prizes: [
+      { name: 'Spa Day for You and Your Bestea', image: img('lipton-bestea', 'prize-spa.webp') },
+      { name: '£50 High Street Gift Card', image: img('lipton-bestea', 'prize-gift-card.webp') },
+    ],
+    faqs: [
+      { q: 'How do I enter?', a: 'Purchase a Lipton Ice Tea Promotional Bottle and scan the QR code. Log in or register a JOY account, then enter the code from the label. You are entered into that week’s prize draw.' },
+      { q: 'How many times can I enter?', a: 'One entry per person, per week. The week resets on a Monday.' },
+      { q: 'When are the winners picked?', a: 'A draw takes place every Monday for the entries from the week before. Winners are contacted by email.' },
+      { q: 'What are the dates of the promotion?', a: 'The promotion opens 00:01 BST on 19th October 2026 and closes 23:59 GMT on 31st January 2027.' },
+    ],
+    mechanic: 'draw', limit: 'week', codePrefix: 'GB',
+    codeHelp: 'Find the code on the back of the label. It starts with GB.',
+    drawPrize: 'a spa day for you and your bestea',
+  },
+  {
+    slug: 'quaker-mornings', brand: 'quaker', brandLabel: 'Quaker',
+    title: 'POWER YOUR MORNINGS', subtitle: 'Win £1,000 to fuel your passion, plus prizes every week',
+    teaserTitle: 'POWER YOUR MORNINGS', teaserText: 'Win £1,000 to fuel your passion, plus fitness prizes to be won every week.',
+    start: '2026-10-05', end: '2026-12-20', countries: ['gb', 'ie'],
+    theme: { bg: '#00273B', ctaBg: '#FFFFFF', ctaText: '#1443FF', deco: g('deco-quaker.svg') },
+    images: {
+      header: img('quaker-mornings', 'header-desktop.webp'), headerMobile: img('quaker-mornings', 'header-mobile.webp'),
+      logo: './images/brands/logo-quaker-on-dark.webp', card: img('quaker-mornings', 'card.webp'),
+    },
+    stepsTitle: 'HOW TO TAKE PART',
+    steps: [
+      { text: 'Purchase a Quaker Oat So Simple Promotional Pack', image: img('quaker-mornings', 'step-1.webp') },
+      { text: 'Scan QR code to log in or register an account', image: img('avengers-doomsday', 'step-2.webp') },
+      { text: 'Enter code on the back of pack to find out if you’ve won!', image: g('step-code.webp') },
+    ],
+    disclaimer: 'PLACEHOLDER FOR TESTING. UK & ROI, 18+ only. 06:00 – 23:59 daily 05/10/26 – 20/12/26. Purchase Promotional Pack, scan the QR code, sign in to your JOY account (or create one for free) and enter the code on the back of pack to find out instantly if you have won a Weekly Prize. All entries entered into the Grand Prize draw. Prizes: Grand Prize: 3 x £1,000 (or € equivalent). Weekly Prizes: 110 x smart fitness watches, 550 x insulated breakfast flasks. Max 1 entry per person per week. Retain packaging to claim. Promoter: PLACEHOLDER.',
+    prizesTitle: 'FUEL YOUR PASSION', prizesSubtitle: 'Prizes to be won every week!',
+    prizes: [
+      { name: '£1,000 to Fuel Your Passion', image: img('quaker-mornings', 'prize-1000.webp') },
+      { name: 'Smart Fitness Watch', image: img('quaker-mornings', 'prize-watch.webp'), instant: true },
+      { name: 'Insulated Breakfast Flask', image: img('quaker-mornings', 'prize-flask.webp'), instant: true },
+    ],
+    faqs: [
+      { q: 'How do I enter?', a: 'Purchase a Quaker Oat So Simple Promotional Pack and scan the QR code. Log in or register a JOY account, then enter the code from the back of pack. You will find out instantly if you have won a Weekly Prize, and every entry goes into the draw for £1,000.' },
+      { q: 'How many times can I enter?', a: 'One entry per person, per week. The week resets on a Monday.' },
+      { q: 'What can I win?', a: 'There are 660 Weekly Prizes: 110 smart fitness watches and 550 insulated breakfast flasks. Every entry is also entered into the draw to win 1 of 3 x £1,000.' },
+      { q: 'What are the dates of the promotion?', a: 'The promotion opens 06:00 BST on 5th October 2026 and closes 23:59 GMT on 20th December 2026.' },
+    ],
+    mechanic: 'instant', limit: 'week', codePrefix: 'GB',
+    codeHelp: 'Find the code on the back of the pack, in the best-before box. It starts with GB.',
+    drawPrize: '£1,000 to fuel your passion',
   },
 ]
 

@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { ChevronDown, LogOut, Menu, Ticket, User as UserIcon, X } from 'lucide-react'
+import { ChevronDown, Menu, User as UserIcon, X } from 'lucide-react'
 import { brands } from '../../data/brands'
 import { useStore } from '../../state/store'
 import { useDesign } from '../../state/design'
 import { useChromeTheme } from '../../state/chrome'
+import { FavouriteButton } from '../ui/FavouriteButton'
 import './layout.css'
 
 export function Navbar() {
   const { user, logout } = useStore()
   const [brandsOpen, setBrandsOpen] = useState(false)
-  const [userOpen, setUserOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
@@ -20,11 +20,11 @@ export function Navbar() {
   const cobrand = chrome !== 'joy' && theme?.logo ? theme : null
 
   // Close every menu when the page changes
-  useEffect(() => { setBrandsOpen(false); setUserOpen(false); setMobileOpen(false) }, [location.pathname])
+  useEffect(() => { setBrandsOpen(false); setMobileOpen(false) }, [location.pathname])
 
   useEffect(() => {
-    const onDown = (e: MouseEvent) => { if (navRef.current && !navRef.current.contains(e.target as Node)) { setBrandsOpen(false); setUserOpen(false) } }
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setBrandsOpen(false); setUserOpen(false); setMobileOpen(false) } }
+    const onDown = (e: MouseEvent) => { if (navRef.current && !navRef.current.contains(e.target as Node)) setBrandsOpen(false) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setBrandsOpen(false); setMobileOpen(false) } }
     document.addEventListener('mousedown', onDown)
     document.addEventListener('keydown', onKey)
     return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey) }
@@ -54,7 +54,7 @@ export function Navbar() {
           <li>
             <button
               type="button" className={`navbar__link ${onBrands || brandsOpen ? 'active' : ''}`}
-              aria-expanded={brandsOpen} aria-controls="brands-menu" onClick={() => { setBrandsOpen(!brandsOpen); setUserOpen(false) }}
+              aria-expanded={brandsOpen} aria-controls="brands-menu" onClick={() => setBrandsOpen(!brandsOpen)}
             >
               Brands <ChevronDown size={16} className={brandsOpen ? 'rot' : ''} aria-hidden />
             </button>
@@ -63,17 +63,10 @@ export function Navbar() {
 
         <div className="navbar__session">
           {user ? (
-            <div className="user-menu">
-              <button type="button" className={`user-menu__toggle ${onProfile || userOpen ? 'active' : ''}`} aria-expanded={userOpen} onClick={() => { setUserOpen(!userOpen); setBrandsOpen(false) }}>
-                <UserIcon size={24} fill="currentColor" aria-hidden /> <span>Hi {user.firstName}</span> <ChevronDown size={16} className={userOpen ? 'rot' : ''} aria-hidden />
-              </button>
-              {/* Menus stay mounted so they can animate out; closed ones are visibility: hidden (out of tab order and screen readers) */}
-              <ul className={`user-menu__list ${userOpen ? 'is-open' : ''}`}>
-                <li><Link to="/profile"><UserIcon size={18} aria-hidden /> My profile</Link></li>
-                <li><Link to="/profile#entries"><Ticket size={18} aria-hidden /> My entries</Link></li>
-                <li><button type="button" onClick={doLogout}><LogOut size={18} aria-hidden /> Log out</button></li>
-              </ul>
-            </div>
+            // Change 55: a plain link to the profile page (no dropdown); Log out lives on the profile page
+            <Link to="/profile" className={`user-menu__toggle ${onProfile ? 'active' : ''}`}>
+              <UserIcon size={24} fill="currentColor" aria-hidden /> <span>Hi {user.firstName}</span>
+            </Link>
           ) : (
             <>
               <Link to="/login" state={{ from: location.pathname }} className="btn btn--outline-white">Login</Link>
@@ -88,10 +81,12 @@ export function Navbar() {
       </nav>
 
       <div id="brands-menu" className={`brands-menu ${brandsOpen ? 'is-open' : ''}`}>
+        {/* Change 46: each logo has a heart in its corner (a sibling of the link, so it doesn't open the page) */}
         {brands.map((b) => (
-          <Link key={b.slug} to={`/brands/${b.slug}`} className="brands-menu__item">
-            <img src={b.logo} alt={b.name} />
-          </Link>
+          <div key={b.slug} className="brands-menu__item brands-menu__brand">
+            <Link to={`/brands/${b.slug}`} className="brands-menu__link"><img src={b.logo} alt={b.name} /></Link>
+            <FavouriteButton brand={b} className="brands-menu__fav" />
+          </div>
         ))}
         <Link to="/brands" className="brands-menu__item brands-menu__all">All brands</Link>
         <span className="brands-menu__item brands-menu__placeholder" aria-hidden><img src="./images/global/menu-logo-placeholder.svg" alt="" /></span>
@@ -103,7 +98,10 @@ export function Navbar() {
         <NavLink to="/brands" className="mobile-menu__link">Brands</NavLink>
         <div className="mobile-menu__brands">
           {brands.map((b) => (
-            <Link key={b.slug} to={`/brands/${b.slug}`}><img src={b.logo} alt={b.name} /></Link>
+            <div key={b.slug} className="mobile-menu__brand">
+              <Link to={`/brands/${b.slug}`}><img src={b.logo} alt={b.name} /></Link>
+              <FavouriteButton brand={b} className="mobile-menu__fav" />
+            </div>
           ))}
         </div>
         {user ? (

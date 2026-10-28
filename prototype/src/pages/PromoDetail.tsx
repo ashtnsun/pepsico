@@ -42,9 +42,9 @@ export default function PromoDetail() {
   const links = [
     { id: 'prizes', label: 'Prizes' },
     promo.steps.length ? { id: 'steps', label: 'Steps' } : null,
-    { id: 'terms', label: 'Terms and conditions' },
     promo.faqs.length ? { id: 'faqs', label: 'FAQs' } : null,
     ended && others.length ? { id: 'others', label: 'Other promotions' } : null,
+    { id: 'terms', label: 'Terms and conditions' },
   ].filter(Boolean) as { id: string; label: string }[]
 
   return (
@@ -105,31 +105,34 @@ export default function PromoDetail() {
         cta={ended ? undefined : blocked ? { label: 'Already entered', to: '#', disabled: true } : { label: 'Participate here', to: user ? participateTo : '/login' }}
       />
 
-      {/* Order: prizes, steps, the legal text with the contact and T&C links right under it, participate, FAQs */}
+      {/* Order: prizes, steps, participate, FAQs, (other promotions), then the legal text and T&C links last (change 33) */}
       <Prizes promo={promo} />
       <Steps promo={promo} />
 
-      <PromoTerms promo={promo} />
-
       {!ended && <CtaBanner promo={promo} to={user ? participateTo : '/login'} label="Participate here" />}
 
-      {promo.faqs.length > 0 && (
-        <section id="faqs" className="promo-faq" aria-labelledby="faq-title">
-          <div className="promo-faq__side">
-            <h2 id="faq-title" className="promo-faq__title">Frequently asked questions</h2>
-            <p className="promo-faq__text">Can’t find your answer here? All FAQs cover your account, codes and prizes.</p>
-            <Link to="/faq" className="btn btn--outline">Go to all FAQs</Link>
-          </div>
-          <Accordion items={promo.faqs} />
-        </section>
-      )}
+      {/* Changes 43 and 49: FAQs, other promotions and the terms sit on white, even on dark-brand pages */}
+      <div className="promo-tail">
+        {promo.faqs.length > 0 && (
+          <section id="faqs" className="promo-faq" aria-labelledby="faq-title">
+            <div className="promo-faq__side">
+              <h2 id="faq-title" className="promo-faq__title">Frequently asked questions</h2>
+              <p className="promo-faq__text">Can’t find your answer here? All FAQs cover your account, codes and prizes.</p>
+              <Link to="/faq" className="btn btn--outline">Go to all FAQs</Link>
+            </div>
+            <Accordion items={promo.faqs} />
+          </section>
+        )}
 
-      {ended && others.length > 0 && (
-        <section id="others" aria-labelledby="others-title" style={{ padding: '40px 0 48px' }} data-brand="joy">
-          <h2 id="others-title" className="section-title">Check out other promotions:</h2>
-          {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
-        </section>
-      )}
+        {ended && others.length > 0 && (
+          <section id="others" className="promo-others" aria-labelledby="others-title" data-brand="joy">
+            <h2 id="others-title" className="section-title">Check out other promotions:</h2>
+            {others.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
+          </section>
+        )}
+
+        <PromoTerms promo={promo} />
+      </div>
     </div>
   )
 }

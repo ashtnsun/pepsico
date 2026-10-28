@@ -1090,3 +1090,141 @@ Add one entry per prompt, newest at the bottom. Template:
 - **Files:** `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`.
 - **Checked by:** `tsc -b`. Headless Chromium at 1440 and 390 px on `#/promotions` (5 slides, starts on slide 2): right click → 3, right → 4, left → 3; left from slide 1 wraps to slide 5; cursor reads `e-resize` / `w-resize`; a dot still selects its slide; "See more" opens the promotion page. No page errors. Keyboard users still use the dots (the click areas are a mouse and touch shortcut only).
 - **Decision record:** none.
+
+### Change 55 — Navbar "Hi Sam" is a plain link; Log out added to the profile page list — 2026-10-27
+
+- **Prompt (verbatim):** ON the nav bar, change the profile tab to a normal button instead of a dropdown. In the profile page, add Log out as an option  on the right list.
+- **What changed:**
+  - Navbar (logged in, desktop): "Hi Sam" is now a plain link to the profile page. The chevron and the dropdown (My profile / My entries / Log out) are gone. Hover still underlines it, and it's bold while you're on the profile page. The phone menu is unchanged (it already had "My profile" and "Log out").
+  - Profile page: "Log out" is added under My details / My entries / Settings, with the same look as those items. It sits outside the tab list for screen readers, because it isn't a tab. The Log out button in Settings stays.
+  - Fix: logging out from the profile page now goes to Home. Before, it went to the Login page, because the profile page's "not logged in" redirect ran before the move to Home (the page change waits for its fade).
+  - The CSS for the removed dropdown is deleted.
+- **Why:** user's request. The dropdown's only other job (Log out) needed a new home, so it moves to the profile page list.
+- **How AI was used:** Claude replaced the dropdown with a link, added the list item, removed the unused CSS, and found and fixed the logout redirect during browser testing.
+- **Files:** `prototype/src/components/layout/Navbar.tsx`, `prototype/src/components/layout/layout.css`, `prototype/src/pages/Profile.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Headless Chromium (test user, 3 entries): at 1440 px the navbar has no buttons in the session area, and "Hi Sam" links to `#/profile` and opens it. Log out on the profile list goes to `#/` with Login/Register showing. At 390 px, Log out goes to `#/`. Screenshots at both widths look right. No page errors.
+- **Decision record:** none.
+
+### Change 56 — Profile page: "Log out" in red — 2026-10-27
+
+- **Prompt (verbatim):** change log out color to red
+- **What changed:** the "Log out" item in the profile page list (added in change 55) now uses the error red `var(--color-feedback-error)` (#B21119) for its text and icon, the same red as "Delete profile". The hover underline is red too. The Log out button in the Settings tab is unchanged.
+- **Why:** user's request. Red sets it apart from the three tabs above it.
+- **How AI was used:** Claude added one CSS rule using the existing error token and checked it in the browser.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** headless Chromium screenshot at 1440 px of `#/profile`: Log out shows in red under the tabs, and clicking it still goes to `#/`. The 390 px run also passes (same rule at every width).
+- **Decision record:** none.
+
+### Change 56 — Promotions hero: normal cursor (undoes change 54's arrow cursors) — 2026-10-27
+
+- **Prompt (verbatim):** on the promotions page, dont change the cursor on the hero banner
+- **What changed:** the mouse cursor no longer turns into a left or right arrow over the hero carousel. It stays the normal arrow, and links and buttons inside the hero still show the hand. Clicking the left or right half still changes slide (change 54 is otherwise kept). The mouse-move tracking that only set the arrow is removed.
+- **Why:** user's request.
+- **How AI was used:** Claude removed the cursor CSS and the mouse-move handler, and folded the left/right check into the click handler.
+- **Files:** `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc -b`. Headless Chromium at 1440 px on `#/promotions`: cursor reads `auto` at 20% and 80% across the hero, "See more" link reads `pointer`; right click goes slide 2 → 3, left click 3 → 2. No page errors.
+- **Decision record:** none.
+
+### Change 57 — Profile page: open tab no longer underlined — 2026-10-27
+
+- **Prompt (verbatim):** remove underline from only the active state (follow-up to "remove the udnerline from the active state/hover effect", which the user interrupted and narrowed)
+- **What changed:** in the profile page list (My details / My entries / Settings / Log out), the open tab is shown only by bold blue text, with no underline, even on hover. Hovering any other item still fades in the underline, as before.
+- **Why:** user's request.
+- **How AI was used:** Claude limited the hover underline rule to tabs that aren't open and checked the computed styles in the browser.
+- **Files:** `prototype/src/pages/pages.css`.
+- **Checked by:** headless Chromium at 1440 px (test user): the open tab's underline colour is transparent at rest and on hover. A hovered closed tab shows its underline (rgb 51,51,51). Element screenshot looks right.
+- **Decision record:** none.
+
+### Change 59 — Logged-out home hero: whole photo, flush right, like the live site — 2026-10-27
+
+- **Prompt (verbatim):** On the non-logged in screen, the right side of the hero image content is cutoff
+- **Follow-up (verbatim):** Undo?? this is how it's supposed to look [screenshot of the live-site JOY hero]
+- **What changed:** the first attempt (a smaller circle moved in from the edge) was undone. On desktop (992 px and wider), the JOY "Register to participate" hero now shows the whole photo instead of a circle crop. The photo is flush to the right edge and sits on the bottom curve, so her raised arm, the purple ✕ and her jeans are all visible. Only its left side is cut, by a large curve. The photo is 631 px wide (its width at the 715 px hero height) and shrinks to 46% of the window below about 1370 px so it doesn't run under the text. Promo slides and mobile are unchanged.
+- **Why:** the live site shows this photo whole (`brand-joy .right-column .hero-image`: image `width: auto; max-height: 725px`, left edge cut by `Brabd-Hero-desktop-mask.png`). The old 950 px circle crop cut her side off at the right edge and her head at the top.
+- **How AI was used:** Claude read the live-site CSS rule and tried to download the mask PNG, but the live site returns 403 to scripts and to the test browser. So Claude measured the user's screenshot against the source photo (scale 0.746, curve crossing the top at 30% of the width, leftmost point at 54% of the height) and rebuilt the curve as `clip-path: circle(74% at 79% 54.5%)` on a new `hero-slide--joy` class.
+- **Files:** `prototype/src/components/promo/HeroCarousel.tsx`, `prototype/src/components/promo/promo.css`.
+- **Checked by:** `tsc --noEmit`. Playwright screenshots of logged-out `#/` at 1024, 1440 and 1920 px: the whole photo shows, flush right, with the curved left edge, and at 1024 px it stays clear of the text. 390 px is unchanged.
+- **Decision record:** none. The curve is an approximation of the live-site mask (NEEDS SOURCE for the exact PNG if it matters).
+
+### Change 58 — Config menu: five progress bar styles for the home hero and the result page — 2026-10-27
+
+- **Prompt (verbatim):** on the logged in home page, I like the current hero section, however I dont like the styling of the progress bar itself. Add to the config menu 5 variants of only the progress bar, that will update the variant in the hero as well as the participation results screen.
+- **What changed:** a new **Progress bar** section in the design config menu (press C). It has six choices: Original plus five new styles. The choice swaps only the bar. The headline, greeting, "Claim your reward" button and the rest of the hero stay the same. It applies on the C · Big track home hero (the default) and in the "to your next JOY reward" box on the result page after entering a code.
+  - **Original** (default, unchanged): chunky yellow track with big dots and an "n / 4" bubble.
+  - **A · Slim line:** thin rail with small dots, an "n of 4 entries" count above, and a gift dot at the end.
+  - **B · Segments:** one rounded block per entry with a gap between, labels underneath with a tick once done. The reward block has a yellow outline until it's earned.
+  - **C · Stepper:** numbered circles joined by lines. Done entries are yellow with a tick, and the next entry is white with a soft ring. The reward circle is purple and turns yellow once earned.
+  - **D · Meter card:** a soft see-through panel with a big "n/4 entries" count, a 4-part bar and a gift tile that turns yellow and pulses once earned. On phones and in the narrow result box, the bar moves under the count so its labels don't collide.
+  - **E · Tickets:** one ticket per entry, with side notches and a dashed inner line. A ticket turns yellow with a tick once used, and the last ticket (purple) is the reward. In narrow spaces the icon stacks over the label.
+  - The menu also has two buttons: **Home hero** (switches to the Big track hero and opens Home) and **Latest result** (opens the result page of the test user's newest entry).
+  - All styles use the same JOY colours as the hero (yellow, purple, navy, white on the dark blue). They keep the progress bar role and label for screen readers, and they keep the "bar stays full while a reward waits to be claimed" rule (change 47).
+- **Why:** user's request. They like the hero but not the bar, so only the bar is up for exploration.
+- **How AI was used:** Claude designed the five styles. It added a `RewardBar` component that picks the style from the config setting, and pointed the hero and result page at it. It screenshotted every style at 0–4 entries, at 1440 and 390 px, on both screens, then fixed the collisions it found: Meter card labels on phones and in the result box, and ticket labels cut off in the result box.
+- **Files:** `prototype/src/components/promo/RewardBar.tsx` (new), `prototype/src/components/promo/reward-bar.css` (new), `prototype/src/state/design.tsx`, `prototype/src/moderator/ConfigPanel.tsx`, `prototype/src/components/promo/HeroVariants.tsx`, `prototype/src/components/promo/hero-variants.css`, `prototype/src/pages/Result.tsx`, `prototype/src/pages/pages.css`.
+- **Checked by:** `tsc -b`. Headless Chromium, test user with 2 entries (part way) and 4 entries (reward unlocked), every style, Home hero and result page, at 1440 and 390 px: element screenshots look right after the fixes above, there's no sideways scroll, and there are no page errors.
+- **Decision record:** none. This is an exploration; the default stays Original until the team picks one.
+
+### Change 60 — Logged-in home: "Suggested for you" shows 3 promotions — 2026-10-27
+
+- **Prompt (verbatim):** On the logged in home page, the suggested for you should only have 3 promos
+- **What changed:** "Suggested for you" now shows at most 3 promotions, so it's one row on desktop. The order is the same as before: promotions you haven't entered yet, with your hearted brands first. The "See all promotions" link beside the heading leads to the rest. If you've entered every active promotion, the empty message still shows.
+- **Why:** user's request. It also matches "Your entries", which already shows 3.
+- **How AI was used:** Claude added `.slice(0, 3)` after the favourite-brand sort in the logged-in home.
+- **Files:** `prototype/src/pages/Home.tsx`.
+- **Checked by:** `tsc --noEmit` (passes). The browser check was skipped because another session was using the Playwright browser.
+- **Decision record:** none.
+
+### Change 61 — Logged-out home: "Current promotions" shows 3 promotions — 2026-10-27
+
+- **Prompt (verbatim):** On the non logged in home, the current promotions section should only have 3 cards,
+- **What changed:** "Current promotions" on the logged-out home now shows only the first 3 active promotions, in the same curated order and with the same alternating left/right layout. The "See all promotions" button under them leads to the rest.
+- **Why:** user's request. It matches the logged-in home, where "Suggested for you" shows 3 (change 60).
+- **How AI was used:** Claude added `.slice(0, 3)` to the active promotions list in the logged-out home.
+- **Files:** `prototype/src/pages/Home.tsx`.
+- **Checked by:** `tsc --noEmit` (passes). No browser check.
+- **Decision record:** none.
+
+### Change 62 — Progress bar default is now D · Meter card — 2026-10-27
+
+- **Prompt (verbatim):** set defauly progress bar to meter card
+- **What changed:** the progress bar on the Big track home hero and the result page now shows **D · Meter card** by default instead of Original. The config menu (press C) marks Meter card as the default, and the other styles can still be picked there.- **Why:** user's request. The team picked Meter card from the five styles in change 58.
+- **How AI was used:** Claude changed the default in the design settings and moved the "Default." note in the menu. It also renamed the saved-settings key (v2 → v3), because every browser had already saved "Original" and would otherwise keep showing it. Side effect: any config menu choices a tester made before (hero, card, global elements) go back to their defaults once.
+- **Files:** `prototype/src/state/design.tsx`.
+- **Checked by:** `tsc --noEmit` (passes). No browser check.
+- **Decision record:** none.
+
+---
+
+## Save state 2 — "pre-testing" — 2026-10-27
+
+**Title:** pre-testing. The prototype right before usability testing.
+**Code at this state:** commit "prototype save state 2: pre-testing", which adds this entry. It also includes changes 57–62, which weren't committed before.
+**Screenshots (taken 2026-10-27):** `docs/save-states/save-state-2/desktop-1440/` and `docs/save-states/save-state-2/mobile-390/` (32 pages each, full page). The method and the list of screenshots are in `docs/save-states/save-state-2/README.md`.
+
+### The prompt (verbatim)
+
+> preform a save state right now on current, title it pre-testing
+
+### Summary
+
+Since save state 1, 62 prompts (changes 1–62, on 2026-10-26 and 2026-10-27) polished the prototype page by page and added the features the team wants to test. The look still follows the live site. A few experiments sit on top, and the team can switch them or review them before testing.
+
+- **Home, logged out:** one "Register to participate" hero that shows the whole photo, like the live site (59). One merged "Creating Joy" section (1–3). "Current promotions" cut to 3 (61).
+- **Home, logged in:** a "Hi Sam!" hero with a reward progress bar (37, 38, 51, 53). "Claim your reward" after every 4 entries (47). The Meter card bar is the default (58, 62). "Suggested for you" is cut to 3 (60), and the page ends after "Your entries" (6).
+- **Navigation:** a Home tab, centred tabs and an underlined active tab (7, 16). "Hi Sam" is a plain link, and Log out moved to the profile page (55–57). Brand logo in the navbar (32).
+- **Promotions:** the heading sits above the Brand, Promotion type and Sort filters. One 3-column grid lists ended promotions last (8–10, 52). Every card is clickable (31). Hero slides change when you click the left or right side (54, 56).
+- **Promotion pages:** prizes come first, and the hero has the live-site curve. Section gaps are even. A sticky section menu takes the navbar's place while you scroll (13, 28, 29, 33–35, 44, 45). Dark-brand pages use the brand colour, with FAQs and terms on white (21, 25–27, 43, 49).
+- **Entering a code:** one centred participate column (14). A brand-specific "Calculating your results" animation (24). A clearer result page with the reward bar (15, 39, 46).
+- **Brands:** a "Promos from other brands" carousel (21, 22) and the hero curve on brand pages (30). Heart a brand to see its promotions first (46).
+- **New test content:** three placeholder active promotions for 7UP, Lipton and Quaker. 7UP uses its official colours (46, 50, 51).
+- **Design config menu (press C):** 5 home hero, 5 promotion card and 6 progress bar styles to compare (17, 18, 58). The defaults are the Big track hero, Poster cards and the Meter card bar.
+- **Motion:** page crossfades, transitions on menus, the accordion and the carousel, and hover states (23, 24).
+
+### Open questions at this state
+
+- Changes 21 and 25–27 put the brand colour on the navbar, breadcrumb, newsletter, footer and page background of promotion and brand pages. Keeping them would replace D36 ("JOY blue on every page"). There's no decision record for this yet.
+- The reward rule (every 4 entries earns a bonus entry into the JOY monthly draw) and the draw date are still made up (D39).
+- The curve on the logged-out hero is an approximation of the live-site mask (NEEDS SOURCE for the exact image).
+- The 7UP, Lipton and Quaker promotions are placeholders, not live-site content.
+
+## Changes after save state 2

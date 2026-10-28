@@ -3,7 +3,7 @@
 // session survives page reloads; the moderator panel can reset it.
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { getPromo } from '../data/promos'
-import { TODAY } from '../data/config'
+import { REWARD_EVERY, TODAY } from '../data/config'
 
 export type User = {
   email: string
@@ -28,6 +28,9 @@ export type Entry = {
   prize?: string
 }
 
+/** A JOY reward the person claimed from the home hero (one per REWARD_EVERY entries). */
+export type Claim = { id: string; ref: string; date: string }
+
 export type OutcomeMode = 'random' | 'win' | 'lose'
 
 type Data = {
@@ -40,13 +43,17 @@ type Data = {
   ignoreLimits: boolean
   country: string | null
   seenWelcome: boolean
+  /** Change 46: brand slugs the person hearted. Kept per browser, not per account, so it also works logged out. */
+  favouriteBrands: string[]
+  /** Change 47: rewards claimed, by email. Rewards earned minus these = rewards waiting to be claimed. */
+  claims: Record<string, Claim[]>
 }
 
 const KEY = 'joy-prototype-v1'
 
 const empty: Data = {
   accounts: {}, entries: {}, usedCodes: [], currentEmail: null, newsletter: [],
-  outcomeMode: 'random', ignoreLimits: false, country: 'gb', seenWelcome: false,
+  outcomeMode: 'random', ignoreLimits: false, country: 'gb', seenWelcome: false, favouriteBrands: [], claims: {},
 }
 
 const load = (): Data => {
@@ -70,6 +77,9 @@ export type EnterResult =
 type Store = Data & {
   user: User | null
   myEntries: Entry[]
+  myClaims: Claim[]
+  unclaimedRewards: number
+  claimReward: () => Claim | null
   register: (u: User) => 'ok' | 'exists'
   login: (email: string) => boolean
   socialLogin: (provider: 'google' | 'facebook') => { isNew: boolean }
@@ -81,6 +91,7 @@ type Store = Data & {
   canEnter: (promoSlug: string) => boolean
   subscribe: (email: string) => 'ok' | 'already'
   setCountry: (code: string) => void
+  toggleFavourite: (brandSlug: string) => void
   setFlag: (patch: Partial<Pick<Data, 'outcomeMode' | 'ignoreLimits' | 'seenWelcome'>>) => void
   resetAll: () => void
   loginAsTestUser: (entries: number) => void
@@ -100,6 +111,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const user = data.currentEmail ? data.accounts[data.currentEmail] ?? null : null
   const myEntries = useMemo(() => (user ? data.entries[user.email] ?? [] : []), [data.entries, user])
+
+  const myClaims = useMemo(() => (user ? data.claims[user.email] ?? [] : []), [data.claims, user])
+  const unclaimedRewards = Math.max(0, Math.floor(myEntries.length / REWARD_EVERY) - myClaims.length)
+
+  const claimReward = useCallback(() => {
+    if (!user || unclaimedRewards < 1) return null
+    const claim: Claim = { id: uid(), ref: `JOY-${uid().slice(0, 6).toUpperCase()}`, date: `${TODAY} ${nowTime()}` }
+    setData((d) => ({ ...d, claims: { ...d.claims, [user.email]: [...(d.claims[user.email] ?? []), claim] } }))
+    return claim
+  }, [unclaimedRewards, user])
 
   const register = useCallback((u: User) => {
     const email = u.email.trim().toLowerCase()
@@ -208,6 +229,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, [data.newsletter])
 
   const setCountry = useCallback((code: string) => setData((d) => ({ ...d, country: code })), [])
+  const toggleFavourite = useCallback((slug: string) => setData((d) => ({
+    ...d,
+    favouriteBrands: d.favouriteBrands.includes(slug) ? d.favouriteBrands.filter((b) => b !== slug) : [...d.favouriteBrands, slug],
+  })), [])
   const setFlag = useCallback((patch: Partial<Data>) => setData((d) => ({ ...d, ...patch })), [])
   const resetAll = useCallback(() => setData({ ...empty }), [])
 
@@ -222,13 +247,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       ...d,
       accounts: { ...d.accounts, [TEST_USER.email]: TEST_USER },
       entries: { ...d.entries, [TEST_USER.email]: entries },
+      claims: { ...d.claims, [TEST_USER.email]: [] },
       currentEmail: TEST_USER.email,
     }))
   }, [])
 
   const value: Store = {
-    ...data, user, myEntries, register, login, socialLogin, completeOnboarding, logout, updateProfile,
-    deleteAccount, enter, canEnter, subscribe, setCountry, setFlag, resetAll, loginAsTestUser,
+    ...data, user, myEntries, myClaims, unclaimedRewards, claimReward, register, login, socialLogin, completeOnboarding, logout, updateProfile,
+    deleteAccount, enter, canEnter, subscribe, setCountry, toggleFavourite, setFlag, resetAll, loginAsTestUser,
   }
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

@@ -923,3 +923,28 @@ document/screenshot all pages of the current dev site. This is pre-visual explor
 
 ### Open questions / next steps
 - If this should count as save state 2, the folder can be moved to `docs/save-states/save-state-2/` with a summary.
+
+---
+## Session 22 — Prototype save state 2: "pre-testing" — 2026-10-27
+
+### Prompt (verbatim)
+preform a save state right now on current, title it pre-testing
+
+### What I did
+- Ran the prototype type check (passes). Started a dev server on port 5190 with the current working copy, which includes changes 57–62 that weren't committed yet.
+- Took full-page screenshots of 32 pages and states at 1440 px and 390 px with a Playwright script. Each page opened in a fresh browser with its own test data. The pages are the same as save state 1, plus the reward-ready home, the 7UP, Lipton and Quaker promotions, and the 7UP brand page.
+- Wrote the save-state summary in `docs/prototype-iterations.md`: changes 1–62 grouped by page, plus open questions. Wrote `docs/save-states/save-state-2/README.md` with the method and the screenshot list.
+
+### Changes
+- Repo: `docs/save-states/save-state-2/` (README.md and 64 PNGs), `docs/prototype-iterations.md`, `docs/process-log.md`. The save-state commit also includes the uncommitted prototype changes 57–62.
+- Figma: none.
+
+### Decisions
+- Numbered this as save state 2. Session 21's `docs/pre-visual-exploration/` stays as it is, because it wasn't called a save state.
+
+### Verification
+- The capture script logged every shot on the expected route, with no page errors and no sideways scroll.
+- Opened four shots: logged-out home and logged-in home (1440), win result (390) and onboarding (1440). All looked as expected.
+
+### Open questions / next steps
+- If the team keeps the brand-coloured page chrome (changes 21, 25–27), it replaces D36. The team needs to decide before testing.

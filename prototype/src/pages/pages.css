@@ -52,6 +52,9 @@
 .brand-band { position: relative; overflow: hidden; text-align: center; padding: 72px var(--spacing-20) 120px; }
 .brand-band h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; position: relative; }
 .brand-band .btn { margin-top: 24px; position: relative; }
+/* Change 46: heart button next to "Visit brand website" (below it when they don't fit side by side) */
+.brand-band .brand-band__fav { margin-left: var(--spacing-12); }
+@media (max-width: 575px) { .brand-band .brand-band__fav { margin: 12px 0 0; } }
 .brand-band__tagline { margin-top: 32px; font-size: var(--font-size-20); font-weight: 600; position: relative; }
 .brand-band__deco { position: absolute; top: 30px; width: 180px; }
 .brand-band__deco--l { left: -10px; } .brand-band__deco--r { right: -10px; transform: scaleX(-1); }
@@ -80,6 +83,9 @@
 .brands-grid a:hover .h3 { color: var(--color-text-hover); }
 .brands-grid img { max-height: 70%; max-width: 80%; object-fit: contain; transition: transform var(--dur-slow) var(--ease-out); }
 .brands-grid a:hover img { transform: scale(1.06); }
+/* Change 46: heart in the top-right corner of each brand */
+.brands-grid__card { position: relative; }
+.brands-grid__fav { position: absolute; top: 16px; right: 16px; }
 .brands-grid__count { font-size: var(--font-size-14); color: var(--color-text-secondary); font-weight: 400; }
 @media (max-width: 767px) {
   .brands-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 16px 48px; }
@@ -134,10 +140,11 @@
 
 /* ---------- Participate ---------- */
 /* Fills the screen under the navbar, so the footer only appears after scrolling */
-/* Change 39: participation and result pages sit on the promotion's brand colour (was grey), with the form or result on a white card */
-.participate { background: var(--promo-bg); min-height: calc(100svh - var(--site-nav-height)); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+/* Change 39: participation and result pages sit on the promotion's brand colour (was grey), with the form or result on a white card.
+   Change 46: a shade of it (stageStyle in state/chrome.ts), so the page doesn't merge with the brand-colour navbar and footer. */
+.participate { background: var(--stage-bg, var(--promo-bg)); min-height: calc(100svh - var(--site-nav-height)); display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
 .participate__main { width: 100%; max-width: 560px; }
-.participate__promo { display: flex; align-items: center; gap: 16px; color: var(--chrome-text, #fff); padding: 0 8px; margin-bottom: 24px; }
+.participate__promo { display: flex; align-items: center; gap: 16px; color: var(--stage-text, #fff); padding: 0 8px; margin-bottom: 24px; }
 .participate__art { width: 72px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; flex: none; }
 .participate__promo .date-line { font-size: var(--font-size-14); line-height: 18px; margin: 4px 0 0; }
 .participate__kicker { font-size: var(--font-size-14); line-height: 18px; text-transform: uppercase; opacity: .85; }
@@ -158,7 +165,7 @@
 }
 
 /* ---------- Result ---------- */
-.result { background: var(--promo-bg); min-height: calc(100svh - var(--site-nav-height)); display: flex; justify-content: center; padding: 48px 24px 80px; }
+.result { background: var(--stage-bg, var(--promo-bg)); min-height: calc(100svh - var(--site-nav-height)); display: flex; justify-content: center; padding: 48px 24px 80px; }
 .result__card { background: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); padding: 40px 48px; text-align: center; animation: rise-in var(--dur-slow) var(--ease-out) backwards; }
 .result__card h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
 .result__prize { margin-top: 20px; }
@@ -169,17 +176,14 @@
 .result__note strong { color: var(--color-text-default); }
 .result__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 32px; }
 .result__code { margin-top: 24px; font-size: var(--font-size-14); color: var(--color-text-secondary); }
-/* Progress towards the next JOY reward: one segment per entry in the action colour */
-.reward { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--color-border-default); text-align: left; }
-.reward__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-.reward__head h2 { font-size: var(--font-size-20); line-height: 26px; font-weight: 700; }
-.reward__count { flex: none; font-size: var(--font-size-14); font-weight: 600; color: var(--color-text-secondary); }
-.reward__bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
-.reward__bar span { height: 12px; border-radius: var(--radius-control); background: color-mix(in srgb, var(--site-blue) 14%, #fff); overflow: hidden; }
-.reward__bar span.is-done::after { content: ''; display: block; height: 100%; background: var(--site-blue); }
-.reward__bar span.is-new::after { transform-origin: left; animation: reward-fill .7s var(--ease-out) .5s backwards; }
-@keyframes reward-fill { from { transform: scaleX(0); } }
-.reward__text { margin-top: 12px; font-size: var(--font-size-14); line-height: var(--line-height-18); color: var(--color-text-secondary); }
+/* Progress towards the next JOY reward. Change 46: the home hero's track bar (HeroVariants.tsx) on the hero's JOY blue,
+   in JOY colours on every brand (data-brand="joy"), since the reward belongs to JOY */
+.reward { margin-top: 32px; padding: 28px 28px 24px; border-radius: var(--radius-card); background: var(--site-blue-dark); color: #fff; text-align: left; }
+.reward h2 { font-size: var(--font-size-24); line-height: var(--line-height-28); font-weight: 800; }
+.reward h2 em { font-style: normal; color: var(--site-yellow); }
+.reward .hv-track__bar { margin: 80px 20px 64px 0; }
+.reward .hv-track__fill { animation-delay: .4s; }
+.reward__text { font-size: var(--font-size-14); line-height: var(--line-height-18); opacity: .85; }
 @media (max-width: 767px) {
   .result { padding: 24px 16px 48px; }
   .result__card { padding: 32px 20px; }
@@ -187,22 +191,22 @@
   .result__prize img { width: 180px; }
   .result__prize-name { font-size: var(--font-size-20); line-height: 26px; }
   .result__lead { font-size: var(--font-size-16); line-height: 22px; }
-  .reward__head h2 { font-size: var(--font-size-16); line-height: 22px; }
+  .reward { padding: 24px 16px 20px; }
+  .reward h2 { font-size: var(--font-size-20); line-height: 26px; }
+  .reward .hv-track__bar { margin: 72px 14px 56px 0; }
 }
 
 /* ---------- Profile ---------- */
-/* The banner is a square logo collage cut to a strip. Height grows with width (172px at 1440) so the crop stays the same,
-   and the strip sits on the Quaker/Doritos row so no logo is cut in half. Phones keep the centre (Walkers/7up/Popworks). */
-.profile-banner img { width: 100%; height: max(172px, 12vw); object-fit: cover; object-position: 50% 85.5%; }
-@media (max-width: 575px) { .profile-banner img { height: 172px; object-position: 50% 50%; } }
 .profile { max-width: 1840px; margin: 0 auto; padding: 48px 40px 80px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
 .profile__intro h1 { font-size: var(--font-size-36); line-height: var(--line-height-40); font-weight: 700; }
 .profile__intro p { margin-top: 24px; color: var(--color-text-secondary); max-width: 490px; line-height: 21px; }
 .profile__tabs { display: flex; flex-direction: column; gap: 4px; margin-top: 32px; max-width: 320px; }
 .profile__tabs button { text-align: left; padding: 10px 0; border: 0; background: none; font-weight: 600; cursor: pointer; color: var(--color-text-default); display: flex; gap: 10px; align-items: center; text-underline-offset: 6px; text-decoration-thickness: 2px; text-decoration-line: underline; text-decoration-color: transparent; transition: color var(--dur-fast), text-decoration-color var(--dur-base); }
-/* Same as the navbar: hover and the open tab underline the text (fading in); the open tab is also bold. */
-.profile__tabs button:hover, .profile__tabs button[aria-selected="true"] { text-decoration-color: currentColor; }
+/* Hover underlines the text (fading in). The open tab is bold and blue with no underline (change 57). */
+.profile__tabs button:not([aria-selected="true"]):hover { text-decoration-color: currentColor; }
 .profile__tabs button[aria-selected="true"] { font-weight: 700; color: var(--site-blue); }
+.profile__tabs--after { margin-top: 4px; }
+.profile__tabs--after button { color: var(--color-feedback-error); } /* Change 56: Log out in red, like "Delete profile" */
 .profile__panel { background: #fff; border-radius: var(--radius-card); box-shadow: var(--site-shadow-card); padding: 0 26px 32px; }
 .profile__panel > * { animation: fade-in var(--dur-slow) var(--ease-out); } /* re-keyed per tab in Profile.tsx */
 .profile__panel .auth__section { margin: 0 -26px; }
@@ -235,3 +239,6 @@
 .page-main[data-page-canvas] .empty-state h3 { color: inherit; }
 .page-main[data-page-canvas] .text-page { border-radius: var(--radius-card); padding: 8px 40px 40px; margin-bottom: 80px; }
 @media (max-width: 767px) { .page-main[data-page-canvas] .text-page { margin: 0 16px 48px; padding: 4px 20px 24px; } }
+.reward__text a { color: inherit; font-weight: 700; text-decoration: underline; }
+/* Change 58: the other progress bar styles (RewardBar) keep their labels in the flow, so they need less room than the track */
+.reward .pbar { margin: 28px 0 24px; }

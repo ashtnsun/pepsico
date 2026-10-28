@@ -7,13 +7,17 @@ import { useStore } from '../../state/store'
 import { Share } from '../ui/Share'
 import './promo.css'
 
+// Change 50: --promo-text is white unless the theme says otherwise (7UP Green takes black); the yellow "ends soon"
+// text on cards then follows the text colour, as yellow can't be read on a light brand colour.
 export const promoStyle = (p: Promo) => ({
   '--promo-bg': p.theme.bg,
+  '--promo-text': p.theme.text ?? '#FFFFFF',
+  ...(p.theme.text && { '--promo-urgent': p.theme.text }),
   '--promo-cta-bg': p.theme.ctaBg,
   '--promo-cta-text': p.theme.ctaText,
 }) as CSSProperties
 
-export function DateLine({ promo, dark = false }: { promo: Promo; dark?: boolean }) {
+export function DateLine({ promo, dark = promo.theme.text === '#000000' }: { promo: Promo; dark?: boolean }) {
   return (
     <p className="date-line">
       <img src={`./images/global/calendar-${dark ? 'black' : 'white'}.svg`} alt="" width={16} height={16} />

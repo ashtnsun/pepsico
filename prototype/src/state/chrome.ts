@@ -3,8 +3,8 @@
 // Change 25: the page content (buttons, links, menus, FAQ boxes, focus rings) takes the brand theme too (`page`).
 import type { CSSProperties } from 'react'
 import { useLocation } from 'react-router-dom'
-import { getPromo } from '../data/promos'
-import { brands, getBrand } from '../data/brands'
+import { getPromo, type Promo } from '../data/promos'
+import { brands, getBrand, type Brand } from '../data/brands'
 
 export type ChromeTheme = {
   /** Brand colour: the promotion's colour (hero band) or the brand page's "Welcome" band colour. */
@@ -47,11 +47,25 @@ const mix = (hex: string, to: number, amount: number) => '#' + [1, 3, 5].map((i)
   const c = parseInt(hex.slice(i, i + 2), 16)
   return Math.round(c + (to - c) * amount).toString(16).padStart(2, '0')
 }).join('')
-const colours = (bg: string) => {
-  const text = readableText(bg)
+// Change 50: a brand can name its own second colour (brands.ts `shade`, 7UP), used instead of the calculated one.
+// Change 51: and its own text colour on both (brands.ts `text`, 7UP white), used instead of the 4.5:1 rule.
+const colours = (bg: string, brand?: Brand) => {
+  const text = brand?.text ?? readableText(bg)
   // Dark brands get a darker bar; light brands (black text) a lighter one, so yellow doesn't turn olive
-  const shade = text === '#FFFFFF' ? mix(bg, 0, 0.22) : mix(bg, 255, 0.4)
-  return { bg, text, shade, shadeText: readableText(shade) }
+  const shade = brand?.shade ?? (readableText(bg) === '#FFFFFF' ? mix(bg, 0, 0.22) : mix(bg, 255, 0.4))
+  return { bg, text, shade, shadeText: brand?.text ?? readableText(shade) }
+}
+
+/**
+ * DERIVED (change 46, needs approval): background of the participation and result pages, one step away from the brand
+ * colour so it doesn't run into the navbar and footer: the breadcrumb shade (22% black, or the brand's own `shade`),
+ * or 14% white on black brands, which can't get darker.
+ */
+export const stageStyle = (promo: Promo) => {
+  const bg = promo.theme.bg
+  const brand = getBrand(promo.brand)
+  const stage = luminance(bg) < 0.01 ? mix(bg, 255, 0.14) : colours(bg, brand).shade
+  return { '--stage-bg': stage, '--stage-text': brand?.text ?? readableText(stage) } as CSSProperties
 }
 
 /**
@@ -59,8 +73,8 @@ const colours = (bg: string) => {
  * light brands). Links, outlines and focus rings in the brand colour darkened in 5% steps until it passes 4.5:1 on
  * white (7UP green turns dark green); if that takes more than 40% black (Lipton yellow turns olive), black instead.
  */
-const derivedPage = (bg: string): Omit<PageTheme, 'canvas'> => {
-  const onBg = readableText(bg)
+const derivedPage = (bg: string, text?: string): Omit<PageTheme, 'canvas'> => {
+  const onBg = text ?? readableText(bg)
   let ink = bg
   for (let n = 1; onWhite(ink) < 4.5; n++) ink = n > 8 ? '#000000' : mix(bg, 0, n * 0.05)
   return {
@@ -83,8 +97,8 @@ const derivedPage = (bg: string): Omit<PageTheme, 'canvas'> => {
 }
 // ink = --color-text-link of the Theme mode (tokens.css). Dark = luminance under 0.05: black, Quaker and Popworks navy
 // (Doritos and Walkers red are 0.12 to 0.17, so they keep white sections).
-const pageTheme = (slug: string, bg: string): PageTheme => ({
-  ...(slug === 'doritos' ? { mode: slug, ink: '#030303' } : slug === 'rockstar' ? { mode: slug, ink: '#000000' } : derivedPage(bg)),
+const pageTheme = (brand: Brand, bg: string): PageTheme => ({
+  ...(brand.slug === 'doritos' ? { mode: brand.slug, ink: '#030303' } : brand.slug === 'rockstar' ? { mode: brand.slug, ink: '#000000' } : derivedPage(bg, brand.text)),
   canvas: luminance(bg) < 0.05,
 })
 
@@ -95,12 +109,12 @@ export function useChromeTheme(): ChromeTheme | null {
   if (promo) {
     const brand = getBrand(promo.brand)
     return {
-      ...colours(promo.theme.bg), logo: brand?.logoOnBand ?? brand?.logo, name: brand?.name ?? promo.brandLabel, brandSlug: brand?.slug, deco: promo.theme.deco ?? brand?.deco,
-      page: brand ? pageTheme(brand.slug, promo.theme.bg) : undefined,
+      ...colours(promo.theme.bg, brand), logo: brand?.logoOnBand ?? brand?.logo, name: brand?.name ?? promo.brandLabel, brandSlug: brand?.slug, deco: promo.theme.deco ?? brand?.deco,
+      page: brand ? pageTheme(brand, promo.theme.bg) : undefined,
     }
   }
   const brandSlug = pathname.match(/^\/brands\/([^/]+)/)?.[1]
   const brand = brands.find((b) => b.slug === brandSlug)
-  if (brand) return { ...colours(brand.band), logo: brand.logoOnBand ?? brand.logo, name: brand.name, brandSlug: brand.slug, deco: brand.deco, page: pageTheme(brand.slug, brand.band) }
+  if (brand) return { ...colours(brand.band, brand), logo: brand.logoOnBand ?? brand.logo, name: brand.name, brandSlug: brand.slug, deco: brand.deco, page: pageTheme(brand, brand.band) }
   return null
 }

@@ -1,17 +1,19 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { ArrowDown, Check, Gift, Sparkles, Ticket, Trophy } from 'lucide-react'
 import { REWARD_EVERY, REWARD_NAME } from '../../data/config'
+import { RewardBar } from './RewardBar'
 import './hero-variants.css'
 
 /**
  * Visual exploration: five alternative logged-in home heroes (chosen in the config menu, press C).
  * All show the same progress towards the next reward as the original ProgressTracker.
  */
-export type HeroProps = { name: string; entries: number; wins: number }
+export type HeroProps = { name: string; entries: number; wins: number; unclaimed: number; onClaim: () => void }
 
-function useReward(entries: number) {
+/** Change 47: the bar stays full while a reward is waiting to be claimed, then starts again. */
+export function rewardState(entries: number, unclaimed: number) {
   const done = entries % REWARD_EVERY
-  const unlocked = entries > 0 && done === 0
+  const unlocked = unclaimed > 0
   const filled = unlocked ? REWARD_EVERY : done
   return { filled, left: REWARD_EVERY - done, unlocked, rewards: Math.floor(entries / REWARD_EVERY), pct: (filled / REWARD_EVERY) * 100 }
 }
@@ -21,12 +23,21 @@ const scrollToPromos = () => document.getElementById('suggested-title')?.scrollI
 
 function Message({ left, unlocked }: { left: number; unlocked: boolean }) {
   return unlocked
-    ? <>You’ve unlocked <strong>{REWARD_NAME}</strong>! Keep entering to earn the next one.</>
+    ? <>You’ve unlocked <strong>{REWARD_NAME}</strong>! Claim it now.</>
     : <>You are <strong>{left} {left === 1 ? 'entry' : 'entries'}</strong> away from your next reward.</>
 }
 
 function Cta({ className = 'btn btn--yellow btn--wide' }: { className?: string }) {
   return <button type="button" className={className} onClick={scrollToPromos}>Find a promotion <ArrowDown size={18} aria-hidden /></button>
+}
+
+/** Change 47: opens the claim modal (ClaimReward). Shown instead of "Find a promotion" while a reward waits. */
+export function ClaimCta({ unclaimed, onClaim, className = 'btn btn--yellow btn--wide' }: { unclaimed: number; onClaim: () => void; className?: string }) {
+  return (
+    <button type="button" className={className} onClick={onClaim}>
+      <Gift size={18} aria-hidden /> {unclaimed > 1 ? `Claim your rewards (${unclaimed})` : 'Claim your reward'}
+    </button>
+  )
 }
 
 function Bar({ filled, children, className }: { filled: number; children: ReactNode; className: string }) {
@@ -47,8 +58,8 @@ function Deco({ variant }: { variant: string }) {
 }
 
 /* ---------- A · Reward ring ---------- */
-export function HeroRing({ name, entries }: HeroProps) {
-  const r = useReward(entries)
+export function HeroRing({ name, entries, unclaimed, onClaim }: HeroProps) {
+  const r = rewardState(entries, unclaimed)
   const R = 130, C = 2 * Math.PI * R, gap = 24, seg = C / REWARD_EVERY - gap
   return (
     <section className="hv hv-ring" aria-labelledby="hero-title">
@@ -59,7 +70,7 @@ export function HeroRing({ name, entries }: HeroProps) {
           <h1 id="hero-title" className="hv__title">Hi {name},</h1>
           <p className="hv__msg"><Message {...r} /></p>
           <p className="hv__small">Every {REWARD_EVERY} entries earns {REWARD_NAME}.</p>
-          <Cta />
+          {r.unlocked ? <ClaimCta unclaimed={unclaimed} onClaim={onClaim} /> : <Cta />}
         </div>
         <Bar className="hv-ring__dial" filled={r.filled}>
           <svg viewBox="0 0 320 320" aria-hidden>
@@ -82,8 +93,8 @@ export function HeroRing({ name, entries }: HeroProps) {
 
 /* ---------- B · Stamp card ---------- */
 const STAMP_COLORS = ['var(--hv-purple)', 'var(--hv-orange)', 'var(--hv-sky)']
-export function HeroStamps({ name, entries }: HeroProps) {
-  const r = useReward(entries)
+export function HeroStamps({ name, entries, unclaimed, onClaim }: HeroProps) {
+  const r = rewardState(entries, unclaimed)
   return (
     <section className="hv hv-stamps" aria-labelledby="hero-title">
       <Deco variant="stamps" />
@@ -110,41 +121,50 @@ export function HeroStamps({ name, entries }: HeroProps) {
           </Bar>
           <p className="hv-stamps__foot">Every {REWARD_EVERY} entries earns {REWARD_NAME}.{r.rewards > 0 && ` Cards completed: ${r.rewards}.`}</p>
         </div>
-        <Cta />
+        {r.unlocked ? <ClaimCta unclaimed={unclaimed} onClaim={onClaim} /> : <Cta />}
       </div>
     </section>
   )
 }
 
 /* ---------- C · Big track ---------- */
-export function HeroTrack({ name, entries }: HeroProps) {
-  const r = useReward(entries)
+/** The track itself: rail, yellow fill with an "n / 4" bubble, one dot per entry and a gift at the end. Change 46: also on the result page. */
+export function TrackBar({ filled }: { filled: number }) {
+  const pct = (filled / REWARD_EVERY) * 100
+  return (
+    <Bar className="hv-track__bar" filled={filled}>
+      <div className="hv-track__rail">
+        <div className="hv-track__fill" style={{ width: `${pct}%` }}>
+          {filled > 0 && <span className="hv-track__bubble">{filled} / {REWARD_EVERY}</span>}
+        </div>
+      </div>
+      <ol className="hv-track__marks">
+        {steps.map((n) => {
+          const last = n === REWARD_EVERY - 1
+          return (
+            <li key={n} className={`${n < filled ? 'is-done' : ''} ${last ? 'is-gift' : ''}`} style={{ left: `${((n + 1) / REWARD_EVERY) * 100}%` }}>
+              <span className="hv-track__dot">{last ? <Gift size={30} aria-hidden /> : n < filled ? <Check size={18} strokeWidth={3} aria-hidden /> : n + 1}</span>
+              <span className="hv-track__name">{last ? 'Reward' : `Entry ${n + 1}`}</span>
+            </li>
+          )
+        })}
+      </ol>
+    </Bar>
+  )
+}
+
+export function HeroTrack({ name, entries, unclaimed, onClaim }: HeroProps) {
+  const r = rewardState(entries, unclaimed)
   return (
     <section className="hv hv-track" aria-labelledby="hero-title">
       <Deco variant="track" />
       <div className="hv__inner hv-track__inner">
-        <p className="hv__eyebrow">Hi {name}</p>
+        <p className="hv-track__hello">Hi {name}!</p>
         <h1 id="hero-title" className="hv-track__headline">
           {r.unlocked ? <>Reward <em>unlocked!</em></> : <><em>{r.left} {r.left === 1 ? 'entry' : 'entries'}</em> to your next reward</>}
         </h1>
-        <Bar className="hv-track__bar" filled={r.filled}>
-          <div className="hv-track__rail">
-            <div className="hv-track__fill" style={{ width: `${r.pct}%` }}>
-              {r.filled > 0 && <span className="hv-track__bubble">{r.filled} / {REWARD_EVERY}</span>}
-            </div>
-          </div>
-          <ol className="hv-track__marks">
-            {steps.map((n) => {
-              const last = n === REWARD_EVERY - 1
-              return (
-                <li key={n} className={`${n < r.filled ? 'is-done' : ''} ${last ? 'is-gift' : ''}`} style={{ left: `${((n + 1) / REWARD_EVERY) * 100}%` }}>
-                  <span className="hv-track__dot">{last ? <Gift size={30} aria-hidden /> : n < r.filled ? <Check size={18} strokeWidth={3} aria-hidden /> : n + 1}</span>
-                  <span className="hv-track__name">{last ? 'Reward' : `Entry ${n + 1}`}</span>
-                </li>
-              )
-            })}
-          </ol>
-        </Bar>
+        <RewardBar filled={r.filled} />
+        {r.unlocked && <ClaimCta unclaimed={unclaimed} onClaim={onClaim} />}
         <p className="hv__small">Every {REWARD_EVERY} entries earns {REWARD_NAME}.</p>
       </div>
     </section>
@@ -152,8 +172,8 @@ export function HeroTrack({ name, entries }: HeroProps) {
 }
 
 /* ---------- D · Bento dashboard ---------- */
-export function HeroBento({ name, entries, wins }: HeroProps) {
-  const r = useReward(entries)
+export function HeroBento({ name, entries, wins, unclaimed, onClaim }: HeroProps) {
+  const r = rewardState(entries, unclaimed)
   return (
     <section className="hv hv-bento" aria-labelledby="hero-title">
       <div className="hv__inner hv-bento__grid">
@@ -169,7 +189,7 @@ export function HeroBento({ name, entries, wins }: HeroProps) {
               </span>
             ))}
           </Bar>
-          <Cta />
+          {r.unlocked ? <ClaimCta unclaimed={unclaimed} onClaim={onClaim} /> : <Cta />}
         </div>
         <div className="hv-bento__tile hv-bento__tile--sky">
           <Ticket size={28} aria-hidden />
@@ -193,8 +213,8 @@ export function HeroBento({ name, entries, wins }: HeroProps) {
 }
 
 /* ---------- E · Fill the can ---------- */
-export function HeroCan({ name, entries }: HeroProps) {
-  const r = useReward(entries)
+export function HeroCan({ name, entries, unclaimed, onClaim }: HeroProps) {
+  const r = rewardState(entries, unclaimed)
   return (
     <section className="hv hv-can" aria-labelledby="hero-title">
       <Deco variant="can" />
@@ -203,7 +223,7 @@ export function HeroCan({ name, entries }: HeroProps) {
           <p className="hv__eyebrow">Your JOY rewards</p>
           <h1 id="hero-title" className="hv__title">Hi {name},<br /><span className="hv-can__accent">{r.unlocked ? 'your can is full!' : 'fill your can.'}</span></h1>
           <p className="hv__msg">Every entry fills it a little more. <Message {...r} /></p>
-          <Cta />
+          {r.unlocked ? <ClaimCta unclaimed={unclaimed} onClaim={onClaim} /> : <Cta />}
         </div>
         <Bar className="hv-can__wrap" filled={r.filled}>
           <div className="hv-can__can">

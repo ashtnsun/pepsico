@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { useStore } from '../state/store'
-import { CARD_VARIANTS, CHROME_VARIANTS, HERO_VARIANTS, useDesign } from '../state/design'
+import { BAR_VARIANTS, CARD_VARIANTS, CHROME_VARIANTS, HERO_VARIANTS, useDesign } from '../state/design'
 import './moderator.css'
 
 /**
@@ -28,6 +28,7 @@ export function ConfigPanel() {
   }, [])
 
   if (!open) return null
+  const last = s.myEntries[s.myEntries.length - 1]
   return (
     <aside className="mod mod--config" aria-label="Design config">
       <div className="mod__head">
@@ -51,6 +52,21 @@ export function ConfigPanel() {
         {[0, 1, 2, 3, 4].map((n) => (
           <button key={n} type="button" onClick={() => { s.loginAsTestUser(n); navigate('/') }}>{n} {n === 1 ? 'entry' : 'entries'}</button>
         ))}
+      </div>
+
+      <h3>Progress bar</h3>
+      <p className="mod__small">On the C · Big track home hero and the result page after entering a code.</p>
+      <div className="mod__list" role="radiogroup" aria-label="Progress bar">
+        {BAR_VARIANTS.map((v) => (
+          <label key={v.id} className={design.bar === v.id ? 'is-on' : ''}>
+            <input type="radio" name="cfg-bar" checked={design.bar === v.id} onChange={() => design.set({ bar: v.id })} />
+            <span><b>{v.name}</b><small>{v.note}</small></span>
+          </label>
+        ))}
+      </div>
+      <div className="mod__row">
+        <button type="button" onClick={() => { design.set({ hero: 'track' }); navigate('/') }}>Home hero</button>
+        <button type="button" disabled={!last} onClick={() => last && navigate(`/promotions/${last.promo}/result/${last.id}`)}>Latest result</button>
       </div>
 
       <h3>Promotion cards</h3>

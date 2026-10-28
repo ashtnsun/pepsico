@@ -66,7 +66,7 @@ function HeroSlideView({ s, active, ...slideProps }: { s: HeroSlide; active: boo
     </div>
   )
   return (
-    <div className={cls} style={{ '--promo-bg': '#0E38DF', '--promo-cta-bg': '#FFE600', '--promo-cta-text': '#0E38DF' } as CSSProperties} {...slideProps}>
+    <div className={`${cls} hero-slide--joy`} style={{ '--promo-bg': '#0E38DF', '--promo-cta-bg': '#FFE600', '--promo-cta-text': '#0E38DF' } as CSSProperties} {...slideProps}>
       <img className="hero-slide__deco" src="./images/global/teaser-deco-default.webp" alt="" />
       <div className="hero-slide__content">
         <img className="hero-slide__logo hero-slide__logo--joy" src="./images/global/joy-logo-white.png" alt="JOY" />

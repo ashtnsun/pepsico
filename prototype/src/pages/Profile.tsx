@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { CircleAlert, LogOut, Settings, Ticket, User as UserIcon } from 'lucide-react'
 import { getPromo } from '../data/promos'
@@ -21,10 +21,13 @@ export default function Profile() {
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [f, setF] = useState(() => ({ firstName: user?.firstName ?? '', lastName: user?.lastName ?? '', dob: user?.dob ?? '', gender: user?.gender ?? '', postcode: user?.postcode ?? '', phone: user?.phone ?? '' }))
   const [errors, setErrors] = useState<Record<string, string>>({})
+  // Logging out goes home; without this flag the "not logged in" redirect below sends you to Login first
+  const leaving = useRef(false)
+  const doLogout = () => { leaving.current = true; logout(); navigate('/') }
 
   useEffect(() => { if (location.hash === '#entries') setTab('entries') }, [location.hash])
 
-  if (!user) return <Navigate to="/login" replace state={{ from: '/profile' }} />
+  if (!user) return leaving.current ? null : <Navigate to="/login" replace state={{ from: '/profile' }} />
 
   const save = (e: FormEvent) => {
     e.preventDefault()
@@ -43,7 +46,6 @@ export default function Profile() {
   return (
     <>
       <Breadcrumb items={[{ label: 'User' }, { label: tab === 'entries' ? 'My entries' : 'Edit' }]} />
-      <div className="profile-banner"><img src="./images/global/login-bg.webp" alt="" /></div>
       <div className="profile">
         <div className="profile__intro">
           <h1>Hello, {user.firstName}!</h1>
@@ -52,6 +54,10 @@ export default function Profile() {
             <button type="button" role="tab" aria-selected={tab === 'details'} onClick={() => setTab('details')}><UserIcon size={18} aria-hidden /> My details</button>
             <button type="button" role="tab" aria-selected={tab === 'entries'} onClick={() => setTab('entries')}><Ticket size={18} aria-hidden /> My entries ({myEntries.length})</button>
             <button type="button" role="tab" aria-selected={tab === 'settings'} onClick={() => setTab('settings')}><Settings size={18} aria-hidden /> Settings</button>
+          </div>
+          {/* Change 55: Log out sits under the tabs (the navbar no longer has a profile dropdown). Outside the tablist because it isn't a tab. */}
+          <div className="profile__tabs profile__tabs--after">
+            <button type="button" onClick={doLogout}><LogOut size={18} aria-hidden /> Log out</button>
           </div>
         </div>
 
@@ -151,7 +157,7 @@ export default function Profile() {
               </div>
               <div className="auth__section">
                 <h2>Account</h2>
-                <button type="button" className="btn btn--outline" onClick={() => { logout(); navigate('/') }}><LogOut size={18} aria-hidden /> Log out</button>
+                <button type="button" className="btn btn--outline" onClick={doLogout}><LogOut size={18} aria-hidden /> Log out</button>
                 <div className="danger-zone">
                   <p className="field__help" style={{ marginBottom: 12 }}>Deleting your profile removes your personal data, your entries in running promotions and your marketing consents.</p>
                   <button type="button" className="link" style={{ color: 'var(--color-feedback-error)' }} onClick={() => setConfirmDelete(true)}>Delete profile</button>

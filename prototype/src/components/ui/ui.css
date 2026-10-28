@@ -39,3 +39,18 @@
 .modal__actions { display: flex; gap: var(--spacing-12); justify-content: center; flex-wrap: wrap; margin-top: var(--spacing-32); }
 .modal__close { position: absolute; right: 16px; top: 16px; background: none; border: 0; cursor: pointer; color: var(--color-text-default); padding: 6px; border-radius: 50%; transition: background-color var(--dur-fast), transform var(--dur-base) var(--ease-out); }
 .modal__close:hover { background: var(--color-surface-subtle); transform: rotate(90deg); }
+
+/* ---------- Favourite (heart) button, change 46 ---------- */
+/* Icon only: a white circle with a JOY-blue heart, filled when the brand is a favourite */
+.fav-btn {
+  display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0;
+  border: 0; border-radius: 50%; background: var(--color-surface-default); color: var(--site-blue); cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,.18); transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast);
+}
+.fav-btn:hover { transform: scale(1.1); }
+.fav-btn:active { transform: scale(.9); }
+.fav-btn svg, .btn--fav svg { transition: fill var(--dur-fast); }
+.fav-btn[aria-pressed="true"] svg, .btn--fav[aria-pressed="true"] svg { fill: currentColor; }
+/* With text: an outline button in the colour of the text around it (brand page band) */
+.btn--fav { background: transparent; border-color: currentColor; color: inherit; }
+.btn--fav:hover { background: color-mix(in srgb, currentColor 14%, transparent); }

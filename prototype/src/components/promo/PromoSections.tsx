@@ -91,28 +91,42 @@ export function CtaBanner({ promo, to, label }: { promo: Promo; to: string; labe
  * Section menu under the hero (live site: STEPS, PRIZES, FAQS...). Wireframe idea added:
  * it sticks under the navbar while scrolling and carries a Participate button. Change 29: it looks the same before and
  * after it sticks (the button is always there), so sticking causes no jump.
+ * Change 44: once it is stuck, scrolling down hides the navbar and this menu moves to the top of the window;
+ * scrolling up brings the navbar back (`data-nav-hidden` on <html>, styles in layout.css and promo.css).
  */
 export function SectionNav({ links, cta }: { links: { id: string; label: string }[]; cta?: { label: string; to: string; disabled?: boolean } }) {
   const ref = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string | null>(null)
-  // Space taken at the top of the window by the navbar (75px, --site-nav-height) plus this menu once stuck, with a little air
-  const offset = () => 75 + (ref.current?.offsetHeight ?? 73) + 16
+  // Space taken at the top of the window by this menu (and the navbar when it shows, 75px, --site-nav-height), with a little air
+  const offset = (navShown: boolean) => (navShown ? 75 : 0) + (ref.current?.offsetHeight ?? 73) + 16
   useEffect(() => {
+    const root = document.documentElement
+    let lastY = window.scrollY
     const onScroll = () => {
+      const y = window.scrollY
+      const menuOpen = document.querySelector('.site-header [aria-expanded="true"]')
+      const stuck = (ref.current?.getBoundingClientRect().top ?? Infinity) <= 76
+      if (y > lastY + 2 && stuck && !menuOpen) root.dataset.navHidden = ''
+      else if (y < lastY - 2 || !stuck) delete root.dataset.navHidden
+      if (Math.abs(y - lastY) > 2) lastY = y
+      const line = offset(!('navHidden' in root.dataset)) + 1
       let cur: string | null = null
       for (const l of links) {
         const el = document.getElementById(l.id)
-        if (el && el.getBoundingClientRect().top <= offset() + 1) cur = l.id
+        if (el && el.getBoundingClientRect().top <= line) cur = l.id
       }
       setActive(cur)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => { window.removeEventListener('scroll', onScroll); delete root.dataset.navHidden }
   }, [links])
   const go = (id: string) => {
     const el = document.getElementById(id)
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset(), behavior: 'smooth' })
+    if (!el) return
+    // Scrolling down hides the navbar, scrolling up shows it, so leave room for it only when going up
+    const top = el.getBoundingClientRect().top
+    window.scrollTo({ top: top + window.scrollY - offset(top < 0), behavior: 'smooth' })
   }
   return (
     <div ref={ref} className="section-nav">

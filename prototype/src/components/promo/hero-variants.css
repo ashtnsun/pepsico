@@ -1,6 +1,7 @@
 /* Visual exploration: logged-in home hero variants (HeroVariants.tsx). Colours are the JOY brand sheet palette (node 18:20865). */
+/* Change 46: the track bar (C) is also used on the result page, outside .hv */
+.hv, .hv-track__bar, .pbar { --hv-navy: #0A0F36; --hv-purple: #9E00BF; --hv-sky: #75DEF2; --hv-green: #EBFF40; --hv-orange: #FF8000; }
 .hv {
-  --hv-navy: #0A0F36; --hv-purple: #9E00BF; --hv-sky: #75DEF2; --hv-green: #EBFF40; --hv-orange: #FF8000;
   position: relative; overflow: hidden; color: #fff; background: var(--site-blue);
   min-height: 600px; display: flex; align-items: center; padding: 72px var(--spacing-20) 96px;
 }
@@ -94,19 +95,20 @@
 }
 
 /* ---------- C · Big track ---------- */
-.hv-track { background: linear-gradient(135deg, var(--site-blue) 0%, var(--site-blue-dark) 55%, var(--hv-navy) 100%); }
+/* Flat, no gradient (change 36: the blue-to-navy gradient looked AI-made). The live site's darker blue, the same as the
+   breadcrumb bar on other pages, so the hero doesn't merge with the JOY blue navbar (change 38). */
+.hv-track { background: var(--site-blue-dark); }
+/* Greeting above the headline: sentence case and large enough to read as a greeting, not a small label */
+.hv-track__hello { font-size: 36px; line-height: 1.1; font-weight: 700; color: var(--hv-sky); margin-bottom: 12px; }
 .hv-track__headline { font-size: 64px; line-height: 1.02; font-weight: 800; letter-spacing: -1.5px; max-width: 820px; }
 .hv-track__headline em { font-style: normal; color: var(--site-yellow); }
-.hv-track__bar { position: relative; margin: 88px 0 72px; }
+.hv-track__bar { position: relative; margin: 88px 0 88px; }
 .hv-track__rail { height: 32px; border-radius: 32px; background: rgba(255, 255, 255, .14); box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25); }
 .hv-track__fill {
   position: relative; height: 100%; border-radius: 32px; min-width: 0;
-  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .22) 0 12px, transparent 12px 24px), linear-gradient(90deg, var(--hv-sky), var(--hv-green) 70%, var(--site-yellow));
-  background-size: 34px 34px, 100% 100%; animation: hv-grow 1.1s cubic-bezier(.3, .8, .3, 1) backwards, hv-stripes 1.2s linear infinite;
-  box-shadow: 0 0 24px rgba(235, 255, 64, .45);
+  background: var(--site-yellow); animation: hv-grow 1.1s cubic-bezier(.3, .8, .3, 1) backwards;
 }
 @keyframes hv-grow { from { width: 0; } }
-@keyframes hv-stripes { to { background-position: 34px 0, 0 0; } }
 .hv-track__bubble {
   position: absolute; right: 0; bottom: calc(100% + 18px); transform: translateX(50%); white-space: nowrap;
   padding: 8px 14px; border-radius: 12px; background: #fff; color: var(--hv-navy); font-weight: 800; font-size: var(--font-size-20);
@@ -115,15 +117,17 @@
 .hv-track__marks { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
 .hv-track__marks li { position: absolute; top: 16px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; }
 .hv-track__marks li:last-child { transform: translate(-60%, -50%); }
-.hv-track__dot { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--site-blue-dark); border: 3px solid rgba(255, 255, 255, .5); font-weight: 800; }
+.hv-track__dot { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--site-blue); border: 3px solid rgba(255, 255, 255, .5); font-weight: 800; }
 .hv-track__marks li.is-done .hv-track__dot { background: #fff; color: var(--hv-navy); border-color: #fff; }
 .hv-track__marks li.is-gift .hv-track__dot { width: 84px; height: 84px; background: var(--hv-purple); border-color: #fff; }
 .hv-track__marks li.is-gift.is-done .hv-track__dot { background: var(--site-yellow); color: var(--hv-navy); animation: hv-pulse 1.6s ease-in-out infinite; }
+.hv-track .hv__small { margin-top: 28px; }
 .hv-track__name { position: absolute; top: calc(100% + 10px); white-space: nowrap; font-size: var(--font-size-14); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: .85; }
 .hv-track__marks li:not(.is-gift) .hv-track__name { top: calc(100% + 26px); }
 @media (max-width: 767px) {
+  .hv-track__hello { font-size: 26px; margin-bottom: 8px; }
   .hv-track__headline { font-size: 40px; letter-spacing: -1px; }
-  .hv-track__bar { margin: 72px 12px 64px 0; }
+  .hv-track__bar { margin: 72px 12px 80px 0; }
   .hv-track__rail { height: 22px; }
   .hv-track__marks li { top: 11px; }
   .hv-track__dot { width: 34px; height: 34px; font-size: 14px; }
@@ -213,3 +217,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hv *, .hv *::before { animation: none !important; }
 }
+
+/* Change 58: the other progress bar styles (RewardBar) on the Big track hero */
+.hv-track .pbar { margin: 56px 0 48px; }
+@media (max-width: 767px) { .hv-track .pbar { margin: 40px 0 40px; } }

@@ -20,7 +20,7 @@ type Sort = keyof typeof SORTS
  * (the same PromoCard as the home page) that can be filtered and sorted. Ended promotions always come last.
  */
 export default function Promotions() {
-  const { myEntries } = useStore()
+  const { myEntries, favouriteBrands } = useStore()
   const [brand, setBrand] = useState('')
   const [type, setType] = useState('')
   const [sort, setSort] = useState<Sort>('recommended')
@@ -34,12 +34,14 @@ export default function Promotions() {
       const newest = (a: Promo, b: Promo) => b.start.localeCompare(a.start)
       return [...live.sort(newest), ...ended.sort(newest)]
     }
-    // Recommended: the curated order, with promotions you haven't entered yet first.
+    // Recommended: the curated order, with promotions you haven't entered yet first, and within those
+    // (and within the entered ones) your favourite brands first (change 46).
     // Ending soonest: nearest end date first.
-    live.sort(sort === 'recommended' ? (a, b) => Number(entered(a.slug)) - Number(entered(b.slug)) : (a, b) => a.end.localeCompare(b.end))
+    const rank = (p: Promo) => Number(entered(p.slug)) * 2 + Number(!favouriteBrands.includes(p.brand))
+    live.sort(sort === 'recommended' ? (a, b) => rank(a) - rank(b) : (a, b) => a.end.localeCompare(b.end))
     // Ended promotions: the one that ended most recently first.
     return [...live, ...ended.sort((a, b) => b.end.localeCompare(a.end))]
-  }, [brand, type, sort, myEntries])
+  }, [brand, type, sort, myEntries, favouriteBrands])
 
   const filtering = brand !== '' || type !== ''
   const latestEntry = (slug: string) => [...myEntries].reverse().find((e) => e.promo === slug)
@@ -50,7 +52,7 @@ export default function Promotions() {
       <h1 className="visually-hidden">Promotions</h1>
       <HeroCarousel slides={ACTIVE.map((p) => ({ kind: 'promo' as const, promo: p }))} start={1} />
 
-      <section className="container" aria-labelledby="all-title" style={{ paddingBottom: 64 }}>
+      <section className="container" aria-labelledby="all-title" style={{ paddingBottom: 120 }}>
         <h2 id="all-title" className="section-title listing-section-title">All promotions</h2>
         <div className="listing-tools" role="group" aria-label="Filter and sort promotions">
           <div className="field listing-tools__field">

@@ -17,6 +17,10 @@ export type Brand = {
   bandText: string
   /** "Visit brand website" button on the band. */
   bandCta: { bg: string; text: string }
+  /** Change 50: second colour (breadcrumb, newsletter, participation pages) when the calculated shade (state/chrome.ts) doesn't suit the brand. */
+  shade?: string
+  /** Change 51: text colour on the brand colour and shade, instead of the 4.5:1 rule (state/chrome.ts). */
+  text?: string
   deco?: string
   welcome: string
   tagline?: string
@@ -68,7 +72,11 @@ export const brands: Brand[] = [
   {
     slug: '7up', name: '7UP', logo: img('brands/logo-7up.webp'),
     hero: img('brands/hero-7up-desktop.webp'), heroMobile: img('brands/hero-7up-mobile.webp'),
+    // Change 51: white text on both 7UP greens, as on the live site (user's choice). White fails 4.5:1 on them
+    // (2.7:1 and 3.3:1); the 7UP brand sheet asks for black.
     band: '#00B74F', bandText: '#FFFFFF', bandCta: { bg: '#FFFFFF', text: '#0E38DF' }, deco: img('global/deco-7up.svg'),
+    shade: '#00A349', // 7UP brand sheet (Sponsor Files 18:17502) tertiary green, replacing the DERIVED mint #66D495
+    text: '#FFFFFF',
     welcome: 'Welcome to 7UP on Joy by PepsiCo!',
     tagline: 'Refreshing 7up taste, Zero sugar. The lemon & lime twist that refreshes like no other.',
     website: 'https://www.7up.co.uk/',

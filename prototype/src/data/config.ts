@@ -9,6 +9,8 @@ export const TODAY = '2026-10-23'
 /** PROTOTYPE: entries needed to fill the progress tracker (wireframe "Home (Logged-in)"). Needs a real rule from the team. */
 export const REWARD_EVERY = 4
 export const REWARD_NAME = 'a bonus entry into the JOY monthly prize draw'
+/** PROTOTYPE: date of the monthly draw a claimed reward goes into (last day of TODAY's month). Made up. */
+export const REWARD_DRAW = '2026-10-31'
 
 export const isActive = (p: Promo) => p.start <= TODAY && TODAY <= p.end
 export const isEnded = (p: Promo) => p.end < TODAY

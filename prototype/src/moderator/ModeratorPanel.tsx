@@ -50,6 +50,7 @@ export function ModeratorPanel() {
       <p className="mod__small">{s.user ? `Logged in as ${s.user.firstName} ${s.user.lastName} (${s.myEntries.length} entries)` : 'Logged out'}</p>
       <div className="mod__row">
         <button type="button" onClick={() => { s.loginAsTestUser(3); navigate('/') }}>Test user, 3 entries</button>
+        <button type="button" onClick={() => { s.loginAsTestUser(4); navigate('/') }}>Test user, 4 entries (reward to claim)</button>
         <button type="button" onClick={() => { s.loginAsTestUser(0); navigate('/') }}>Test user, 0 entries</button>
         {s.user && <button type="button" onClick={() => { s.logout(); navigate('/') }}>Log out</button>}
       </div>

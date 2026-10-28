@@ -4,11 +4,10 @@ import { CircleAlert, Info } from 'lucide-react'
 import { getPromo, type Promo } from '../data/promos'
 import { isEnded } from '../data/config'
 import { useStore } from '../state/store'
-import { Breadcrumb } from '../components/layout/Breadcrumb'
+import { stageStyle } from '../state/chrome'
 import { DateLine, promoStyle } from '../components/promo/PromoTeaser'
 import { BrandLoader } from '../components/promo/BrandLoader'
 import NotFound from './NotFound'
-import { promoCrumbs } from './PromoDetail'
 import './pages.css'
 
 /** The promotion's art, name and dates, straight on the brand colour above the white card (participation and result pages) */
@@ -58,8 +57,8 @@ export default function Participate() {
   }
 
   return (
-    <div style={promoStyle(promo)}>
-      <Breadcrumb items={promoCrumbs(promo.slug, [{ label: 'Participation' }])} />
+    // Change 46: no breadcrumb on this task page; the promo strip says where you are
+    <div style={{ ...promoStyle(promo), ...stageStyle(promo) }}>
       <div className="participate">
         <div className="participate__main">
           <PromoStrip promo={promo} kicker="You’re entering" />

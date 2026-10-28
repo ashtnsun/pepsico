@@ -1,7 +1,11 @@
 /* Navbar, breadcrumb, newsletter and footer, measured from the live site at 1440px. */
 
 /* ---------- Navbar: 75px, JOY blue, padding 0 40px ---------- */
-.site-header { position: sticky; top: 0; z-index: 50; }
+.site-header { position: sticky; top: 0; z-index: 50; transition: transform var(--dur-base) var(--ease-out); }
+/* Change 44: on promotion pages the navbar slides up while scrolling down past the section menu (SectionNav), and
+   comes back on scroll up. It also comes back when a keyboard user tabs into it. */
+:root[data-nav-hidden]:not(:has(.site-header:focus-within)) .site-header { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .site-header, .section-nav { transition: none; } }
 .navbar {
   height: var(--site-nav-height); background: var(--site-blue); color: var(--color-text-on-inverse);
   display: flex; align-items: center; padding: 0 40px; position: relative;
@@ -21,7 +25,7 @@
 .navbar__link { text-underline-offset: 6px; text-decoration-thickness: 2px; text-decoration-line: underline; text-decoration-color: transparent; transition: text-decoration-color var(--dur-base); }
 .navbar__link.active, .navbar__link:hover { text-decoration-color: currentColor; }
 .navbar__link.active { font-weight: 700; }
-.navbar__link svg, .user-menu__toggle svg { transition: transform var(--dur-base) var(--ease-out); }
+.navbar__link svg { transition: transform var(--dur-base) var(--ease-out); }
 .navbar__link .rot { transform: rotate(180deg); }
 .navbar__session { display: flex; margin-left: auto; gap: var(--spacing-8); align-items: center; }
 .navbar__session .btn { height: 45px; padding: 0 24px; }
@@ -30,35 +34,22 @@
 .navbar__burger-icon { display: flex; animation: burger-in var(--dur-base) var(--ease-out); }
 @keyframes burger-in { from { opacity: 0; transform: rotate(-90deg) scale(.6); } }
 
-.user-menu { position: relative; }
-.user-menu__toggle { display: flex; align-items: center; gap: 10px; background: none; border: 0; color: #fff; text-transform: uppercase; font-size: var(--font-size-16); cursor: pointer; padding: 10px 0; }
-/* Same as the navbar links: hover underlines "Hi Sam"; on the profile page or with the menu open it is also bold. */
+.user-menu__toggle { display: flex; align-items: center; gap: 10px; background: none; border: 0; color: #fff; text-transform: uppercase; font-size: var(--font-size-16); cursor: pointer; padding: 10px 0; text-decoration: none; }
+/* Same as the navbar links: hover underlines "Hi Sam"; on the profile page it is also bold. */
 .user-menu__toggle span { text-underline-offset: 6px; text-decoration-thickness: 2px; text-decoration-line: underline; text-decoration-color: transparent; transition: text-decoration-color var(--dur-base); }
 .user-menu__toggle:hover span, .user-menu__toggle.active span { text-decoration-color: currentColor; }
 .user-menu__toggle.active { font-weight: 700; }
-.user-menu__toggle .rot { transform: rotate(180deg); }
-.user-menu__list {
-  position: absolute; right: 0; top: calc(100% + 14px); list-style: none; margin: 0; padding: var(--spacing-8) 0; min-width: 220px;
-  background: #fff; border-radius: var(--radius-container); box-shadow: 0 8px 24px rgba(0,0,0,.18);
-}
 
 /* Dropdowns and the phone menu: closed = invisible and out of the tab order; opening fades and slides them in.
    visibility switches off only after the fade-out has finished. */
-.user-menu__list, .brands-menu, .mobile-menu {
+.brands-menu, .mobile-menu {
   opacity: 0; visibility: hidden; transform: translateY(-8px);
   transition: opacity var(--dur-base), transform var(--dur-base) var(--ease-out), visibility 0s var(--dur-base);
 }
-.user-menu__list.is-open, .brands-menu.is-open, .mobile-menu.is-open {
+.brands-menu.is-open, .mobile-menu.is-open {
   opacity: 1; visibility: visible; transform: none;
   transition: opacity var(--dur-base), transform var(--dur-slow) var(--ease-out), visibility 0s;
 }
-.user-menu__list a, .user-menu__list button {
-  display: flex; gap: 10px; align-items: center; width: 100%; padding: 12px 20px; color: var(--color-text-default);
-  text-decoration: none; background: none; border: 0; cursor: pointer; text-align: left; font-size: var(--font-size-16);
-  transition: background-color var(--dur-fast), color var(--dur-fast);
-}
-.user-menu__list a:hover, .user-menu__list button:hover { background: var(--color-surface-subtle); color: var(--site-blue); }
-
 /* Brands dropdown: white grid of logos (live site brands submenu) */
 .brands-menu {
   position: absolute; left: 0; right: 0; top: var(--site-nav-height); background: #fff;
@@ -77,6 +68,10 @@
 .brands-menu.is-open .brands-menu__item:nth-child(n+6) { animation-delay: 150ms; }
 .brands-menu__item img { max-height: 200px; max-width: 80%; object-fit: contain; transition: transform var(--dur-slow) var(--ease-out); }
 .brands-menu__item:hover img { transform: scale(1.06); }
+/* Change 46: brand tiles hold a link (the whole tile) and a heart in the top-right corner */
+.brands-menu__brand { position: relative; padding: 0; }
+.brands-menu__link { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 20px; }
+.brands-menu__fav { position: absolute; top: 14px; right: 14px; }
 .brands-menu__all { color: var(--site-blue); font-weight: 600; text-transform: uppercase; text-decoration: underline transparent; text-underline-offset: 3px; background: var(--color-surface-subtle); transition: text-decoration-color var(--dur-base); }
 .brands-menu__all:hover { text-decoration-color: currentColor; }
 .brands-menu__placeholder { background: var(--color-surface-subtle); }
@@ -92,7 +87,11 @@
 .mobile-menu.is-open > :nth-child(3) { animation-delay: 60ms; }
 .mobile-menu.is-open > :nth-child(n+4) { animation-delay: 90ms; }
 .mobile-menu__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px 0; }
+.mobile-menu__brand { position: relative; }
 .mobile-menu__brands a { background: #fff; border-radius: var(--radius-container); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; padding: 8px; }
+/* Change 46: a smaller heart tucked into the corner of each tile (still a 28px tap target) */
+.mobile-menu__brand .mobile-menu__fav { position: absolute; top: -6px; right: -6px; width: 28px; height: 28px; }
+.mobile-menu__brand .mobile-menu__fav svg { width: 16px; height: 16px; }
 .mobile-menu__brands img { max-height: 100%; object-fit: contain; }
 .mobile-menu__cta { display: flex; flex-direction: column; gap: var(--spacing-12); margin-top: var(--spacing-16); }
 

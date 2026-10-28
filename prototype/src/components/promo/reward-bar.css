@@ -1,0 +1,131 @@
+/* Change 58: reward progress bar variants (RewardBar.tsx). Drawn on the dark-blue home hero and result card, so text is white.
+   Colours are the JOY brand sheet palette (--hv-*, set in hero-variants.css) and the JOY yellow. */
+.pbar { position: relative; color: #fff; }
+.pbar__name { font-size: var(--font-size-14); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+.pbar__fill { height: 100%; border-radius: inherit; background: var(--site-yellow); animation: pbar-grow 1.1s cubic-bezier(.3, .8, .3, 1) .2s backwards; }
+@keyframes pbar-grow { from { width: 0; } }
+@keyframes pbar-pop { from { transform: scale(.6); opacity: 0; } }
+@keyframes pbar-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 230, 0, .6); } 50% { box-shadow: 0 0 0 14px rgba(255, 230, 0, 0); } }
+
+/* A · Slim line */
+.pbar--line { padding-right: 16px; }
+.pbar-line__count { font-size: var(--font-size-16); margin-bottom: 20px; opacity: .9; }
+.pbar-line__count strong { font-size: var(--font-size-24); color: var(--site-yellow); }
+.pbar-line__track { position: relative; padding-bottom: 44px; }
+.pbar-line__rail { height: 6px; border-radius: 6px; background: rgba(255, 255, 255, .25); }
+.pbar-line__marks { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
+.pbar-line__marks li { position: absolute; top: 3px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; }
+.pbar-line__dot {
+  display: flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--site-blue-dark); border: 3px solid rgba(255, 255, 255, .5); transition: background .3s, border-color .3s;
+}
+.pbar-line__marks li.is-done .pbar-line__dot { background: var(--site-yellow); border-color: var(--site-yellow); }
+.pbar-line__marks li.is-gift .pbar-line__dot { width: 36px; height: 36px; color: #fff; }
+.pbar-line__marks li.is-gift.is-done .pbar-line__dot { color: var(--hv-navy); animation: pbar-pulse 1.6s ease-in-out infinite; }
+.pbar-line__marks .pbar__name { position: absolute; top: calc(100% + 12px); opacity: .7; }
+.pbar-line__marks li:not(.is-gift) .pbar__name { top: calc(100% + 21px); }
+.pbar-line__marks li.is-done .pbar__name { opacity: 1; }
+.pbar-line__marks li.is-gift .pbar__name { right: 0; }
+
+/* B · Segments */
+.pbar--segs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.pbar-seg { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.pbar-seg__block { display: block; height: 16px; border-radius: 16px; background: rgba(255, 255, 255, .18); overflow: hidden; }
+.pbar-seg__fill { display: block; height: 100%; width: 0; background: var(--site-yellow); }
+.pbar-seg.is-done .pbar-seg__fill { width: 100%; animation: pbar-grow .5s ease-out backwards; }
+.pbar-seg.is-gift:not(.is-done) .pbar-seg__block { background: rgba(255, 255, 255, .18); box-shadow: inset 0 0 0 2px var(--site-yellow); }
+.pbar-seg .pbar__name { display: flex; align-items: center; gap: 6px; opacity: .7; }
+.pbar-seg.is-done .pbar__name, .pbar-seg.is-gift .pbar__name { opacity: 1; }
+.pbar-seg .pbar__name svg { flex: none; color: var(--site-yellow); }
+
+/* C · Stepper */
+.pbar--steps { display: grid; grid-template-columns: repeat(4, 1fr); }
+.pbar-step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.pbar-step + .pbar-step::before {
+  content: ''; position: absolute; top: 24px; right: calc(50% + 32px); left: calc(-50% + 32px); height: 4px; border-radius: 4px;
+  background: rgba(255, 255, 255, .25); transform: translateY(-50%);
+}
+.pbar-step.is-done::before { background: var(--site-yellow); }
+.pbar-step__dot {
+  display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .4); font-size: var(--font-size-20); font-weight: 800;
+}
+.pbar-step.is-done .pbar-step__dot { background: var(--site-yellow); border-color: var(--site-yellow); color: var(--hv-navy); animation: pbar-pop .4s ease-out backwards; }
+.pbar-step.is-next .pbar-step__dot { background: #fff; border-color: #fff; color: var(--site-blue-dark); box-shadow: 0 0 0 6px rgba(255, 255, 255, .25); }
+.pbar-step.is-gift:not(.is-done) .pbar-step__dot { background: var(--hv-purple); border-color: #fff; color: #fff; }
+.pbar-step.is-gift.is-done .pbar-step__dot { animation: pbar-pulse 1.6s ease-in-out infinite; }
+.pbar-step .pbar__name { opacity: .7; }
+.pbar-step.is-done .pbar__name, .pbar-step.is-next .pbar__name { opacity: 1; }
+
+/* D · Meter card */
+.pbar--meter {
+  display: flex; align-items: center; gap: 28px; padding: 20px 24px; border-radius: var(--radius-card, 16px);
+  background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .2);
+}
+.pbar-meter__count { flex: none; font-size: var(--font-size-20); font-weight: 700; line-height: 1; opacity: .9; }
+.pbar-meter__count strong { font-size: 56px; font-weight: 800; color: var(--site-yellow); }
+.pbar-meter__count small { display: block; margin-top: 6px; font-size: var(--font-size-14); letter-spacing: 1px; text-transform: uppercase; }
+.pbar-meter__main { flex: 1; min-width: 0; }
+.pbar-meter__rail {
+  position: relative; height: 14px; border-radius: 14px; background: rgba(255, 255, 255, .2); overflow: hidden;
+}
+/* thin dividers between the 4 entries */
+.pbar-meter__rail::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent calc(25% - 2px), var(--site-blue-dark) calc(25% - 2px) calc(25% + 2px), transparent calc(25% + 2px) calc(50% - 2px), var(--site-blue-dark) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px) calc(75% - 2px), var(--site-blue-dark) calc(75% - 2px) calc(75% + 2px), transparent calc(75% + 2px));
+}
+.pbar-meter__names { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.pbar-meter__names li { text-align: right; opacity: .6; }
+.pbar-meter__names li.is-done { opacity: 1; }
+.pbar-meter__gift {
+  flex: none; display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 16px;
+  background: var(--hv-purple); color: #fff;
+}
+.pbar-meter__gift.is-open { background: var(--site-yellow); color: var(--hv-navy); animation: pbar-pulse 1.6s ease-in-out infinite; }
+
+/* E · Tickets: notches cut into both sides with a mask */
+.pbar--tickets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.pbar-ticket {
+  position: relative; display: flex; align-items: center; gap: 12px; padding: 18px 22px; border-radius: 10px;
+  background: rgba(255, 255, 255, .12); min-width: 0;
+  -webkit-mask: radial-gradient(circle 10px at 0 50%, transparent 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 10px at 100% 50%, transparent 97%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle 10px at 0 50%, transparent 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 10px at 100% 50%, transparent 97%, #000) right / 51% 100% no-repeat;
+}
+.pbar-ticket::after { content: ''; position: absolute; inset: 6px 14px; border: 2px dashed rgba(255, 255, 255, .3); border-radius: 6px; pointer-events: none; }
+.pbar-ticket__icon {
+  flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255, 255, 255, .15); font-size: var(--font-size-18, 18px); font-weight: 800;
+}
+.pbar-ticket .pbar__name { overflow: hidden; text-overflow: ellipsis; }
+.pbar-ticket.is-gift { background: var(--hv-purple); }
+.pbar-ticket.is-done { background: var(--site-yellow); color: var(--hv-navy); animation: pbar-pop .4s ease-out backwards; }
+.pbar-ticket.is-done::after { border-color: rgba(10, 15, 54, .25); }
+.pbar-ticket.is-done .pbar-ticket__icon { background: var(--hv-navy); color: var(--site-yellow); }
+
+/* Narrow spaces (the result card, phones): meter count and gift share the top row with the bar full width below,
+   and each ticket stacks its icon over its label, so labels don't collide or get cut off */
+.reward .pbar--meter { flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.reward .pbar-meter__main { order: 1; flex-basis: 100%; }
+.reward .pbar-ticket { flex-direction: column; gap: 8px; padding: 16px 8px; }
+.reward .pbar-ticket .pbar__name { font-size: 12px; letter-spacing: .3px; }
+@media (max-width: 767px) {
+  .pbar--meter { flex-wrap: wrap; justify-content: space-between; gap: 16px; padding: 16px; }
+  .pbar-meter__main { order: 1; flex-basis: 100%; }
+  .pbar-ticket { flex-direction: column; gap: 6px; padding: 14px 6px; }
+}
+
+@media (max-width: 767px) {
+  .pbar__name { font-size: 11px; letter-spacing: .3px; }
+  .pbar--segs { gap: 6px; }
+  .pbar-seg .pbar__name svg { display: none; }
+  .pbar-step + .pbar-step::before { top: 18px; right: calc(50% + 24px); left: calc(-50% + 24px); }
+  .pbar-step__dot { width: 36px; height: 36px; font-size: var(--font-size-16); }
+  .pbar-step__dot svg { width: 16px; height: 16px; }
+  .pbar-meter__count strong { font-size: 40px; }
+  .pbar-meter__gift { width: 48px; height: 48px; border-radius: 12px; }
+  .pbar-meter__gift svg { width: 22px; height: 22px; }
+  .pbar--tickets { gap: 6px; }
+  .pbar-ticket::after { inset: 4px 10px; }
+  .pbar-ticket__icon { width: 32px; height: 32px; font-size: var(--font-size-16); }
+  .pbar-ticket__icon svg { width: 18px; height: 18px; }
+}

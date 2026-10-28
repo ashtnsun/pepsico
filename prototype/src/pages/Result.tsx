@@ -2,11 +2,11 @@ import { Link, useParams } from 'react-router-dom'
 import { getPromo } from '../data/promos'
 import { REWARD_EVERY, REWARD_NAME, formatDate } from '../data/config'
 import { useStore } from '../state/store'
-import { Breadcrumb } from '../components/layout/Breadcrumb'
+import { stageStyle } from '../state/chrome'
+import { RewardBar } from '../components/promo/RewardBar'
 import { promoStyle } from '../components/promo/PromoTeaser'
 import NotFound from './NotFound'
 import { PromoStrip } from './Participate'
-import { promoCrumbs } from './PromoDetail'
 import './pages.css'
 
 /**
@@ -24,8 +24,8 @@ export default function Result() {
   const prize = promo.prizes.find((p) => p.name === entry.prize)
 
   return (
-    <div style={promoStyle(promo)}>
-      <Breadcrumb items={promoCrumbs(promo.slug, [{ label: 'Your result' }])} />
+    // Change 46: no breadcrumb on this task page; the promo strip says where you are
+    <div style={{ ...promoStyle(promo), ...stageStyle(promo) }}>
       <div className="result">
         <div className="participate__main">
           <PromoStrip promo={promo} kicker="Your result" />
@@ -72,25 +72,20 @@ export default function Result() {
   )
 }
 
-/** Change 39: entries towards the next JOY reward, one segment per entry. The segment this entry filled grows in. */
+/** Change 39: entries towards the next JOY reward. Change 46: drawn with the home hero's track bar, in JOY colours on every brand.
+ * Change 58: the bar style follows the config menu's "Progress bar" choice. */
 function RewardProgress({ entries }: { entries: number }) {
+  // Change 47: "unlocked" means a reward is waiting to be claimed on the homepage
+  const { unclaimedRewards } = useStore()
   const done = entries % REWARD_EVERY
-  const unlocked = entries > 0 && done === 0
-  const filled = unlocked ? REWARD_EVERY : done
+  const unlocked = unclaimedRewards > 0
   const left = REWARD_EVERY - done
   return (
-    <section className="reward" aria-labelledby="reward-title">
-      <div className="reward__head">
-        <h2 id="reward-title">{unlocked ? 'You’ve unlocked a JOY reward' : `${left} more ${left === 1 ? 'entry' : 'entries'} to your next JOY reward`}</h2>
-        <span className="reward__count">{filled} of {REWARD_EVERY}</span>
-      </div>
-      <div className="reward__bar" role="progressbar" aria-valuemin={0} aria-valuemax={REWARD_EVERY} aria-valuenow={filled} aria-label="Entries towards your next JOY reward">
-        {Array.from({ length: REWARD_EVERY }, (_, n) => (
-          <span key={n} className={n === filled - 1 ? 'is-done is-new' : n < filled ? 'is-done' : undefined} />
-        ))}
-      </div>
+    <section className="reward" data-brand="joy" aria-labelledby="reward-title">
+      <h2 id="reward-title">{unlocked ? <>You’ve <em>unlocked</em> a JOY reward</> : <><em>{left} more {left === 1 ? 'entry' : 'entries'}</em> to your next JOY reward</>}</h2>
+      <RewardBar filled={unlocked ? REWARD_EVERY : done} />
       <p className="reward__text">
-        {unlocked ? <>You’ve earned {REWARD_NAME}. See it on your homepage.</> : <>Every {REWARD_EVERY} entries earns {REWARD_NAME}.</>}
+        {unlocked ? <>You’ve earned {REWARD_NAME}. <Link to="/">Claim it on your homepage</Link>.</> : <>Every {REWARD_EVERY} entries earns {REWARD_NAME}.</>}
       </p>
     </section>
   )

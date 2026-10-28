@@ -213,9 +213,9 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
   Changes 26 and 27: on dark brands only (black or navy: Rockstar, Pepsi, Quaker, Popworks), <main> also carries
   data-page-canvas and the whole page sits on the brand colour, with no white sections. Buttons, links and outlines
   there use the theme's "on dark background" set; forms, FAQ boxes, the legal panel, the result and the T&C text are
-  white cards that go back to the light-background set. Other brands' promotions keep JOY (data-brand="joy"). */
+  white cards that go back to the light-background set (changes 43 and 49: so does the end of a promotion page, from the FAQs down). Other brands' promotions keep JOY (data-brand="joy"). */
 .page-main[data-page-theme],
-.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page, .prizes) {
+.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page, .prizes, .promo-tail) {
   --site-blue: var(--color-action-primary);
   --site-blue-hover: var(--color-action-primary-hover);
   --site-on-blue: var(--color-text-on-action);
@@ -238,7 +238,7 @@ select.field__input { appearance: none; background-image: url("data:image/svg+xm
   --site-focus: var(--color-border-focus-inverse);
   --site-muted: color-mix(in srgb, var(--chrome-text) 82%, var(--chrome-bg));   /* secondary text on the brand colour */
 }
-.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page, .prizes) {
+.page-main[data-page-canvas] :is(.pterms, .accordion__item, .panel, .result__card, .text-page, .prizes, .promo-tail) {
   background: var(--color-surface-default); color: var(--color-text-default);
 }
 /* Same as :root, so the JOY tokens tokens.css restores on [data-brand="joy"] reach the site values again */

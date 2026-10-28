@@ -52,7 +52,7 @@ function Packshots({ text }: { text: string }) {
 }
 
 export default function Home() {
-  const { user, myEntries } = useStore()
+  const { user, myEntries, favouriteBrands } = useStore()
 
   if (!user) {
     // Logged out: one JOY register hero, not a carousel.
@@ -64,7 +64,8 @@ export default function Home() {
         <HowItWorks />
         <section aria-labelledby="current-title" className="home-promos">
           <h2 id="current-title" className="section-title">Current promotions</h2>
-          {active.map((p, i) => <PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
+          {/* Change 61: show at most 3 (the rest are on /promotions) */}
+          {active.slice(0, 3).map((p, i) =><PromoTeaser key={p.slug} promo={p} side={i % 2 ? 'left' : 'right'} />)}
           <div className="center"><Link to="/promotions" className="btn btn--primary btn--wide">See all promotions</Link></div>
         </section>
         {/* The cyan band message is merged into this text (no separate band or Walkers block when logged out). */}
@@ -75,7 +76,11 @@ export default function Home() {
 
   // Logged in (wireframe "Home (Logged-in)")
   const enteredSlugs = new Set(myEntries.map((e) => e.promo))
+  // Change 46: promotions from favourite brands first, otherwise the curated order
+  // Change 60: show at most 3 (the rest are on /promotions)
   const suggested = active.filter((p) => !enteredSlugs.has(p.slug))
+    .sort((a, b) => Number(!favouriteBrands.includes(a.brand)) - Number(!favouriteBrands.includes(b.brand)))
+    .slice(0, 3)
   const latestEntries = [...myEntries].reverse()
   return (
     <>
